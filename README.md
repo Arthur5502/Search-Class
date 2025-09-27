@@ -87,12 +87,10 @@ Esta aplicação foi construída com o que há de mais moderno em desenvolviment
 - **[Swiper](https://swiperjs.com/)** - Carrosséis interativos
 
 ### **Desenvolvimento**
-- **[ESLint](https://eslint.org/)** + **[Prettier](https://prettier.io/)** - Qualidade de código
-- **[Husky](https://typicode.github.io/husky/)** - Git hooks
-- **[Conventional Commits](https://www.conventionalcommits.org/)** - Padrão de commits
+
 
 ### **Deploy e Infraestrutura**
-- **[Vercel](https://vercel.com/)** - Não realizado ainda
+
 
 ## 📱 Screenshots
 
