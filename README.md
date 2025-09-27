@@ -1,4 +1,4 @@
-# 🎯 TalentPlatform - Conectando Talentos com Oportunidades
+# 🎯 Search Class - Conectando Talentos com Oportunidades
 
 <div align="center">
 
