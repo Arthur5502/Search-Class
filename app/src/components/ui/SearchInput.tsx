@@ -1,4 +1,3 @@
-// src/components/ui/SearchInput.tsx
 'use client';
 import { FC } from 'react';
 import {
@@ -16,7 +15,7 @@ interface SearchInputProps {
 }
 
 export const SearchInput: FC<SearchInputProps> = ({
-    placeholder = "Curso de Front-End"
+    placeholder = "Procure por cursos"
 }) => {
     const { filtros, updateFiltros } = useAppStore();
 

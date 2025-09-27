@@ -44,15 +44,15 @@ const HomePage: FC = () => {
       {/* Seção de busca e filtros */}
       <Box bg="gray.50" py={6}>
         <Container maxW="8xl">
-          <VStack gap={4}>
-            <SearchInput placeholder="Curso de front-end" />
+          <VStack gap={2}>
+            <SearchInput placeholder="Procure por cursos" />
             <FilterTabs />
           </VStack>
         </Container>
       </Box>
 
       {/* Carousel principal */}
-      <Box bg="white">
+      <Box bg="gray.50">
         {programasDestaque.length > 0 && (
           <ProgramaCarousel programas={programasDestaque} />
         )}
