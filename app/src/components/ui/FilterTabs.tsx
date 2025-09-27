@@ -36,7 +36,7 @@ export const FilterTabs: FC = () => {
 
     return (
         <Container maxW="6xl" px={0} mt={8}>
-            <HStack gap={4} justify="center" flexWrap="wrap">
+            <HStack gap={10} justify="center" flexWrap="wrap">
                 {/* Localização - Menu Dropdown com design premium */}
                 <MenuRoot>
                     <MenuTrigger asChild>

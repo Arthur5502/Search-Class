@@ -18,7 +18,7 @@ export const Header: FC = () => {
     return (
         <Box
             as="header"
-            bg="white"
+            bg="gray.50"
             py={4}
             borderBottom="1px"
             borderColor="gray.100"
