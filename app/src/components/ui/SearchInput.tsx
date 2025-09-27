@@ -24,8 +24,8 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <Container maxW="3xl" px={0}>
-            <Box position="relative">
+        <Container maxW="2xl" px={0} centerContent>
+            <Box position="relative" w="100%">
                 <Box
                     position="absolute"
                     left="5"
@@ -51,6 +51,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                     fontSize="lg"
                     fontWeight="400"
                     shadow="lg"
+                    w="100%"
                     _hover={{
                         borderColor: 'blue.300',
                         shadow: 'xl'
