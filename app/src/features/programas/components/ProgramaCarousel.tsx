@@ -1,4 +1,3 @@
-// src/features/programas/components/ProgramaCarousel.tsx
 'use client';
 import { FC, useRef, useState } from 'react';
 import {
@@ -32,14 +31,14 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
     const nextRef = useRef<HTMLButtonElement>(null);
 
     return (
-        <Container maxW="7xl" py={8}>
-            <Box position="relative" display="flex" justifyContent="center">
+        <Box w="100vw" py={8} overflow="hidden">
+            <Box position="relative" display="flex" justifyContent="center" w="100%">
                 {/* Navigation Buttons */}
                 <IconButton
                     ref={prevRef}
                     aria-label="Slide anterior"
                     position="absolute"
-                    left="-20px"
+                    left="20px"
                     top="50%"
                     transform="translateY(-50%)"
                     zIndex={10}
@@ -59,7 +58,7 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     ref={nextRef}
                     aria-label="Próximo slide"
                     position="absolute"
-                    right="-20px"
+                    right="20px"
                     top="50%"
                     transform="translateY(-50%)"
                     zIndex={10}
@@ -76,11 +75,12 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 </IconButton>
 
                 {/* Swiper */}
-                <Box width="100%" display="flex" justifyContent="right">
+                <Box width="100%" px={0}>
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay]}
                         spaceBetween={24}
-                        slidesPerView={1}
+                        slidesPerView={4}
+                        centeredSlides={false}
                         navigation={{
                             prevEl: prevRef.current,
                             nextEl: nextRef.current,
@@ -98,15 +98,19 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                         speed={600}
                         loop={true}
                         breakpoints={{
-                            640: {
-                                slidesPerView: 2,
+                            320: {
+                                slidesPerView: 1,
                                 spaceBetween: 20,
                             },
-                            768: {
-                                slidesPerView: 3,
+                            640: {
+                                slidesPerView: 2,
                                 spaceBetween: 24,
                             },
                             1024: {
+                                slidesPerView: 3,
+                                spaceBetween: 24,
+                            },
+                            1400: {
                                 slidesPerView: 4,
                                 spaceBetween: 24,
                             },
@@ -129,68 +133,88 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                 <Link href={`/programas/${programa.id}`}>
                                     <Box
                                         h="561px"
-                                        bg="white"
-                                        borderRadius="12px"
+                                        w="362px"
+                                        bg="gray.50"
+                                        borderRadius="20px"
                                         overflow="hidden"
-                                        boxShadow="sm"
-                                        border="1px"
-                                        borderColor="gray.200"
+                                        boxShadow="0 8px 32px rgba(0, 0, 0, 0.12)"
                                         cursor="pointer"
-                                        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                                        transition="all 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
+                                        position="relative"
+                                        flexShrink={0}
                                         _hover={{
-                                            transform: 'translateY(-4px)',
-                                            boxShadow: 'lg',
-                                            borderColor: 'blue.200',
+                                            transform: 'translateY(-8px)',
+                                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)',
                                         }}
                                     >
-                                        {/* Image */}
-                                        <Box position="relative" h="420px" overflow="hidden">
+                                        {/* Image - Toda a altura do card */}
+                                        <Box position="relative" h="100%" w="100%" overflow="hidden">
                                             <Image
-                                                src={`https://picsum.photos/400/240?random=${programa.id}`}
+                                                src={`https://picsum.photos/362/561?random=${programa.id}`}
                                                 alt={programa.titulo}
                                                 w="100%"
                                                 h="100%"
                                                 objectFit="cover"
                                                 loading={index < 4 ? 'eager' : 'lazy'}
-                                                transition="transform 0.3s ease"
-                                                _hover={{ transform: 'scale(1.05)' }}
+                                                transition="transform 0.4s ease"
+                                                _hover={{ transform: 'scale(1.06)' }}
                                             />
-                                        </Box>
 
-                                        {/* Content */}
-                                        <Box p={5} h="140px">
-                                            <VStack align="start" gap={2} h="100%">
-                                                <Heading
-                                                    size="sm"
-                                                    fontWeight="600"
-                                                    color="gray.800"
-                                                    lineHeight="short"
-                                                    style={{
-                                                        display: '-webkit-box',
-                                                        WebkitLineClamp: 2,
-                                                        WebkitBoxOrient: 'vertical',
-                                                        overflow: 'hidden',
-                                                    }}
-                                                >
-                                                    {programa.titulo}
-                                                </Heading>
+                                            {/* Gradiente overlay na parte inferior - mais suave e profissional */}
+                                            <Box
+                                                position="absolute"
+                                                bottom={0}
+                                                left={0}
+                                                right={0}
+                                                h="70%"
+                                                bgGradient="linear(to-t, blackAlpha.900, blackAlpha.600, transparent)"
+                                                pointerEvents="none"
+                                            />
 
-                                                <Text
-                                                    fontSize="sm"
-                                                    color="gray.600"
-                                                    fontWeight="500"
-                                                >
-                                                    {programa.instituicao.nome}
-                                                </Text>
+                                            {/* Content sobreposto na imagem */}
+                                            <Box
+                                                position="absolute"
+                                                bottom={0}
+                                                left={0}
+                                                right={0}
+                                                p={8}
+                                                color="white"
+                                            >
+                                                <VStack align="start" gap={2}>
+                                                    <Heading
+                                                        size="lg"
+                                                        fontWeight="800"
+                                                        color="gray.50"
+                                                        lineHeight="1.2"
+                                                        letterSpacing="-0.02em"
+                                                        style={{
+                                                            display: '-webkit-box',
+                                                            WebkitLineClamp: 2,
+                                                            WebkitBoxOrient: 'vertical',
+                                                            overflow: 'hidden',
+                                                        }}
+                                                    >
+                                                        {programa.titulo}
+                                                    </Heading>
 
-                                                <Text
-                                                    fontSize="sm"
-                                                    color="gray.500"
-                                                    mt="auto"
-                                                >
-                                                    Professor: Arthur Campos
-                                                </Text>
-                                            </VStack>
+                                                    <Text
+                                                        fontSize="md"
+                                                        color="whiteAlpha.900"
+                                                        fontWeight="400"
+                                                        letterSpacing="0.01em"
+                                                    >
+                                                        Fornecido por {programa.instituicao.nome}
+                                                    </Text>
+
+                                                    <Text
+                                                        fontSize="sm"
+                                                        color="gray.50"
+                                                        fontWeight="400"
+                                                    >
+                                                        Professor: Arthur Campos
+                                                    </Text>
+                                                </VStack>
+                                            </Box>
                                         </Box>
                                     </Box>
                                 </Link>
@@ -200,25 +224,30 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 </Box>
             </Box>
 
-            {/* Pagination Container */}
+            {/* Pagination Container - Centralizado perfeitamente */}
             <Box
-                className="swiper-pagination-custom"
-                mt={18}
                 display="flex"
-                justifyContent="end"
-                alignItems="end"
+                justifyContent="center"
+                alignItems="center"
                 width="100%"
-            />
+                mt={14}
+                position="relative"
+            >
+                <Box className="swiper-pagination-custom" />
+            </Box>
 
             {/* Custom Pagination Styles */}
             <style jsx global>{`
                 .swiper-pagination-custom {
+                    position: relative !important;
                     display: flex !important;
-                    justify-content: right !important;
-                    align-items: right !important;
-                    width: 100% !important;
-                    text-align: right !important;
+                    justify-content: center !important;
+                    align-items: center !important;
+                    width: auto !important;
+                    text-align: center !important;
                     margin: 0 auto !important;
+                    left: 5% !important;
+                    transform: translateX(-50%) !important;
                 }
                 
                 .swiper-pagination-bullet {
@@ -226,7 +255,7 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     height: 14px !important;
                     background: #CBD5E0 !important;
                     opacity: 1 !important;
-                    margin: 15 4px !important;
+                    margin: 0 4px !important;
                     transition: all 0.3s ease !important;
                     cursor: pointer !important;
                 }
@@ -241,6 +270,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     transition: all 0.3s ease !important;
                 }
             `}</style>
-        </Container>
+        </Box>
     );
 };

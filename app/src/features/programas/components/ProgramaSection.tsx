@@ -1,4 +1,3 @@
-// src/features/programas/components/ProgramaSection.tsx
 'use client';
 import { FC, useState, useRef } from 'react';
 import {

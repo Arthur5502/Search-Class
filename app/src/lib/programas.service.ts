@@ -1,4 +1,3 @@
-
 import { mockProgramas } from '../mocks/programas';
 import type { Programa, AreaTecnologia } from '../types/domain';
 
