@@ -16,7 +16,7 @@ interface SearchInputProps {
 }
 
 export const SearchInput: FC<SearchInputProps> = ({
-    placeholder = "Curso de front-end"
+    placeholder = "Curso de Front-End"
 }) => {
     const { filtros, updateFiltros } = useAppStore();
 
@@ -25,17 +25,17 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <Container maxW="2xl" px={0}>
+        <Container maxW="3xl" px={0}>
             <Box position="relative">
                 <Box
                     position="absolute"
-                    left="4"
+                    left="5"
                     top="50%"
                     transform="translateY(-50%)"
                     zIndex={2}
-                    color="gray.400"
+                    color="blue.400"
                 >
-                    <FiSearch size={20} />
+                    <FiSearch size={22} />
                 </Box>
                 <Input
                     value={filtros.busca}
@@ -43,25 +43,28 @@ export const SearchInput: FC<SearchInputProps> = ({
                     placeholder={placeholder}
                     bg="white"
                     border="2px"
-                    borderColor="gray.200"
+                    borderColor="blue.200"
                     size="lg"
-                    h="56px"
-                    pl="14"
-                    pr="4"
-                    borderRadius="16px"
-                    fontSize="md"
-                    fontWeight="medium"
-                    shadow="sm"
+                    h="64px"
+                    pl="16"
+                    pr="6"
+                    borderRadius="32px"
+                    fontSize="lg"
+                    fontWeight="400"
+                    shadow="lg"
                     _hover={{
-                        borderColor: 'blue.300'
+                        borderColor: 'blue.300',
+                        shadow: 'xl'
                     }}
                     _focus={{
-                        borderColor: 'blue.500',
-                        boxShadow: '0 0 0 3px rgba(66, 153, 225, 0.1)'
+                        borderColor: 'blue.400',
+                        boxShadow: '0 0 0 4px rgba(66, 153, 225, 0.15)',
+                        outline: 'none'
                     }}
                     _placeholder={{
-                        color: 'gray.400',
-                        fontSize: 'md'
+                        color: 'gray.500',
+                        fontSize: 'lg',
+                        fontWeight: '400'
                     }}
                 />
             </Box>
