@@ -32,7 +32,7 @@
 
 ## 🎯 Sobre o Projeto
 
-A **TalentPlatform** é uma plataforma centralizada que conecta pessoas interessadas em formação tecnológica com as melhores instituições e programas do país. Desenvolvida com as mais modernas tecnologias de 2025, oferece uma experiência superior de busca, descoberta e aplicação para programas de capacitação.
+A **Search Class** é uma plataforma centralizada que conecta pessoas interessadas em formação tecnológica com as melhores instituições e programas do país. Desenvolvida com as mais modernas tecnologias de 2025, oferece uma experiência superior de busca, descoberta e aplicação para programas de capacitação.
 
 ### 🚨 Problema e Solução
 
@@ -92,8 +92,7 @@ Esta aplicação foi construída com o que há de mais moderno em desenvolviment
 - **[Conventional Commits](https://www.conventionalcommits.org/)** - Padrão de commits
 
 ### **Deploy e Infraestrutura**
-- **[Vercel](https://vercel.com/)** - Deploy automático
-- **[GitHub Actions](https://github.com/features/actions)** - CI/CD
+- **[Vercel](https://vercel.com/)** - Não realizado ainda
 
 ## 📱 Screenshots
 
