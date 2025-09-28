@@ -26,7 +26,7 @@ export const Header: FC = () => {
         >
             <Container maxW="8xl">
                 <HStack justify="space-between" align="center">
-                    {/* Header esquerdo*/}
+                    {/* Header esquerdo - Logo com S e C destacados */}
                     <Link href="/">
                         <HStack gap={3} cursor="pointer" ml={10}>
                             <Image
@@ -37,11 +37,41 @@ export const Header: FC = () => {
                                 objectFit="contain"
                             />
                             <Box>
-                                <Text fontSize="xl" fontWeight="bold" color="gray.800">
-                                    Search
+                                <Text
+                                    fontSize="xl"
+                                    color="gray.800"
+                                    lineHeight="1"
+                                    textTransform="uppercase"
+                                    _firstLetter={{
+                                        color: "blue.600",
+                                        textTransform: "uppercase"
+                                    }}
+                                    css={{
+                                        '&::first-letter': {
+                                            color: 'var(--chakra-colors-blue-600)',
+                                            textTransform: 'uppercase'
+                                        }
+                                    }}
+                                >
+                                    search
                                 </Text>
-                                <Text fontSize="xs" color="gray.500" textTransform="uppercase" letterSpacing="wide">
-                                    Class
+                                <Text
+                                    fontSize="xl"
+                                    color="gray.500"
+                                    textTransform="uppercase"
+                                    letterSpacing="wide"
+                                    _firstLetter={{
+                                        color: "blue.600",
+                                        textTransform: "uppercase"
+                                    }}
+                                    css={{
+                                        '&::first-letter': {
+                                            color: 'var(--chakra-colors-blue-600)',
+                                            textTransform: 'uppercase'
+                                        }
+                                    }}
+                                >
+                                    class
                                 </Text>
                             </Box>
                         </HStack>
@@ -58,7 +88,7 @@ export const Header: FC = () => {
                                 fontWeight="medium"
                                 _hover={{ bg: "gray.50" }}
                             >
-                                <FiHeart size={16} style={{ marginRight: '0px' }} />
+                                <FiHeart size={16} style={{ marginRight: '8px' }} />
                                 Favoritos
                             </Button>
                         </Link>
