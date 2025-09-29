@@ -1,6 +1,6 @@
 'use client';
 import { FC, useState, useEffect } from 'react';
-import { Box, Container, VStack, HStack } from '@chakra-ui/react';
+import { Box, VStack } from '@chakra-ui/react';
 import { Header } from '../components/layout/Header';
 import { SearchInput } from '../components/ui/SearchInput';
 import { FilterTabs } from '../components/ui/FilterTabs';
@@ -41,14 +41,12 @@ const HomePage: FC = () => {
     <Box bg="gray.50" minH="100vh">
       <Header />
 
-      {/* Seção de busca e filtros */}
+      {/* Seção de busca e filtros - SEM CONTAINER */}
       <Box bg="gray.50" py={6}>
-        <Container maxW="8xl">
-          <VStack gap={2} align="center">
-            <SearchInput placeholder="Procure por cursos" />
-            <FilterTabs />
-          </VStack>
-        </Container>
+        <VStack gap={6} align="center" w="100%">
+          <SearchInput placeholder="Procure por cursos" />
+          <FilterTabs />
+        </VStack>
       </Box>
 
       {/* Carousel principal */}
