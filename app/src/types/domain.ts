@@ -34,6 +34,7 @@ export interface Programa {
     instituicao: Instituicao;
     area: AreaTecnologia;
     modalidade: Modalidade;
+    descricao: string;
     nivel: NivelExperiencia;
     publicoAlvo: string[];
     requisitos: string[];
@@ -98,7 +99,13 @@ export type AreaTecnologia =
     | 'ux'
     | 'seguranca'
     | 'qa'
-    | 'gamedev';
+    | 'gamedev'
+    | 'marketing'
+    | 'design'
+    | 'industrial'
+    | 'engenharia'
+    | 'outras'
+    | 'gestao';
 
 export type Modalidade = 'presencial' | 'online' | 'hibrido';
 
