@@ -1,19 +1,18 @@
 'use client';
-import { FC, useState, useRef } from 'react';
+import { FC, useState, useRef, useEffect } from 'react';
 import {
     Box,
     Container,
     Heading,
-    Grid,
+    Flex,
     Image,
     Text,
     HStack,
     VStack,
     Button,
     IconButton,
-    Badge
 } from '@chakra-ui/react';
-import { FiArrowRight, FiChevronRight } from 'react-icons/fi';
+import { FiArrowRight, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import type { Programa } from '../../../types/domain';
 import Link from 'next/link';
 
@@ -32,39 +31,59 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     viewAllHref = "/programas",
     showScrollButton = true
 }) => {
-    const [showAll, setShowAll] = useState(false);
-    const gridRef = useRef<HTMLDivElement>(null);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
 
-    // Simplified approach to avoid SSR issues
-    const displayPrograms = showAll ? programas : programas.slice(0, 4);
+    const updateScrollButtons = () => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
+        }
+    };
 
-    const scrollToNext = () => {
-        if (gridRef.current) {
-            const cardWidth = gridRef.current.scrollWidth / programas.length;
-            gridRef.current.scrollBy({
-                left: cardWidth * 4,
+    const scrollToDirection = (direction: 'left' | 'right') => {
+        if (scrollContainerRef.current) {
+            const scrollAmount = 300; // largura aproximada de um card + gap
+
+            scrollContainerRef.current.scrollBy({
+                left: direction === 'right' ? scrollAmount : -scrollAmount,
                 behavior: 'smooth'
             });
         }
     };
 
+    useEffect(() => {
+        const handleScroll = () => updateScrollButtons();
+        const handleResize = () => updateScrollButtons();
+
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.addEventListener('scroll', handleScroll);
+            window.addEventListener('resize', handleResize);
+            updateScrollButtons();
+        }
+
+        return () => {
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.removeEventListener('scroll', handleScroll);
+            }
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [programas.length]);
+
     return (
-        <Container maxW="8xl" py={12}>
+        <Box maxW="9xl" py={8} px={{ base: 4, md: 40 }}>
             {/* Header Section */}
-            <HStack justify="space-between" align="flex-end" mb={8}>
-                <VStack align="start" gap={2}>
-                    <Heading
-                        size="xl"
-                        color="gray.800"
-                        fontWeight="700"
-                        lineHeight="shorter"
-                    >
-                        {title}
-                    </Heading>
-                    <Text color="gray.600" fontSize="md">
-                        {programas.length} programas disponíveis
-                    </Text>
-                </VStack>
+            <HStack justify="space-between" align="center" mb={8}>
+                <Heading
+                    size="lg"
+                    color="gray.900"
+                    fontWeight="600"
+                    fontSize={{ base: "xl", md: "2xl" }}
+                >
+                    {title}
+                </Heading>
 
                 {showViewAll && (
                     <Link href={viewAllHref}>
@@ -72,215 +91,181 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                             variant="ghost"
                             color="blue.500"
                             fontSize="sm"
-                            fontWeight="600"
-                            _hover={{ bg: 'blue.50', color: 'blue.600' }}
-                            transition="all 0.2s"
+                            fontWeight="500"
+                            p={0}
+                            _hover={{ color: 'blue.600' }}
+                            transition="color 0.2s"
                         >
                             Ver tudo
-                            <FiArrowRight style={{ marginLeft: '8px' }} />
                         </Button>
                     </Link>
                 )}
             </HStack>
 
-            {/* Grid Container com Scroll Horizontal */}
+            {/* Container com Cards sem Bordas */}
             <Box position="relative">
-                <Box
-                    ref={gridRef}
+                <Flex
+                    ref={scrollContainerRef}
                     overflowX="auto"
+                    overflowY="hidden"
+                    gap={6}
                     pb={4}
                     css={{
-                        scrollbarWidth: 'thin',
-                        scrollbarColor: '#CBD5E0 transparent',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none',
                         '&::-webkit-scrollbar': {
-                            height: '6px',
+                            display: 'none',
                         },
-                        '&::-webkit-scrollbar-track': {
-                            background: '#F7FAFC',
-                            borderRadius: '3px',
-                        },
-                        '&::-webkit-scrollbar-thumb': {
-                            background: '#CBD5E0',
-                            borderRadius: '3px',
-                        },
-                        '&::-webkit-scrollbar-thumb:hover': {
-                            background: '#A0AEC0',
-                        },
+                        scrollSnapType: 'x mandatory',
+                        scrollBehavior: 'smooth',
                     }}
                 >
-                    <Grid
-                        templateColumns={{
-                            base: `repeat(${programas.length}, 280px)`,
-                            lg: "repeat(4, 1fr)"
-                        }}
-                        gap={6}
-                        minW={{ base: 'max-content', lg: 'unset' }}
-                    >
-                        {displayPrograms.map((programa, index) => (
-                            <Link key={programa.id} href={`/programas/${programa.id}`}>
+                    {programas.map((programa, index) => (
+                        <Link key={programa.id} href={`/programas/${programa.id}`}>
+                            <Box
+                                minW="280px"
+                                w="280px"
+                                cursor="pointer"
+                                transition="all 0.3s ease"
+                                scrollSnapAlign="start"
+                                flexShrink={0}
+                                _hover={{
+                                    transform: 'translateY(-4px)',
+                                }}
+                            >
+                                {/* Imagem com bordas arredondadas */}
                                 <Box
-                                    w={{ base: "280px", lg: "100%" }}
-                                    cursor="pointer"
-                                    borderRadius="16px"
+                                    position="relative"
                                     overflow="hidden"
-                                    bg="white"
+                                    h="200px"
+                                    borderRadius="16px"
+                                    mb={4}
                                     shadow="md"
-                                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                                    transition="all 0.3s ease"
                                     _hover={{
-                                        shadow: 'xl',
-                                        transform: 'translateY(-8px) scale(1.02)',
-                                        '& .card-image': {
-                                            transform: 'scale(1.1)'
-                                        }
+                                        shadow: 'lg',
                                     }}
-                                    role="group"
                                 >
-                                    {/* Container da Imagem */}
-                                    <Box position="relative" overflow="hidden" h="180px">
-                                        <Image
-                                            className="card-image"
-                                            src={`https://picsum.photos/280/180?random=${programa.id}`}
-                                            alt={programa.titulo}
-                                            w="100%"
-                                            h="100%"
-                                            objectFit="cover"
-                                            loading={index < 4 ? "eager" : "lazy"}
-                                            transition="transform 0.4s ease"
-                                            onError={(e) => {
-                                                e.currentTarget.src = `https://via.placeholder.com/280x180/4299E1/FFFFFF?text=${encodeURIComponent(programa.area)}`;
-                                            }}
-                                        />
-
-                                        {/* Overlay sutil */}
-                                        <Box
-                                            position="absolute"
-                                            inset={0}
-                                            bg="blackAlpha.100"
-                                            opacity={0}
-                                            transition="opacity 0.3s ease"
-                                            _groupHover={{ opacity: 1 }}
-                                        />
-
-                                        {/* Badge de modalidade */}
-                                        <Badge
-                                            position="absolute"
-                                            top={3}
-                                            right={3}
-                                            colorScheme={
-                                                programa.modalidade === 'online' ? 'green' :
-                                                    programa.modalidade === 'presencial' ? 'blue' : 'purple'
-                                            }
-                                            variant="solid"
-                                            fontSize="xs"
-                                            px={2}
-                                            py={1}
-                                            borderRadius="md"
-                                            textTransform="capitalize"
-                                        >
-                                            {programa.modalidade}
-                                        </Badge>
-                                    </Box>
-
-                                    {/* Conteúdo do Card */}
-                                    <Box p={5}>
-                                        <VStack align="start" gap={3}>
-                                            {/* Categoria */}
-                                            <Text
-                                                fontSize="xs"
-                                                color="blue.600"
-                                                textTransform="uppercase"
-                                                fontWeight="700"
-                                                letterSpacing="wider"
-                                                lineHeight="1"
-                                            >
-                                                CURSO DE {programa.area.toUpperCase()}
-                                            </Text>
-
-                                            {/* Título */}
-                                            <Heading
-                                                size="sm"
-                                                color="gray.800"
-                                                fontWeight="600"
-                                                lineHeight="shorter"
-                                                minH="2.5rem"
-                                                style={{
-                                                    display: '-webkit-box',
-                                                    WebkitLineClamp: 2,
-                                                    WebkitBoxOrient: 'vertical',
-                                                    overflow: 'hidden'
-                                                }}
-                                            >
-                                                {programa.titulo}
-                                            </Heading>
-
-                                            {/* Meta informações */}
-                                            <VStack align="start" gap={1} w="100%">
-                                                <Text
-                                                    fontSize="sm"
-                                                    color="gray.600"
-                                                    fontWeight="500"
-                                                >
-                                                    {programa.instituicao.nome}
-                                                </Text>
-
-                                                <HStack
-                                                    fontSize="xs"
-                                                    color="gray.500"
-                                                >
-                                                    <Text>{programa.cronograma?.duracao || '4 meses'}</Text>
-                                                    <Text>•</Text>
-                                                    <Text>
-                                                        {programa.investimento === 0
-                                                            ? 'Gratuito'
-                                                            : `R$ ${programa.investimento?.toLocaleString('pt-BR') || '---'}`}
-                                                    </Text>
-                                                </HStack>
-                                            </VStack>
-                                        </VStack>
-                                    </Box>
+                                    <Image
+                                        src={`https://picsum.photos/280/200?random=${programa.id}`}
+                                        alt={programa.titulo}
+                                        w="100%"
+                                        h="100%"
+                                        objectFit="cover"
+                                        loading={index < 4 ? "eager" : "lazy"}
+                                        onError={(e) => {
+                                            e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                        }}
+                                    />
                                 </Box>
-                            </Link>
-                        ))}
-                    </Grid>
-                </Box>
 
-                {/* Botão de scroll lateral (apenas mobile) */}
+                                {/* Conteúdo do Card - Apenas Texto */}
+                                <Box>
+                                    <VStack align="start" gap={2}>
+                                        {/* Categoria em maiúsculo */}
+                                        <Text
+                                            fontSize="xs"
+                                            color="gray.500"
+                                            textTransform="uppercase"
+                                            fontWeight="600"
+                                            letterSpacing="wide"
+                                        >
+                                            CURSO DE {programa.area.toUpperCase()}
+                                        </Text>
+
+                                        {/* Título do Programa */}
+                                        <Heading
+                                            fontSize="lg"
+                                            color="gray.900"
+                                            fontWeight="600"
+                                            lineHeight="1.3"
+                                            lineClamp={2}
+                                        >
+                                            {programa.titulo}
+                                        </Heading>
+
+                                        {/* Instituição */}
+                                        <Text
+                                            fontSize="sm"
+                                            color="gray.500"
+                                            fontWeight="400"
+                                        >
+                                            {programa.instituicao.nome}
+                                        </Text>
+                                    </VStack>
+                                </Box>
+                            </Box>
+                        </Link>
+                    ))}
+                </Flex>
+
+                {/* Botões de navegação */}
                 {showScrollButton && programas.length > 4 && (
-                    <IconButton
-                        position="absolute"
-                        right={-4}
-                        top="50%"
-                        transform="translateY(-50%)"
-                        aria-label="Ver próximos programas"
-                        variant="solid"
-                        bg="white"
-                        color="gray.600"
-                        size="lg"
-                        borderRadius="full"
-                        shadow="lg"
-                        display={{ base: 'flex', lg: 'none' }}
-                        onClick={scrollToNext}
-                        _hover={{ bg: 'gray.50', transform: 'translateY(-50%) scale(1.1)' }}
-                        transition="all 0.2s"
-                    >
-                        <FiChevronRight size={20} />
-                    </IconButton>
+                    <>
+                        {/* Botão Esquerdo */}
+                        <IconButton
+                            position="absolute"
+                            left="-20px"
+                            top="30%"
+                            transform="translateY(-50%)"
+                            aria-label="Ver programas anteriores"
+                            variant="solid"
+                            bg="white"
+                            color="gray.600"
+                            size="lg"
+                            borderRadius="md"
+                            shadow="lg"
+                            border="1px solid"
+                            borderColor="gray.200"
+                            onClick={() => scrollToDirection('left')}
+                            opacity={canScrollLeft ? 1 : 0.4}
+                            cursor={canScrollLeft ? 'pointer' : 'not-allowed'}
+                            _hover={{
+                                bg: canScrollLeft ? 'gray.50' : 'white',
+                                color: canScrollLeft ? 'gray.800' : 'gray.600',
+                                shadow: canScrollLeft ? 'xl' : 'lg',
+                                transform: canScrollLeft ? 'translateY(-50%) scale(1.05)' : 'translateY(-50%)',
+                            }}
+                            transition="all 0.2s"
+                            zIndex={2}
+                            disabled={!canScrollLeft}
+                        >
+                            <FiChevronLeft size={20} />
+                        </IconButton>
+
+                        {/* Botão Direito */}
+                        <IconButton
+                            position="absolute"
+                            right="-20px"
+                            top="30%"
+                            transform="translateY(-50%)"
+                            aria-label="Ver próximos programas"
+                            variant="solid"
+                            bg="white"
+                            color="gray.600"
+                            size="lg"
+                            borderRadius="md"
+                            shadow="lg"
+                            border="1px solid"
+                            borderColor="gray.200"
+                            onClick={() => scrollToDirection('right')}
+                            opacity={canScrollRight ? 1 : 0.4}
+                            cursor={canScrollRight ? 'pointer' : 'not-allowed'}
+                            _hover={{
+                                bg: canScrollRight ? 'gray.50' : 'white',
+                                color: canScrollRight ? 'gray.800' : 'gray.600',
+                                shadow: canScrollRight ? 'xl' : 'lg',
+                                transform: canScrollRight ? 'translateY(-50%) scale(1.05)' : 'translateY(-50%)',
+                            }}
+                            transition="all 0.2s"
+                            zIndex={2}
+                            disabled={!canScrollRight}
+                        >
+                            <FiChevronRight size={20} />
+                        </IconButton>
+                    </>
                 )}
             </Box>
-
-            {/* Botão "Ver mais" para mobile */}
-            {!showAll && programas.length > 4 && (
-                <Box textAlign="center" mt={8} display={{ base: 'block', lg: 'none' }}>
-                    <Button
-                        variant="outline"
-                        colorScheme="blue"
-                        onClick={() => setShowAll(true)}
-                    >
-                        Ver mais {programas.length - 4} programas
-                        <FiArrowRight style={{ marginLeft: '8px' }} />
-                    </Button>
-                </Box>
-            )}
-        </Container>
+        </Box>
     );
 };
