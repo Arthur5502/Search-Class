@@ -43,7 +43,7 @@ const HomePage: FC = () => {
 
       {/* Seção de busca e filtros - SEM CONTAINER */}
       <Box bg="gray.50" py={6}>
-        <VStack gap={6} align="center" w="100%">
+        <VStack gap={4} align="center" w="100%">
           <SearchInput placeholder="Procure por cursos" />
           <FilterTabs />
         </VStack>
