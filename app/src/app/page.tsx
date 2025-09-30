@@ -14,6 +14,7 @@ const HomePage: FC = () => {
   const [programasPopulares, setProgramasPopulares] = useState<Programa[]>([]);
   const [cursosAutomacao, setCursosAutomacao] = useState<Programa[]>([]);
   const [eventosLocais, setEventosLocais] = useState<Programa[]>([]);
+  const searchInputProps = { placeholder: "Buscar cursos" };
 
   useEffect(() => {
     const carregarDados = async () => {
@@ -44,7 +45,7 @@ const HomePage: FC = () => {
       {/* Seção de busca e filtros - SEM CONTAINER */}
       <Box bg="gray.50" py={6}>
         <VStack gap={4} align="center" w="100%">
-          <SearchInput placeholder="Procure por cursos" />
+          <SearchInput {...searchInputProps} />
           <FilterTabs />
         </VStack>
       </Box>

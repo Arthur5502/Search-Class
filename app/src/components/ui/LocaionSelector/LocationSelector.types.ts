@@ -1,4 +1,3 @@
-// components/ui/LocationSelector/LocationSelector.types.ts
 import { Estado } from '../../../constants/estados'
 
 export interface LocationSelectorProps {

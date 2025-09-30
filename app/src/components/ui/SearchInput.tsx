@@ -9,7 +9,7 @@ interface SearchInputProps {
 }
 
 export const SearchInput: FC<SearchInputProps> = ({
-  placeholder = "Procure por cursos"
+  placeholder = "Buscar cursos"
 }) => {
   const { filtros, updateFiltros } = useAppStore();
   const [iconColor, setIconColor] = useState('#656a72');
@@ -36,7 +36,7 @@ export const SearchInput: FC<SearchInputProps> = ({
         alignItems="center"
         justifyContent="center"
       >
-        <FiSearch size={20} 
+        <FiSearch size={20}
         color={iconColor} />
       </Box>
 

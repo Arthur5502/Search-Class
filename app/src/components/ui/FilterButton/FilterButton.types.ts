@@ -1,4 +1,3 @@
-// components/ui/FilterButton/FilterButton.types.ts
 import { ReactElement } from 'react'
 
 export interface FilterButtonProps {

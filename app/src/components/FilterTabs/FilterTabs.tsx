@@ -1,8 +1,6 @@
-// components/FilterTabs/FilterTabs.tsx
 'use client'
 
 import { Container, HStack, VStack, Icon, Box, Text, Button } from '@chakra-ui/react'
-import { FiMonitor, FiCloud } from 'react-icons/fi'
 import Image from 'next/image'
 import { FilterButton } from '../ui/FilterButton'
 import { LocationSelector } from '../ui/LocaionSelector'
@@ -17,7 +15,62 @@ export const FilterTabs = ({ className }: FilterTabsProps) => {
         isActive
     } = useFilters()
 
-    // Componente de ícone customizado para Financeiro
+    const CloudIcon = ({ isActiveState }: { isActiveState: boolean }) => (
+            <Image
+                src="/cloud.svg"
+                alt="Cloud"
+                width={24}
+                height={24}
+                style={{
+                    filter: isActiveState
+                        ? 'brightness(0) saturate(100%) invert(45%) sepia(67%) saturate(1234%) hue-rotate(192deg) brightness(101%) contrast(97%)' // #298BF8
+                        : 'brightness(0) saturate(100%) invert(42%) sepia(8%) saturate(586%) hue-rotate(182deg) brightness(91%) contrast(88%)' // #666B74
+                }}
+            />
+    )
+
+    const CloudIconMobile = ({ isActiveState }: { isActiveState: boolean }) => (
+        <Image
+            src="/cloud.svg"
+            alt="Cloud"
+            width={10}
+            height={10}
+            style={{
+                filter: isActiveState
+                    ? 'brightness(0) saturate(100%) invert(45%) sepia(67%) saturate(1234%) hue-rotate(192deg) brightness(101%) contrast(97%)' // #298BF8
+                    : 'brightness(0) saturate(100%) invert(42%) sepia(8%) saturate(586%) hue-rotate(182deg) brightness(91%) contrast(88%)' // #666B74
+            }}
+        />
+    )
+    
+    const TecIcon = ({ isActiveState }: { isActiveState: boolean }) => (
+            <Image
+                src="/tecnologia.svg"
+                alt="Tecnologia"
+                width={24}
+                height={24}
+                style={{
+                    filter: isActiveState
+                        ? 'brightness(0) saturate(100%) invert(45%) sepia(67%) saturate(1234%) hue-rotate(192deg) brightness(101%) contrast(97%)' // #298BF8
+                        : 'brightness(0) saturate(100%) invert(42%) sepia(8%) saturate(586%) hue-rotate(182deg) brightness(91%) contrast(88%)' // #666B74
+                }}
+            />
+    )
+
+    const TecIconMobile = ({ isActiveState }: { isActiveState: boolean }) => (
+        <Image
+            src="/tecnologia.svg"
+            alt="Tecnologia"
+            width={10}
+            height={10}
+            style={{
+                filter: isActiveState
+                    ? 'brightness(0) saturate(100%) invert(45%) sepia(67%) saturate(1234%) hue-rotate(192deg) brightness(101%) contrast(97%)' // #298BF8
+                    : 'brightness(0) saturate(100%) invert(42%) sepia(8%) saturate(586%) hue-rotate(182deg) brightness(91%) contrast(88%)' // #666B74
+            }}
+        />
+    )
+    
     const FinanceIcon = ({ isActiveState }: { isActiveState: boolean }) => (
             <Image
                 src="/akar-icons_coin.svg"
@@ -32,7 +85,6 @@ export const FilterTabs = ({ className }: FilterTabsProps) => {
             />
     )
 
-    // Componente de ícone mobile para Financeiro
     const FinanceIconMobile = ({ isActiveState }: { isActiveState: boolean }) => (
         <Image
             src="/akar-icons_coin.svg"
@@ -70,7 +122,7 @@ export const FilterTabs = ({ className }: FilterTabsProps) => {
                 />
 
                 <FilterButton
-                    icon={<Icon as={FiMonitor} boxSize={5} color={isActive('tecnologia') ? '#298BF8' : '#666B74'} />}
+                    icon={<TecIcon isActiveState={isActive('tecnologia')} />}
                     isActive={isActive('tecnologia')}
                     onClick={() => handleFilterToggle('tecnologia')}
                     variant="default"
@@ -88,7 +140,7 @@ export const FilterTabs = ({ className }: FilterTabsProps) => {
                 </FilterButton>
 
                 <FilterButton
-                    icon={<Icon as={FiCloud} boxSize={5} color={isActive('cloud') ? '#298BF8' : '#666B74'} />}
+                    icon={<CloudIcon isActiveState={isActive('cloud')} />}
                     isActive={isActive('cloud')}
                     onClick={() => handleFilterToggle('cloud')}
                     variant="variant2"
@@ -132,11 +184,7 @@ export const FilterTabs = ({ className }: FilterTabsProps) => {
                         }
                     >
                         <VStack gap={1}>
-                            <Icon
-                                as={FiMonitor}
-                                boxSize={4}
-                                color={isActive('tecnologia') ? 'white' : '#666B74'}
-                            />
+                            <TecIconMobile isActiveState={isActive('tecnologia')} />
                             <Text fontSize="xs" fontWeight="600" textAlign="center">
                                 Tecnologia
                             </Text>
@@ -186,11 +234,7 @@ export const FilterTabs = ({ className }: FilterTabsProps) => {
                         }
                     >
                         <VStack gap={1}>
-                            <Icon
-                                as={FiCloud}
-                                boxSize={4}
-                                color={isActive('cloud') ? 'white' : '#666B74'}
-                            />
+                            <CloudIconMobile isActiveState={isActive('cloud')} />
                             <Text fontSize="xs" fontWeight="600" textAlign="center">
                                 Cloud
                             </Text>

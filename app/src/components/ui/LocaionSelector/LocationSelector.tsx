@@ -1,11 +1,11 @@
-// components/ui/LocationSelector/LocationSelector.tsx
 import {
     Button,
     HStack,
     Text,
     Box,
     Icon,
-    Portal
+    Portal,
+    Image
 } from '@chakra-ui/react'
 import {
     MenuRoot,
@@ -14,9 +14,21 @@ import {
     MenuItem,
     MenuPositioner
 } from '@chakra-ui/react'
-import { FiMapPin, FiChevronDown } from 'react-icons/fi'
+import { FiChevronDown } from 'react-icons/fi'
 import { estadosBrasil } from '../../../constants/estados'
 import type { LocationSelectorProps } from './LocationSelector.types'
+
+const LocationIcon = ({ isActiveState }: { isActiveState: boolean }) => (
+    <Image
+        src="/location.svg"
+        alt="Localização"
+        style={{
+            filter: isActiveState
+                ? 'brightness(0) saturate(100%) invert(45%) sepia(67%) saturate(1234%) hue-rotate(192deg) brightness(101%) contrast(97%)' // #298BF8
+                : 'brightness(0) saturate(100%) invert(42%) sepia(8%) saturate(586%) hue-rotate(182deg) brightness(91%) contrast(88%)' // #666B74
+        }}
+    />
+)
 
 const DESIGN_TOKENS = {
     primaryColor: '#E2F2FE',
@@ -69,11 +81,7 @@ export const LocationSelector = ({
                     }}
                 >
                     <HStack gap="16px" justify="center" align="center">
-                        <Icon
-                            as={FiMapPin}
-                            boxSize={5}
-                            color={selectedLocation ? '#298BF8' : DESIGN_TOKENS.textColor}
-                        />
+                        <LocationIcon isActiveState={!!selectedLocation} />
                         <Box textAlign={isDesktop ? "center" : "left"}>
                             <Text fontSize="sm" fontWeight="600" lineHeight="1.2">
                                 {selectedLocation ? selectedLocation.nome : 'Localização'}

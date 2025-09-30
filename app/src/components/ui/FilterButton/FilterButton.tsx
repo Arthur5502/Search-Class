@@ -1,4 +1,3 @@
-// components/ui/FilterButton/FilterButton.tsx
 import { Button, HStack, Text } from '@chakra-ui/react'
 import type { FilterButtonProps } from './FilterButton.types'
 
