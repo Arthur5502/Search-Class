@@ -1,7 +1,7 @@
 'use client';
 import { FC, useState, useEffect } from 'react';
 import { Box, VStack } from '@chakra-ui/react';
-import { Header } from '../components/layout/Header';
+import { Header } from '@/components/Header'
 import { SearchInput } from '../components/ui/SearchInput';
 import { FilterTabs } from '@/components/FilterTabs'
 import { ProgramaCarousel } from '../features/programas/components/ProgramaCarousel';
