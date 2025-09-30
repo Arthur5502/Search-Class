@@ -3,7 +3,7 @@ import { FC, useState, useEffect } from 'react';
 import { Box, VStack } from '@chakra-ui/react';
 import { Header } from '../components/layout/Header';
 import { SearchInput } from '../components/ui/SearchInput';
-import { FilterTabs } from '../components/ui/FilterTabs';
+import { FilterTabs } from '@/components/FilterTabs'
 import { ProgramaCarousel } from '../features/programas/components/ProgramaCarousel';
 import { ProgramaSection } from '../features/programas/components/ProgramaSection';
 import { getProgramasDestaque, getProgramasPopulares, getProgramasPorCategoria } from '../lib/programas.service';

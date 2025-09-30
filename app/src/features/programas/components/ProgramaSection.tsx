@@ -206,7 +206,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                             </Box>
 
                             {/* TEXTO LIVRE EMBAIXO */}
-                            <VStack align="start" spacing={2} px={1}>
+                            <VStack align="start" gap={2} px={1}>
                                 <Text
                                     fontSize="xs"
                                     color="gray.500"
@@ -222,7 +222,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                     color="gray.900"
                                     fontWeight="600"
                                     lineHeight="1.3"
-                                    noOfLines={2}
+                                    lineClamp={2}
                                 >
                                     {programa.titulo}
                                 </Text>
@@ -231,7 +231,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                     fontSize="sm"
                                     color="gray.500"
                                     fontWeight="400"
-                                    noOfLines={1}
+                                    lineClamp={1}
                                 >
                                     {programa.instituicao.nome}
                                 </Text>
