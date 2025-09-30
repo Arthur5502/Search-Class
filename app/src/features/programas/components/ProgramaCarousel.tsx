@@ -15,7 +15,6 @@ import type { Programa } from '../../../types/domain';
 import type { Swiper as SwiperType } from 'swiper';
 import Link from 'next/link';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -32,25 +31,20 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
 
-    // Responsividade melhorada
     useEffect(() => {
         const updateDimensions = () => {
             const width = window.innerWidth;
 
             if (width < 480) {
-                // Mobile pequeno
                 setSlideWidth('280px');
                 setCardDimensions({ width: '280px', height: '420px' });
             } else if (width < 768) {
-                // Mobile
                 setSlideWidth('300px');
                 setCardDimensions({ width: '300px', height: '480px' });
             } else if (width < 1024) {
-                // Tablet
                 setSlideWidth('320px');
                 setCardDimensions({ width: '320px', height: '520px' });
             } else {
-                // Desktop
                 setSlideWidth('350px');
                 setCardDimensions({ width: '350px', height: '561px' });
             }
@@ -64,7 +58,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
 
     return (
         <Box w="100vw" py={{ base: 10, md: 20 }} overflow="hidden" bg="gray.50">
-            {/* Container wrapper responsivo */}
             <Box
                 position="relative"
                 display="flex"
@@ -75,7 +68,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 py={{ base: "30px", md: "50px" }}
                 overflow="visible"
             >
-                {/* Navigation Buttons - Responsivos */}
                 <IconButton
                     ref={prevRef}
                     aria-label="Slide anterior"
@@ -136,7 +128,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     <FiChevronRight size={24} />
                 </IconButton>
 
-                {/* Swiper Container responsivo */}
                 <Box
                     width="100%"
                     maxW={{ base: "100%", md: "1200px" }}
@@ -214,7 +205,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                             zIndex: 1000
                                         }}
                                     >
-                                        {/* Image Container */}
                                         <Box
                                             position="relative"
                                             h="100%"
@@ -231,7 +221,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                 loading={index < 3 ? 'eager' : 'lazy'}
                                             />
 
-                                            {/* Gradient Overlay */}
                                             <Box
                                                 position="absolute"
                                                 top={0}
@@ -244,7 +233,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     rgba(0, 0, 0, 0.8) 100%)"
                                             />
 
-                                            {/* Content */}
                                             <Box
                                                 position="absolute"
                                                 bottom={0}
@@ -311,7 +299,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 </Box>
             </Box>
 
-            {/* Pagination responsiva */}
             <Box
                 display="flex"
                 justifyContent="center"
@@ -323,7 +310,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 <Box className="swiper-pagination-custom" />
             </Box>
 
-            {/* Custom Styles com responsividade melhorada */}
             <style jsx global>{`
                 .swiper-overflow-container .swiper {
                     overflow: visible !important;

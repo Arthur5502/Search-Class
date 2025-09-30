@@ -3,16 +3,20 @@ import { FC, useState } from 'react';
 import {
     Button,
     HStack,
+    Container,
     Icon,
     Text,
     Box,
     VStack,
+    Stack,
+    Portal
 } from '@chakra-ui/react';
 import {
     MenuRoot,
     MenuTrigger,
     MenuContent,
-    MenuItem
+    MenuItem,
+    MenuPositioner
 } from '@chakra-ui/react';
 import { FiMapPin, FiCloud, FiMonitor, FiChevronDown } from 'react-icons/fi';
 import { estadosBrasil, type Estado } from '../../constants/estados';
@@ -20,7 +24,6 @@ import { estadosBrasil, type Estado } from '../../constants/estados';
 type FilterType = 'financeiro' | 'cloud' | 'tecnologia';
 
 export const FilterTabs: FC = () => {
-    // Cores padronizadas
     const primaryColor = '#3b82f6';
     const primaryColorRgba = '59, 130, 246';
     const textColor = '#666B74';
@@ -45,281 +48,274 @@ export const FilterTabs: FC = () => {
     const isActive = (filter: FilterType) => activeFilters.includes(filter);
 
     return (
-        <Box w="100%" px={{ base: 4, sm: 6, md: 8 }}>
-            {/* Desktop e Tablet - Layout Horizontal CENTRALIZADO */}
-            <Box
+        <Container
+            maxW="8xl"
+            px={{ base: 4, sm: 6, md: 8 }}
+            py={{ base: 4, md: 8 }}
+        >
+            <HStack
+                gap={{ base: 4, md: 6, lg: 8 }}
+                justify="center"
+                align="center"
+                flexWrap="nowrap"
                 display={{ base: 'none', md: 'flex' }}
-                justifyContent="center"
-                alignItems="center"
                 w="100%"
             >
-                <HStack
-                    gap={{ md: 6, lg: 8 }}
-                    justify="center"
-                    align="center"
-                    flexWrap="nowrap"
+                <MenuRoot
+                    positioning={{
+                        placement: "bottom-start",
+                        gutter: 8,
+                        offset: { mainAxis: 4, crossAxis: 0 }
+                    }}
                 >
-                    {/* Localização - Menu Dropdown */}
-                    <MenuRoot>
-                        <MenuTrigger asChild>
-                            <Button
-                                variant="outline"
-                                size="lg"
-                                borderRadius="20px"
-                                bg={selectedLocation ? primaryColor : "white"}
-                                color={selectedLocation ? 'white' : textColor}
-                                border="2px"
-                                borderColor={selectedLocation ? primaryColor : 'gray.200'}
-                                px={8}
-                                py={4}
-                                h="auto"
-                                minW="160px"
-                                boxShadow={selectedLocation ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)` : "0 4px 20px rgba(0, 0, 0, 0.08)"}
-                                transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                                _hover={{
-                                    transform: "translateY(-2px)",
-                                    boxShadow: selectedLocation
-                                        ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
-                                        : "0 8px 25px rgba(0, 0, 0, 0.15)",
-                                    borderColor: selectedLocation ? primaryColor : 'blue.300'
-                                }}
-                                _active={{
-                                    transform: "translateY(0px)"
-                                }}
-                            >
-                                <HStack gap={3} justify="center" align="center">
-                                    <Icon
-                                        as={FiMapPin}
-                                        boxSize={5}
-                                        color={selectedLocation ? 'white' : textColor}
-                                    />
-                                    <Box textAlign="center">
-                                        <Text fontSize="sm" fontWeight="600" lineHeight="1.2">
-                                            {selectedLocation ? selectedLocation.nome : 'Localização'}
-                                        </Text>
-                                        {selectedLocation && (
-                                            <Text fontSize="xs" opacity={0.9} lineHeight="1.2">
-                                                {selectedLocation.sigla} • {selectedLocation.regiao}
-                                            </Text>
-                                        )}
-                                    </Box>
-                                    <Icon
-                                        as={FiChevronDown}
-                                        boxSize={4}
-                                        color={selectedLocation ? 'white' : textColor}
-                                        transition="transform 0.2s"
-                                    />
-                                </HStack>
-                            </Button>
-                        </MenuTrigger>
-
-                        <MenuContent
-                            maxH="300px"
-                            overflowY="auto"
-                            zIndex={1000}
-                            borderRadius="16px"
+                    <MenuTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            borderRadius="20px"
+                            bg={selectedLocation ? primaryColor : "white"}
+                            color={selectedLocation ? 'white' : textColor}
                             border="2px"
-                            borderColor="gray.100"
-                            boxShadow="0 20px 60px rgba(0, 0, 0, 0.15)"
-                            bg="white"
-                            backdropFilter="blur(10px)"
-                            minW="280px"
-                            w="auto"
-                            position="absolute"
-                            top="100%"
-                            left="50%"
-                            transform="translateX(-50%)"
-                            mt={2}
+                            borderColor={selectedLocation ? primaryColor : 'gray.200'}
+                            px={8}
+                            py={4}
+                            h="auto"
+                            minW="160px"
+                            boxShadow={selectedLocation ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)` : "0 4px 20px rgba(0, 0, 0, 0.08)"}
+                            transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                            _hover={{
+                                transform: "translateY(-2px)",
+                                boxShadow: selectedLocation
+                                    ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
+                                    : "0 8px 25px rgba(0, 0, 0, 0.15)",
+                                borderColor: selectedLocation ? primaryColor : 'blue.300'
+                            }}
+                            _active={{
+                                transform: "translateY(0px)"
+                            }}
                         >
-                            {selectedLocation && (
-                                <MenuItem
-                                    value="clear"
-                                    onClick={() => setSelectedLocation(null)}
-                                    fontWeight="600"
-                                    color="red.500"
-                                    bg="red.50"
-                                    borderRadius="12px"
-                                    mx={2}
-                                    my={1}
-                                    px={3}
-                                    py={2}
-                                    _hover={{
-                                        bg: "red.100",
-                                        transform: "scale(1.02)"
-                                    }}
-                                    transition="all 0.2s"
-                                >
-                                    ✕ Limpar seleção
-                                </MenuItem>
-                            )}
-                            {estadosBrasil.map((estado) => (
-                                <MenuItem
-                                    key={estado.id}
-                                    value={estado.id}
-                                    onClick={() => handleLocationSelect(estado)}
-                                    bg={selectedLocation?.id === estado.id ? 'blue.50' : 'transparent'}
-                                    borderRadius="12px"
-                                    mx={2}
-                                    my={1}
-                                    px={3}
-                                    py={2}
-                                    transition="all 0.2s"
-                                    _hover={{
-                                        bg: 'blue.100',
-                                        transform: "scale(1.02)"
-                                    }}
-                                >
-                                    <Box>
-                                        <Text fontWeight="600" color="gray.800">{estado.nome}</Text>
-                                        <Text fontSize="xs" color="blue.600" fontWeight="500">
-                                            {estado.sigla} • Região {estado.regiao}
+                            <HStack gap={3} justify="center" align="center">
+                                <Icon
+                                    as={FiMapPin}
+                                    boxSize={5}
+                                    color={selectedLocation ? 'white' : textColor}
+                                />
+                                <Box textAlign="center">
+                                    <Text fontSize="sm" fontWeight="600" lineHeight="1.2">
+                                        {selectedLocation ? selectedLocation.nome : 'Localização'}
+                                    </Text>
+                                    {selectedLocation && (
+                                        <Text fontSize="xs" opacity={0.9} lineHeight="1.2">
+                                            {selectedLocation.sigla} • {selectedLocation.regiao}
                                         </Text>
-                                    </Box>
-                                </MenuItem>
-                            ))}
-                        </MenuContent>
-                    </MenuRoot>
+                                    )}
+                                </Box>
+                                <Icon
+                                    as={FiChevronDown}
+                                    boxSize={4}
+                                    color={selectedLocation ? 'white' : textColor}
+                                    transition="transform 0.2s"
+                                />
+                            </HStack>
+                        </Button>
+                    </MenuTrigger>
 
-                    {/* Filtro Tecnologia */}
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        borderRadius="20px"
-                        bg={isActive('tecnologia') ? primaryColor : "white"}
-                        color={isActive('tecnologia') ? 'white' : textColor}
-                        border="2px"
-                        borderColor={isActive('tecnologia') ? primaryColor : 'gray.200'}
-                        px={8}
-                        py={4}
-                        h="auto"
-                        minW="140px"
-                        boxShadow={isActive('tecnologia')
-                            ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)`
-                            : "0 4px 20px rgba(0, 0, 0, 0.08)"}
-                        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                        onClick={() => handleFilterToggle('tecnologia')}
-                        _hover={{
-                            transform: "translateY(-2px)",
-                            boxShadow: isActive('tecnologia')
-                                ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
-                                : "0 8px 25px rgba(0, 0, 0, 0.15)",
-                            borderColor: isActive('tecnologia') ? primaryColor : 'blue.300'
-                        }}
-                        _active={{
-                            transform: "translateY(0px)"
-                        }}
-                    >
-                        <HStack gap={3} justify="center" align="center">
-                            <Icon
-                                as={FiMonitor}
-                                boxSize={5}
-                                color={isActive('tecnologia') ? 'white' : textColor}
-                            />
-                            <Text fontSize="sm" fontWeight="600">
-                                Tecnologia
-                            </Text>
-                        </HStack>
-                    </Button>
-
-                    {/* Filtro Financeiro */}
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        borderRadius="20px"
-                        bg={isActive('financeiro') ? primaryColor : "white"}
-                        color={isActive('financeiro') ? 'white' : textColor}
-                        border="2px"
-                        borderColor={isActive('financeiro') ? primaryColor : 'gray.200'}
-                        px={8}
-                        py={4}
-                        h="auto"
-                        minW="140px"
-                        boxShadow={isActive('financeiro')
-                            ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)`
-                            : "0 4px 20px rgba(0, 0, 0, 0.08)"}
-                        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                        onClick={() => handleFilterToggle('financeiro')}
-                        _hover={{
-                            transform: "translateY(-2px)",
-                            boxShadow: isActive('financeiro')
-                                ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
-                                : "0 8px 25px rgba(0, 0, 0, 0.15)",
-                            borderColor: isActive('financeiro') ? primaryColor : 'blue.300'
-                        }}
-                        _active={{
-                            transform: "translateY(0px)"
-                        }}
-                    >
-                        <HStack gap={3} justify="center" align="center">
-                            <Box
-                                w={5}
-                                h={5}
-                                bg={isActive('financeiro') ? 'white' : textColor}
-                                borderRadius="full"
-                                display="flex"
-                                alignItems="center"
-                                justifyContent="center"
+                    <Portal>
+                        <MenuPositioner>
+                            <MenuContent
+                                maxH="300px"
+                                overflowY="auto"
+                                zIndex={1000}
+                                borderRadius="16px"
+                                border="2px"
+                                borderColor="gray.100"
+                                boxShadow="0 20px 60px rgba(0, 0, 0, 0.15)"
+                                bg="white"
+                                backdropFilter="blur(10px)"
+                                minW="280px"
+                                w="auto"
                             >
-                                <Text
-                                    fontSize="xs"
-                                    fontWeight="bold"
-                                    color={isActive('financeiro') ? textColor : 'white'}
-                                >
-                                    ©
-                                </Text>
-                            </Box>
-                            <Text fontSize="sm" fontWeight="600">
-                                Financeiro
-                            </Text>
-                        </HStack>
-                    </Button>
+                                {selectedLocation && (
+                                    <MenuItem
+                                        value="clear"
+                                        onClick={() => setSelectedLocation(null)}
+                                        fontWeight="600"
+                                        color="red.500"
+                                        bg="red.50"
+                                        borderRadius="12px"
+                                        m={2}
+                                        _hover={{
+                                            bg: "red.100",
+                                            transform: "scale(1.02)"
+                                        }}
+                                        transition="all 0.2s"
+                                    >
+                                        ✕ Limpar seleção
+                                    </MenuItem>
+                                )}
+                                {estadosBrasil.map((estado) => (
+                                    <MenuItem
+                                        key={estado.id}
+                                        value={estado.id}
+                                        onClick={() => handleLocationSelect(estado)}
+                                        bg={selectedLocation?.id === estado.id ? 'blue.50' : 'transparent'}
+                                        borderRadius="12px"
+                                        m={2}
+                                        p={3}
+                                        transition="all 0.2s"
+                                        _hover={{
+                                            bg: 'blue.100',
+                                            transform: "scale(1.02)"
+                                        }}
+                                    >
+                                        <Box>
+                                            <Text fontWeight="600" color="gray.800">{estado.nome}</Text>
+                                            <Text fontSize="xs" color="blue.600" fontWeight="500">
+                                                {estado.sigla} • Região {estado.regiao}
+                                            </Text>
+                                        </Box>
+                                    </MenuItem>
+                                ))}
+                            </MenuContent>
+                        </MenuPositioner>
+                    </Portal>
+                </MenuRoot>
 
-                    {/* Filtro Cloud */}
-                    <Button
-                        variant="outline"
-                        size="lg"
-                        borderRadius="20px"
-                        bg={isActive('cloud') ? primaryColor : "white"}
-                        color={isActive('cloud') ? 'white' : textColor}
-                        border="2px"
-                        borderColor={isActive('cloud') ? primaryColor : 'gray.200'}
-                        px={8}
-                        py={4}
-                        h="auto"
-                        minW="180px"
-                        boxShadow={isActive('cloud')
-                            ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)`
-                            : "0 4px 20px rgba(0, 0, 0, 0.08)"}
-                        transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                        onClick={() => handleFilterToggle('cloud')}
-                        _hover={{
-                            transform: "translateY(-2px)",
-                            boxShadow: isActive('cloud')
-                                ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
-                                : "0 8px 25px rgba(0, 0, 0, 0.15)",
-                            bg: isActive('cloud')
-                                ? primaryColor
-                                : "blue.50"
-                        }}
-                        _active={{
-                            transform: "translateY(0px)"
-                        }}
-                    >
-                        <HStack gap={3} justify="center" align="center">
-                            <Icon
-                                as={FiCloud}
-                                boxSize={5}
-                                color={isActive('cloud') ? 'white' : textColor}
-                            />
-                            <Text fontSize="sm" fontWeight="600">
-                                Arquitetura em Cloud
-                            </Text>
-                        </HStack>
-                    </Button>
-                </HStack>
-            </Box>
+                <Button
+                    variant="outline"
+                    size="lg"
+                    borderRadius="20px"
+                    bg={isActive('tecnologia') ? primaryColor : "white"}
+                    color={isActive('tecnologia') ? 'white' : textColor}
+                    border="2px"
+                    borderColor={isActive('tecnologia') ? primaryColor : 'gray.200'}
+                    px={8}
+                    py={4}
+                    h="auto"
+                    minW="140px"
+                    boxShadow={isActive('tecnologia')
+                        ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)`
+                        : "0 4px 20px rgba(0, 0, 0, 0.08)"}
+                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                    onClick={() => handleFilterToggle('tecnologia')}
+                    _hover={{
+                        transform: "translateY(-2px)",
+                        boxShadow: isActive('tecnologia')
+                            ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
+                            : "0 8px 25px rgba(0, 0, 0, 0.15)",
+                        borderColor: isActive('tecnologia') ? primaryColor : 'blue.300'
+                    }}
+                    _active={{
+                        transform: "translateY(0px)"
+                    }}
+                >
+                    <HStack gap={3} justify="center" align="center">
+                        <Icon
+                            as={FiMonitor}
+                            boxSize={5}
+                            color={isActive('tecnologia') ? 'white' : textColor}
+                        />
+                        <Text fontSize="sm" fontWeight="600">
+                            Tecnologia
+                        </Text>
+                    </HStack>
+                </Button>
 
-            {/* Mobile - Layout Vertical CENTRALIZADO */}
+                <Button
+                    variant="outline"
+                    size="lg"
+                    borderRadius="20px"
+                    bg={isActive('financeiro') ? primaryColor : "white"}
+                    color={isActive('financeiro') ? 'white' : textColor}
+                    border="2px"
+                    borderColor={isActive('financeiro') ? primaryColor : 'gray.200'}
+                    px={8}
+                    py={4}
+                    h="auto"
+                    minW="140px"
+                    boxShadow={isActive('financeiro')
+                        ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)`
+                        : "0 4px 20px rgba(0, 0, 0, 0.08)"}
+                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                    onClick={() => handleFilterToggle('financeiro')}
+                    _hover={{
+                        transform: "translateY(-2px)",
+                        boxShadow: isActive('financeiro')
+                            ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
+                            : "0 8px 25px rgba(0, 0, 0, 0.15)",
+                        borderColor: isActive('financeiro') ? primaryColor : 'blue.300'
+                    }}
+                    _active={{
+                        transform: "translateY(0px)"
+                    }}
+                >
+                    <HStack gap={3} justify="center" align="center">
+                        <Box
+                            w={5}
+                            h={5}
+                            bg={isActive('financeiro') ? 'white' : textColor}
+                            borderRadius="full"
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <Text
+                                fontSize="xs"
+                                fontWeight="bold"
+                                color={isActive('financeiro') ? textColor : 'white'}
+                            >
+                                ©
+                            </Text>
+                        </Box>
+                        <Text fontSize="sm" fontWeight="600">
+                            Financeiro
+                        </Text>
+                    </HStack>
+                </Button>
+
+                <Button
+                    variant="outline"
+                    size="lg"
+                    borderRadius="20px"
+                    bg={isActive('cloud') ? primaryColor : "white"}
+                    color={isActive('cloud') ? 'white' : textColor}
+                    border="2px"
+                    borderColor={isActive('cloud') ? primaryColor : 'gray.200'}
+                    px={8}
+                    py={4}
+                    h="auto"
+                    minW="180px"
+                    boxShadow={isActive('cloud')
+                        ? `0 8px 32px rgba(${primaryColorRgba}, 0.4)`
+                        : "0 4px 20px rgba(0, 0, 0, 0.08)"}
+                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                    onClick={() => handleFilterToggle('cloud')}
+                    _hover={{
+                        transform: "translateY(-2px)",
+                        boxShadow: isActive('cloud')
+                            ? `0 12px 40px rgba(${primaryColorRgba}, 0.5)`
+                            : "0 8px 25px rgba(0, 0, 0, 0.15)",
+                        bg: isActive('cloud')
+                            ? primaryColor
+                            : "blue.50"
+                    }}
+                    _active={{
+                        transform: "translateY(0px)"
+                    }}
+                >
+                    <HStack gap={3} justify="center" align="center">
+                        <Icon
+                            as={FiCloud}
+                            boxSize={5}
+                            color={isActive('cloud') ? 'white' : textColor}
+                        />
+                        <Text fontSize="sm" fontWeight="600">
+                            Arquitetura em Cloud
+                        </Text>
+                    </HStack>
+                </Button>
+            </HStack>
+
             <VStack
                 gap={4}
                 display={{ base: 'flex', md: 'none' }}
@@ -328,8 +324,13 @@ export const FilterTabs: FC = () => {
                 maxW="400px"
                 mx="auto"
             >
-                {/* Localização Mobile */}
-                <MenuRoot>
+                <MenuRoot
+                    positioning={{
+                        placement: "bottom",
+                        gutter: 8,
+                        offset: { mainAxis: 4, crossAxis: 0 }
+                    }}
+                >
                     <MenuTrigger asChild>
                         <Button
                             variant="outline"
@@ -356,60 +357,53 @@ export const FilterTabs: FC = () => {
                         </Button>
                     </MenuTrigger>
 
-                    <MenuContent
-                        maxH="250px"
-                        overflowY="auto"
-                        zIndex={1000}
-                        borderRadius="12px"
-                        border="1px"
-                        borderColor="gray.200"
-                        boxShadow="0 10px 40px rgba(0, 0, 0, 0.1)"
-                        bg="white"
-                        w="100%"
-                        position="absolute"
-                        top="100%"
-                        left="50%"
-                        transform="translateX(-50%)"
-                        mt={2}
-                    >
-                        {selectedLocation && (
-                            <MenuItem
-                                value="clear"
-                                onClick={() => setSelectedLocation(null)}
-                                fontWeight="600"
-                                color="red.500"
-                                bg="red.50"
-                                mx={2}
-                                my={1}
-                                px={3}
-                                py={2}
-                                borderRadius="8px"
+                    <Portal>
+                        <MenuPositioner>
+                            <MenuContent
+                                maxH="250px"
+                                overflowY="auto"
+                                zIndex={1000}
+                                borderRadius="12px"
+                                border="1px"
+                                borderColor="gray.200"
+                                boxShadow="0 10px 40px rgba(0, 0, 0, 0.1)"
+                                bg="white"
+                                w="100%"
                             >
-                                ✕ Limpar seleção
-                            </MenuItem>
-                        )}
-                        {estadosBrasil.map((estado) => (
-                            <MenuItem
-                                key={estado.id}
-                                value={estado.id}
-                                onClick={() => handleLocationSelect(estado)}
-                                bg={selectedLocation?.id === estado.id ? 'blue.50' : 'transparent'}
-                                mx={2}
-                                my={1}
-                                px={3}
-                                py={2}
-                                borderRadius="8px"
-                            >
-                                <Box>
-                                    <Text fontWeight="500" color="gray.800" fontSize="sm">{estado.nome}</Text>
-                                    <Text fontSize="xs" color="blue.600">{estado.sigla} • {estado.regiao}</Text>
-                                </Box>
-                            </MenuItem>
-                        ))}
-                    </MenuContent>
+                                {selectedLocation && (
+                                    <MenuItem
+                                        value="clear"
+                                        onClick={() => setSelectedLocation(null)}
+                                        fontWeight="600"
+                                        color="red.500"
+                                        bg="red.50"
+                                        m={2}
+                                        borderRadius="8px"
+                                    >
+                                        ✕ Limpar seleção
+                                    </MenuItem>
+                                )}
+                                {estadosBrasil.map((estado) => (
+                                    <MenuItem
+                                        key={estado.id}
+                                        value={estado.id}
+                                        onClick={() => handleLocationSelect(estado)}
+                                        bg={selectedLocation?.id === estado.id ? 'blue.50' : 'transparent'}
+                                        m={2}
+                                        p={2}
+                                        borderRadius="8px"
+                                    >
+                                        <Box>
+                                            <Text fontWeight="500" color="gray.800" fontSize="sm">{estado.nome}</Text>
+                                            <Text fontSize="xs" color="blue.600">{estado.sigla} • {estado.regiao}</Text>
+                                        </Box>
+                                    </MenuItem>
+                                ))}
+                            </MenuContent>
+                        </MenuPositioner>
+                    </Portal>
                 </MenuRoot>
 
-                {/* Filtros Mobile - Grid 3 colunas equalizada */}
                 <HStack gap={3} w="100%" justify="space-between">
                     <Button
                         variant="outline"
@@ -480,6 +474,6 @@ export const FilterTabs: FC = () => {
                     </Button>
                 </HStack>
             </VStack>
-        </Box>
+        </Container>
     );
 };
