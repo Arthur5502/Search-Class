@@ -102,7 +102,7 @@ export const CourseCard = ({
             >
                 {/* Imagem de Fundo */}
                 <Image
-                    src={programa.imagem || `https://picsum.photos/350/500?random=${programa.id}`}
+                    src={`https://picsum.photos/350/500?random=${programa.id}`}
                     alt={programa.titulo}
                     w="100%"
                     h={layout === 'overlay' ? "100%" : config.imageHeight}

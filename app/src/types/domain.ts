@@ -39,7 +39,6 @@ export interface Programa {
     publicoAlvo: string[];
     requisitos: string[];
     professor?: string;
-    imagem?: string;
     periodoInscricao: {
         inicio: string;
         fim: string;

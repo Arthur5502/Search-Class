@@ -183,7 +183,7 @@ export const ProgramaSection = ({
                                         bg="gray.100"
                                     >
                                         <Image
-                                            src={programa.imagem || `https://picsum.photos/400/300?random=${programa.id}`}
+                                            src={`https://picsum.photos/400/300?random=${programa.id}`}
                                             alt={programa.titulo}
                                             w="100%"
                                             h="100%"
@@ -357,7 +357,7 @@ export const ProgramaSection = ({
                                                     bg="gray.100"
                                                 >
                                                     <Image
-                                                        src={programa.imagem || `https://picsum.photos/280/200?random=${programa.id}`}
+                                                        src={`https://picsum.photos/280/200?random=${programa.id}`}
                                                         alt={programa.titulo}
                                                         w="100%"
                                                         h="100%"
