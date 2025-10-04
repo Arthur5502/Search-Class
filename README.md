@@ -60,12 +60,10 @@ A **Search Class** é uma plataforma centralizada que conecta pessoas interessad
 ### 🎯 **Matching Personalizado**
 - ✔️ Recomendações baseadas no perfil do usuário
 - ✔️ Sistema de compatibilidade por skills e interesses
-- ✔️ Alertas automáticos para novas oportunidades
 - ✔️ Histórico de buscas e preferências
 
 ### 💼 **Gerenciamento de Perfil**
 - ✔️ Perfil completo com áreas de interesse
-- ✔️ Controle de preferências de notificação
 - ✔️ Sistema de favoritos
 - ✔️ Acompanhamento de inscrições
 
@@ -89,7 +87,7 @@ A **Search Class** é uma plataforma centralizada que conecta pessoas interessad
 ### **Desenvolvimento & Deploy**
 - **ESLint** - Linting de código
 - **Prettier** - Formatação de código
-- **Vercel** - Deploy e hospedagem
+- **Vercel** - Deploy e hospedagem (Ainda estamos para confirmar)
 
 ---
 
