@@ -112,41 +112,41 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 
 ### Rodando a aplicação
 
-Clone este repositório
-$ git clone https://github.com/Arthur5502/Search-Class.git
+## Clone este repositório
+# $ git clone https://github.com/Arthur5502/Search-Class.git
 
-Acesse a pasta do projeto no terminal/cmd
-$ cd Search-Class
+## Acesse a pasta do projeto no terminal/cmd
+# $ cd Search-Class
 
-Instale as dependências
-$ npm install
-
-ou
-$ yarn install
-
-Execute a aplicação em modo de desenvolvimento
-$ npm run dev
+## Instale as dependências
+# $ npm install
 
 ou
-$ yarn dev
+# $ yarn install
 
-O servidor inciará na porta:3000
-Acesse http://localhost:3000 no seu navegador
+## Execute a aplicação em modo de desenvolvimento
+# $ npm run dev
+
+ou
+# $ yarn dev
+
+## O servidor inciará na porta:3000
+# Acesse http://localhost:3000 no seu navegador
 text
 
 ### Scripts disponíveis
 
-Desenvolvimento
-npm run dev
+## Desenvolvimento
+# npm run dev
 
-Build para produção
-npm run build
+## Build para produção
+# npm run build
 
-Iniciar versão de produção
-npm start
+## Iniciar versão de produção
+# npm start
 
-Verificar linting
-npm run lint
+## Verificar linting
+# npm run lint
 
 text
 
