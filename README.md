@@ -123,8 +123,7 @@ $ yarn install
 
 ## Execute a aplicação em modo de desenvolvimento
 $ npm run dev
-
-ou
+ou <br>
 $ yarn dev
 
 ## O servidor inciará na porta:3000
