@@ -190,14 +190,33 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 <div align="center">
   <a href="https://github.com/Arthur5502">
-    <img src="https://avatars.githubusercontent.com/u/Arthur5502?v=4" width="115px" style="border-radius: 50%">
     <br>
     <sub><b>Arthur Felipe</b></sub>
   </a>
   <br>
   
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/seu-linkedin)
+  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/arthur-campos-a120472b7)
   [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/Arthur5502)
+</div>
+<div align="center">
+  <a href="https://github.com/GuilhermeWolf04">
+    <br>
+    <sub><b>Guilherme Wolf</b></sub>
+  </a>
+  <br>
+  
+  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/guilherme-wolf)
+  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/GuilhermeWolf04)
+</div>
+<div align="center">
+  <a href="https://github.com/lalinhos">
+    <br>
+    <sub><b>Larissa Lima</b></sub>
+  </a>
+  <br>
+  
+  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/)
+  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/lalinhos)
 </div>
 
 ---
