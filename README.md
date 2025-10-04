@@ -133,16 +133,16 @@ Acesse http://localhost:3000 no seu navegador
 ### Scripts disponíveis
 
 ## Desenvolvimento
-# npm run dev
+npm run dev
 
 ## Build para produção
-# npm run build
+npm run build
 
 ## Iniciar versão de produção
-# npm start
+npm start
 
 ## Verificar linting
-# npm run lint
+npm run lint
 
 ---
 
