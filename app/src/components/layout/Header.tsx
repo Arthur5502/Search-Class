@@ -30,7 +30,7 @@ export const Header: FC = () => {
                     <Link href="/">
                         <HStack gap={3} cursor="pointer" ml={10}>
                             <Image
-                                src="/logo.png"
+                                src="/Logo.svg"
                                 alt="Logo"
                                 w={12}
                                 h={12}
