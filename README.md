@@ -128,7 +128,7 @@ $ yarn dev
 ## O servidor inciará na porta:3000
 Acesse http://localhost:3000 no seu navegador
 
-### Scripts disponíveis
+## Scripts disponíveis
 
 # Desenvolvimento
 npm run dev
