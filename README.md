@@ -1,4 +1,3 @@
-text
 <div align="center">
   <h1>🎯 Search Class</h1>
   <h3>Conectando Talentos com Oportunidades</h3>
@@ -148,8 +147,6 @@ text
 ## Verificar linting
 # npm run lint
 
-text
-
 ---
 
 ## 📁 Estrutura do Projeto
@@ -163,8 +160,6 @@ Search-Class/
 ├── docs/ # Documentação
 ├── README.md
 └── package.json
-
-text
 
 ---
 
@@ -186,48 +181,16 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
 
 ---
 
-## 👨‍💻 Desenvolvedor
+## 👨‍💻 Desenvolvedores
 
 <div align="center">
-  <a href="https://github.com/Arthur5502">
-    <br>
-    <sub><b>Arthur Felipe</b></sub>
-  </a>
-  <br>
-  
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/arthur-campos-a120472b7)
-  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/Arthur5502)
+
+| [<img src="https://avatars.githubusercontent.com/u/Arthur5502?v=4" width="115"><br><sub><b>Arthur Felipe Campos</b></sub>](https://github.com/Arthur5502) | [<img src="https://avatars.githubusercontent.com/u/GuilhermeWolf04?v=4" width="115"><br><sub><b>Guilherme Wolf</b></sub>](https://github.com/GuilhermeWolf04) | [<img src="https://avatars.githubusercontent.com/u/lalinhos?v=4" width="115"><br><sub><b>Larissa Lima</b></sub>](https://github.com/lalinhos) | [<img src="https://avatars.githubusercontent.com/u/JacioAlvesADS?v=4" width="115"><br><sub><b>Jácio Alves</b></sub>](https://github.com/JacioAlvesADS) |
+| :---: | :---: | :---: | :---: |
+| [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/arthur-campos-a120472b7) [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/Arthur5502) | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/guilherme-wolf) [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/GuilhermeWolf04) | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/larissa-lima-27a607303) [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/lalinhos) | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/Jacioalves) [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/JacioAlvesADS) |
+
 </div>
-<div align="center">
-  <a href="https://github.com/GuilhermeWolf04">
-    <br>
-    <sub><b>Guilherme Wolf</b></sub>
-  </a>
-  <br>
-  
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/guilherme-wolf)
-  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/GuilhermeWolf04)
-</div>
-<div align="center">
-  <a href="https://github.com/lalinhos">
-    <br>
-    <sub><b>Larissa Lima</b></sub>
-  </a>
-  <br>
-  
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/)
-  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/lalinhos)
-</div>
-<div align="center">
-  <a href="https://github.com/JacioAlvesADS">
-    <br>
-    <sub><b>Jácio Alves</b></sub>
-  </a>
-  <br>
-  
-  [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/Jacioalves)
-  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/JacioAlvesADS)
-</div>
+
 
 ---
 
