@@ -219,14 +219,14 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para ma
   [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/lalinhos)
 </div>
 <div align="center">
-  <a href="https://github.com/jacioalves">
+  <a href="https://github.com/JacioAlvesADS">
     <br>
     <sub><b>Jácio Alves</b></sub>
   </a>
   <br>
   
   [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://linkedin.com/in/Jacioalves)
-  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/jacioalves)
+  [![GitHub](https://img.shields.io/badge/-GitHub-181717?style=flat-square&logo=github)](https://github.com/JacioAlvesADS)
 </div>
 
 ---
