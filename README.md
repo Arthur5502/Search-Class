@@ -110,26 +110,25 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 ### Rodando a aplicação
 
 ## Clone este repositório
-# $ git clone https://github.com/Arthur5502/Search-Class.git
+$ git clone https://github.com/Arthur5502/Search-Class.git
 
 ## Acesse a pasta do projeto no terminal/cmd
-# $ cd Search-Class
+$ cd Search-Class
 
 ## Instale as dependências
-# $ npm install
+$ npm install
 
 ou
-# $ yarn install
+$ yarn install
 
 ## Execute a aplicação em modo de desenvolvimento
-# $ npm run dev
+$ npm run dev
 
 ou
-# $ yarn dev
+$ yarn dev
 
 ## O servidor inciará na porta:3000
-# Acesse http://localhost:3000 no seu navegador
-text
+Acesse http://localhost:3000 no seu navegador
 
 ### Scripts disponíveis
 
