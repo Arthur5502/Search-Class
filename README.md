@@ -116,13 +116,12 @@ $ git clone https://github.com/Arthur5502/Search-Class.git
 $ cd Search-Class
 
 ## Instale as dependências
-$ npm install
-
-ou
+$ npm install <br>
+ou <br>
 $ yarn install
 
 ## Execute a aplicação em modo de desenvolvimento
-$ npm run dev
+$ npm run dev <br>
 ou <br>
 $ yarn dev
 
@@ -147,6 +146,7 @@ npm run lint
 
 ## 📁 Estrutura do Projeto
 
+```
 Search-Class/
 ├── app/ # Pasta principal da aplicação (App Router)
 │ ├── components/ # Componentes reutilizáveis
@@ -156,6 +156,9 @@ Search-Class/
 ├── docs/ # Documentação
 ├── README.md
 └── package.json
+```
+
+
 
 ---
 
