@@ -10,10 +10,11 @@ import {
 } from '@chakra-ui/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay, EffectCoverflow } from 'swiper/modules';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiHeart } from 'react-icons/fi';
 import type { Programa } from '../../../types/domain';
 import type { Swiper as SwiperType } from 'swiper';
 import Link from 'next/link';
+import { useAppStore } from '../../../store/useAppStore';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -26,6 +27,8 @@ interface ProgramaCarouselProps {
 }
 
 export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
+    const favoritos = useAppStore((state) => state.favoritos);
+    const toggleFavorito = useAppStore((state) => state.toggleFavorito);
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
@@ -33,7 +36,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
     return (
         <Box w="100vw" py={20} overflow="hidden" bg="gray.50">
             <Box position="relative" display="flex" justifyContent="center" w="100%" minH="550px" alignItems="center">
-                {/* Navigation Buttons - Centralizados */}
                 <IconButton
                     ref={prevRef}
                     aria-label="Slide anterior"
@@ -92,7 +94,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     <FiChevronRight size={24}/>
                 </IconButton>
 
-                {/* Swiper Container */}
                 <Box width="100%" maxW="1200px" px={0}>
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
@@ -135,25 +136,54 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                             });
                         }}
                     >
-                        {programas.map((programa, index) => (
-                            <SwiperSlide key={programa.id} style={{ width: '350px' }}>
-                                <Link href={`/programas/${programa.id}`}>
-                                    <Box
-                                        h="561px"
-                                        w="362px"
-                                        mx="auto"
-                                        borderRadius="20px"
-                                        overflow="hidden"
-                                        cursor="pointer"
-                                        position="relative"
-                                        boxShadow="0 10px 30px rgba(0, 0, 0, 0.2)"
-                                        transition="transform 0.4s ease, box-shadow 0.4s ease"
-                                        _hover={{
-                                            transform: 'translateY(-10px)',
-                                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
-                                        }}
-                                    >
-                                        {/* Image Container */}
+                        {programas.map((programa, index) => {
+                            const isFavorito = favoritos.includes(String(programa.id));
+                            
+                            return (
+                                <SwiperSlide key={programa.id} style={{ width: '350px' }}>
+                                    <Box position="relative">
+                                        <Box
+                                            position="absolute"
+                                            top="16px"
+                                            right="16px"
+                                            zIndex={999}
+                                        >
+                                            <IconButton
+                                                aria-label={isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                                                size="md"
+                                                borderRadius="full"
+                                                bg={isFavorito ? 'red.500' : 'white'}
+                                                color={isFavorito ? 'white' : 'gray.700'}
+                                                boxShadow="lg"
+                                                _hover={{
+                                                    bg: isFavorito ? 'red.600' : 'gray.100',
+                                                    transform: 'scale(1.1)',
+                                                }}
+                                                onClick={() => toggleFavorito(String(programa.id))}
+                                            >
+                                                <FiHeart
+                                                    size={20}
+                                                    fill={isFavorito ? 'white' : 'none'}
+                                                />
+                                            </IconButton>
+                                        </Box>
+
+                                        <Link href={`/programas/${programa.id}`}>
+                                            <Box
+                                                h="561px"
+                                                w="362px"
+                                                mx="auto"
+                                                borderRadius="20px"
+                                                overflow="hidden"
+                                                cursor="pointer"
+                                                position="relative"
+                                                boxShadow="0 10px 30px rgba(0, 0, 0, 0.2)"
+                                                transition="transform 0.4s ease, box-shadow 0.4s ease"
+                                                _hover={{
+                                                    transform: 'translateY(-10px)',
+                                                    boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                                                }}
+                                            >
                                         <Box position="relative" h="100%" w="100%" overflow="hidden" borderRadius="20px">
                                             <Image
                                                 src={`https://picsum.photos/350/500?random=${programa.id}`}
@@ -164,7 +194,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                 loading={index < 3 ? 'eager' : 'lazy'}
                                             />
 
-                                            {/* Gradient Overlay */}
                                             <Box
                                                 position="absolute"
                                                 top={0}
@@ -177,7 +206,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     rgba(0, 0, 0, 0.8) 100%)"
                                             />
 
-                                            {/* Content */}
                                             <Box
                                                 position="absolute"
                                                 bottom={0}
@@ -234,16 +262,17 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     </Box>
                                                 </VStack>
                                             </Box>
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                </Link>
+                                    </Link>
+                                </Box>
                             </SwiperSlide>
-                        ))}
+                            );
+                        })}
                     </Swiper>
                 </Box>
             </Box>
 
-            {/* Pagination */}
             <Box
                 display="flex"
                 justifyContent="center"
@@ -255,7 +284,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 <Box className="swiper-pagination-custom" />
             </Box>
 
-            {/* Custom Styles */}
             <style jsx global>{`
                 @keyframes pulse {
                     0%, 100% {

@@ -12,9 +12,10 @@ import {
     Button,
     IconButton,
 } from '@chakra-ui/react';
-import { FiArrowRight, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+import { FiArrowRight, FiChevronRight, FiChevronLeft, FiHeart } from 'react-icons/fi';
 import type { Programa } from '../../../types/domain';
 import Link from 'next/link';
+import { useAppStore } from '../../../store/useAppStore';
 
 interface ProgramaSectionProps {
     title: string;
@@ -31,6 +32,8 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     viewAllHref = "/programas",
     showScrollButton = true
 }) => {
+    const favoritos = useAppStore((state) => state.favoritos);
+    const toggleFavorito = useAppStore((state) => state.toggleFavorito);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -45,7 +48,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
 
     const scrollToDirection = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
-            const scrollAmount = 300; // largura aproximada de um card + gap
+            const scrollAmount = 300;
 
             scrollContainerRef.current.scrollBy({
                 left: direction === 'right' ? scrollAmount : -scrollAmount,
@@ -74,7 +77,6 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
 
     return (
         <Box maxW="9xl" py={8} px={{ base: 4, md: 40 }}>
-            {/* Header Section */}
             <HStack justify="space-between" align="center" mb={8}>
                 <Heading
                     size="lg"
@@ -102,7 +104,6 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                 )}
             </HStack>
 
-            {/* Container com Cards sem Bordas */}
             <Box position="relative">
                 <Flex
                     ref={scrollContainerRef}
@@ -120,89 +121,117 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                         scrollBehavior: 'smooth',
                     }}
                 >
-                    {programas.map((programa, index) => (
-                        <Link key={programa.id} href={`/programas/${programa.id}`}>
+                    {programas.map((programa, index) => {
+                        const isFavorito = favoritos.includes(String(programa.id));
+                        
+                        return (
                             <Box
+                                key={programa.id}
                                 minW="280px"
                                 w="280px"
-                                cursor="pointer"
-                                transition="all 0.3s ease"
                                 scrollSnapAlign="start"
                                 flexShrink={0}
-                                _hover={{
-                                    transform: 'translateY(-4px)',
-                                }}
+                                position="relative"
                             >
-                                {/* Imagem com bordas arredondadas */}
                                 <Box
-                                    position="relative"
-                                    overflow="hidden"
-                                    h="200px"
-                                    borderRadius="16px"
-                                    mb={4}
-                                    shadow="md"
-                                    transition="all 0.3s ease"
-                                    _hover={{
-                                        shadow: 'lg',
-                                    }}
+                                    position="absolute"
+                                    top="8px"
+                                    right="8px"
+                                    zIndex={10}
                                 >
-                                    <Image
-                                        src={`https://picsum.photos/280/200?random=${programa.id}`}
-                                        alt={programa.titulo}
-                                        w="100%"
-                                        h="100%"
-                                        objectFit="cover"
-                                        loading={index < 4 ? "eager" : "lazy"}
-                                        onError={(e) => {
-                                            e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                    <IconButton
+                                        aria-label={isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                                        size="sm"
+                                        borderRadius="full"
+                                        bg={isFavorito ? 'red.500' : 'white'}
+                                        color={isFavorito ? 'white' : 'gray.700'}
+                                        boxShadow="lg"
+                                        _hover={{
+                                            bg: isFavorito ? 'red.600' : 'gray.100',
+                                            transform: 'scale(1.1)',
                                         }}
-                                    />
+                                        onClick={() => toggleFavorito(String(programa.id))}
+                                    >
+                                        <FiHeart
+                                            size={16}
+                                            fill={isFavorito ? 'white' : 'none'}
+                                        />
+                                    </IconButton>
                                 </Box>
 
-                                {/* Conteúdo do Card - Apenas Texto */}
-                                <Box>
-                                    <VStack align="start" gap={2}>
-                                        {/* Categoria em maiúsculo */}
-                                        <Text
-                                            fontSize="xs"
-                                            color="gray.500"
-                                            textTransform="uppercase"
-                                            fontWeight="600"
-                                            letterSpacing="wide"
+                                <Link href={`/programas/${programa.id}`}>
+                                    <Box
+                                        cursor="pointer"
+                                        transition="all 0.3s ease"
+                                        _hover={{
+                                            transform: 'translateY(-4px)',
+                                        }}
+                                    >
+                                        <Box
+                                            position="relative"
+                                            overflow="hidden"
+                                            h="200px"
+                                            borderRadius="16px"
+                                            mb={4}
+                                            shadow="md"
+                                            transition="all 0.3s ease"
+                                            _hover={{
+                                                shadow: 'lg',
+                                            }}
                                         >
-                                            CURSO DE {programa.area.toUpperCase()}
-                                        </Text>
+                                            <Image
+                                                src={`https://picsum.photos/280/200?random=${programa.id}`}
+                                                alt={programa.titulo}
+                                                w="100%"
+                                                h="100%"
+                                                objectFit="cover"
+                                                loading={index < 4 ? "eager" : "lazy"}
+                                                onError={(e) => {
+                                                    e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                                }}
+                                            />
+                                        </Box>
 
-                                        {/* Título do Programa */}
-                                        <Heading
-                                            fontSize="lg"
-                                            color="gray.900"
-                                            fontWeight="600"
-                                            lineHeight="1.3"
-                                            lineClamp={2}
-                                        >
-                                            {programa.titulo}
-                                        </Heading>
+                                        <Box>
+                                            <VStack align="start" gap={2}>
+                                                <Text
+                                                    fontSize="xs"
+                                                    color="gray.500"
+                                                    textTransform="uppercase"
+                                                    fontWeight="600"
+                                                    letterSpacing="wide"
+                                                >
+                                                    CURSO DE {programa.area.toUpperCase()}
+                                                </Text>
 
-                                        {/* Instituição */}
-                                        <Text
-                                            fontSize="sm"
-                                            color="gray.500"
-                                            fontWeight="400"
-                                        >
-                                            {programa.instituicao.nome}
-                                        </Text>
-                                    </VStack>
-                                </Box>
+                                                <Heading
+                                                    fontSize="lg"
+                                                    color="gray.900"
+                                                    fontWeight="600"
+                                                    lineHeight="1.3"
+                                                    lineClamp={2}
+                                                >
+                                                    {programa.titulo}
+                                                </Heading>
+
+                                                <Text
+                                                    fontSize="sm"
+                                                    color="gray.500"
+                                                    fontWeight="400"
+                                                >
+                                                    {programa.instituicao.nome}
+                                                </Text>
+                                            </VStack>
+                                        </Box>
+                                    </Box>
+                                </Link>
                             </Box>
-                        </Link>
-                    ))}
+                        );
+                    })}
                 </Flex>
 
-                {/* Botões de navegação */}
                 {showScrollButton && programas.length > 4 && (
                     <>
-                        {/* Botão Esquerdo */}
                         <IconButton
                             position="absolute"
                             left="-20px"
@@ -233,7 +262,6 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                             <FiChevronLeft size={20} />
                         </IconButton>
 
-                        {/* Botão Direito */}
                         <IconButton
                             position="absolute"
                             right="-20px"

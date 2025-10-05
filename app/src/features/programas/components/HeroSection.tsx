@@ -10,7 +10,10 @@ import {
     HStack,
     Icon,
     Image,
+    IconButton,
 } from '@chakra-ui/react';
+import { FiHeart } from 'react-icons/fi';
+import { useAppStore } from '../../../store/useAppStore';
 
 interface HeroSectionProps {
     programa: {
@@ -21,15 +24,19 @@ interface HeroSectionProps {
     };
 }
 
-export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
-    <Box
-        position="relative"
-        h="509px"
-        overflow="hidden"
-        w="full"
-        bg="black"
-    >
-        {/* Background Image com Overlay */}
+export const HeroSection: FC<HeroSectionProps> = ({ programa }) => {
+    const favoritos = useAppStore((state) => state.favoritos);
+    const toggleFavorito = useAppStore((state) => state.toggleFavorito);
+    const isFavorito = favoritos.includes(String(programa.id));
+
+    return (
+        <Box
+            position="relative"
+            h="509px"
+            overflow="hidden"
+            w="full"
+            bg="black"
+        >
         <Image
             src={`https://picsum.photos/350/500?random=${programa.id}`}
             alt="Background do curso"
@@ -42,7 +49,6 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
             filter="brightness(0.3)"
         />
 
-        {/* Overlay Gradient */}
         <Box
             position="absolute"
             top="0"
@@ -52,10 +58,8 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
             bgGradient="linear(to-r, blackAlpha.800, blackAlpha.600)"
         />
 
-        {/* Content Container - Posicionado na parte inferior */}
         <Container maxW="8xl" h="full" position="relative" zIndex={2} pl={12}>
             <HStack h="full" justify="space-between" align="flex-end" pb={8}>
-                {/* Lado Esquerdo - Conteúdo Principal */}
                 <VStack align="start" maxW="600px" gap={3}>
                     <Heading
                         as="h1"
@@ -87,8 +91,30 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
                     </VStack>
                 </VStack>
 
-                {/* Lado Direito - Botão Compartilhar */}
-                <VStack pb={4}>
+                <HStack pb={4} gap={3}>
+                    <IconButton
+                        aria-label={isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                        variant="outline"
+                        colorScheme="whiteAlpha"
+                        borderColor="whiteAlpha.400"
+                        color="white"
+                        bg={isFavorito ? 'red.500' : 'whiteAlpha.200'}
+                        backdropFilter="blur(8px)"
+                        _hover={{
+                            bg: isFavorito ? 'red.600' : 'whiteAlpha.300',
+                            borderColor: 'whiteAlpha.600',
+                        }}
+                        h="48px"
+                        w="48px"
+                        borderRadius="8px"
+                        onClick={() => toggleFavorito(String(programa.id))}
+                    >
+                        <FiHeart
+                            size={24}
+                            fill={isFavorito ? 'white' : 'none'}
+                        />
+                    </IconButton>
+
                     <Button
                         variant="outline"
                         colorScheme="whiteAlpha"
@@ -108,18 +134,18 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
                         fontSize="md"
                         fontFamily="Poppins, sans-serif"
                     >
-                        {/* Ícone personalizado de compartilhar */}
                         <Image
                             src="/mdi-light_share.svg"
                             alt="Compartilhar"
                             boxSize="24px"
                             mr={2}
-                            filter="brightness(0) invert(1)" // Torna o ícone branco
+                            filter="brightness(0) invert(1)"
                         />
                         Compartilhar
                     </Button>
-                </VStack>
+                </HStack>
             </HStack>
         </Container>
     </Box>
-);
+    );
+};
