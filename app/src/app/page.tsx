@@ -41,11 +41,11 @@ export default function HomePage() {
   }
 
   return (
-    <Box bg="gray.50" minH="100vh">
+    <Box bg="gray.50"  minH="100vh">
       <Header />
 
       <Box bg="gray.50" py={6} px={4}>
-        <VStack gap={4} align="center" w="100%" maxW="800px" mx="auto">
+        <VStack gap={1} align="center" w="100%" maxW="800px" mx="auto">
           <SearchInput
             placeholder="Curso de Front-End"
           />
@@ -53,7 +53,7 @@ export default function HomePage() {
         </VStack>
       </Box>
 
-      <Box bg="gray.50" py={8}>
+      <Box py={8}>
         {programasDestaque.length > 0 && (
           <ProgramaCarousel
             programas={programasDestaque}

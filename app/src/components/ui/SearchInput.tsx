@@ -54,8 +54,8 @@ export const SearchInput: FC<SearchInputProps> = ({
         borderRadius={{ base: "18px", sm: "18px", md: "18px" }}
         fontSize={{ base: "md", sm: "lg", md: "lg" }}
         fontWeight="400"
-        shadow="lg"
         w="100%"
+        shadow="sm"
         transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
         _focus={{
           borderColor: 'blue.400',

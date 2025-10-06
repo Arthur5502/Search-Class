@@ -27,13 +27,10 @@ export const ProgramaCarousel = ({
     const { prevRef, nextRef, handleSwiperInit } = useSwiperNavigation()
 
     return (
-        <Box
-            w="100vw"
-            py={{ base: 10, md: 20 }}
-            overflow="hidden"
-            bg="gray.50"
-            className={className}
-        >
+            <Box
+                overflow="hidden"
+                className={className}
+            >
             <Box
                 position="relative"
                 display="flex"
