@@ -1,5 +1,5 @@
 'use client';
-import { FC, useRef, useState } from 'react';
+import { FC, useRef, useState, useEffect } from 'react';
 import {
     Box,
     Image,
@@ -15,7 +15,6 @@ import type { Programa } from '../../../types/domain';
 import type { Swiper as SwiperType } from 'swiper';
 import Link from 'next/link';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -27,22 +26,57 @@ interface ProgramaCarouselProps {
 
 export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
     const [swiperInstance, setSwiperInstance] = useState<SwiperType | null>(null);
+    const [slideWidth, setSlideWidth] = useState('350px');
+    const [cardDimensions, setCardDimensions] = useState({ width: '350px', height: '561px' });
     const prevRef = useRef<HTMLButtonElement>(null);
     const nextRef = useRef<HTMLButtonElement>(null);
 
+    useEffect(() => {
+        const updateDimensions = () => {
+            const width = window.innerWidth;
+
+            if (width < 480) {
+                setSlideWidth('280px');
+                setCardDimensions({ width: '280px', height: '420px' });
+            } else if (width < 768) {
+                setSlideWidth('300px');
+                setCardDimensions({ width: '300px', height: '480px' });
+            } else if (width < 1024) {
+                setSlideWidth('320px');
+                setCardDimensions({ width: '320px', height: '520px' });
+            } else {
+                setSlideWidth('350px');
+                setCardDimensions({ width: '350px', height: '561px' });
+            }
+        };
+
+        updateDimensions();
+        window.addEventListener('resize', updateDimensions);
+
+        return () => window.removeEventListener('resize', updateDimensions);
+    }, []);
+
     return (
-        <Box w="100vw" py={20} overflow="hidden" bg="gray.50">
-            <Box position="relative" display="flex" justifyContent="center" w="100%" minH="550px" alignItems="center">
-                {/* Navigation Buttons - Centralizados */}
+        <Box w="100vw" py={{ base: 10, md: 20 }} overflow="hidden" bg="gray.50">
+            <Box
+                position="relative"
+                display="flex"
+                justifyContent="center"
+                w="100%"
+                minH={{ base: "500px", sm: "580px", md: "650px" }}
+                alignItems="center"
+                py={{ base: "30px", md: "50px" }}
+                overflow="visible"
+            >
                 <IconButton
                     ref={prevRef}
                     aria-label="Slide anterior"
                     position="absolute"
-                    left="130px"
+                    left={{ base: "10px", sm: "20px", md: "50px", lg: "80px", xl: "130px" }}
                     top="50%"
                     transform="translateY(-50%)"
                     zIndex={20}
-                    size="xl"
+                    size={{ base: "lg", md: "xl" }}
                     borderRadius="md"
                     bg="#FFFFFF"
                     color="#666B74"
@@ -59,6 +93,7 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                         boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
                     }}
                     transition="all 0.3s ease"
+                    display={{ base: 'none', sm: 'flex' }}
                 >
                     <FiChevronLeft size={24} />
                 </IconButton>
@@ -67,11 +102,11 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     ref={nextRef}
                     aria-label="Próximo slide"
                     position="absolute"
-                    right="130px"
+                    right={{ base: "10px", sm: "20px", md: "50px", lg: "80px", xl: "130px" }}
                     top="50%"
                     transform="translateY(-50%)"
                     zIndex={20}
-                    size="xl"
+                    size={{ base: "lg", md: "xl" }}
                     borderRadius="md"
                     bg="#FFFFFF"
                     color="#666B74"
@@ -88,19 +123,24 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                         boxShadow: '0 2px 6px rgba(0, 0, 0, 0.15)',
                     }}
                     transition="all 0.3s ease"
+                    display={{ base: 'none', sm: 'flex' }}
                 >
-                    <FiChevronRight size={24}/>
+                    <FiChevronRight size={24} />
                 </IconButton>
 
-                {/* Swiper Container */}
-                <Box width="100%" maxW="1200px" px={0}>
+                <Box
+                    width="100%"
+                    maxW={{ base: "100%", md: "1200px" }}
+                    px={{ base: 4, sm: 6, md: 0 }}
+                    className="swiper-overflow-container"
+                >
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
                         effect="coverflow"
                         coverflowEffect={{
-                            rotate: 20,
-                            stretch: -60,
-                            depth: 100,
+                            rotate: window.innerWidth < 768 ? 10 : 20,
+                            stretch: window.innerWidth < 768 ? -30 : -60,
+                            depth: window.innerWidth < 768 ? 50 : 100,
                             modifier: 1,
                             slideShadows: false,
                         }}
@@ -123,6 +163,7 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                         }}
                         speed={600}
                         loop={true}
+                        watchSlidesProgress={true}
                         onSwiper={(swiper) => {
                             setSwiperInstance(swiper);
                             setTimeout(() => {
@@ -136,25 +177,41 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                         }}
                     >
                         {programas.map((programa, index) => (
-                            <SwiperSlide key={programa.id} style={{ width: '350px' }}>
+                            <SwiperSlide
+                                key={programa.id}
+                                style={{ width: slideWidth }}
+                            >
                                 <Link href={`/programas/${programa.id}`}>
                                     <Box
-                                        h="561px"
-                                        w="362px"
+                                        h={cardDimensions.height}
+                                        w={cardDimensions.width}
                                         mx="auto"
-                                        borderRadius="20px"
+                                        borderRadius={{ base: "16px", md: "20px" }}
                                         overflow="hidden"
                                         cursor="pointer"
                                         position="relative"
                                         boxShadow="0 10px 30px rgba(0, 0, 0, 0.2)"
-                                        transition="transform 0.4s ease, box-shadow 0.4s ease"
+                                        transition="all 0.4s ease"
+                                        zIndex={1}
                                         _hover={{
-                                            transform: 'translateY(-10px)',
-                                            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                                            transform: {
+                                                base: 'translateY(-10px) scale(1.02)',
+                                                md: 'translateY(-20px) scale(1.02)'
+                                            },
+                                            boxShadow: {
+                                                base: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                                                md: '0 30px 60px rgba(0, 0, 0, 0.4)'
+                                            },
+                                            zIndex: 1000
                                         }}
                                     >
-                                        {/* Image Container */}
-                                        <Box position="relative" h="100%" w="100%" overflow="hidden" borderRadius="20px">
+                                        <Box
+                                            position="relative"
+                                            h="100%"
+                                            w="100%"
+                                            overflow="hidden"
+                                            borderRadius={{ base: "16px", md: "20px" }}
+                                        >
                                             <Image
                                                 src={`https://picsum.photos/350/500?random=${programa.id}`}
                                                 alt={programa.titulo}
@@ -164,7 +221,6 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                 loading={index < 3 ? 'eager' : 'lazy'}
                                             />
 
-                                            {/* Gradient Overlay */}
                                             <Box
                                                 position="absolute"
                                                 top={0}
@@ -177,23 +233,22 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     rgba(0, 0, 0, 0.8) 100%)"
                                             />
 
-                                            {/* Content */}
                                             <Box
                                                 position="absolute"
                                                 bottom={0}
                                                 left={0}
                                                 right={0}
-                                                p={6}
+                                                p={{ base: 4, md: 6 }}
                                                 color="white"
                                             >
-                                                <VStack align="start" gap={3}>
+                                                <VStack align="start" gap={{ base: 2, md: 3 }}>
                                                     <Box
-                                                        px={3}
+                                                        px={{ base: 2, md: 3 }}
                                                         py={1}
                                                         borderRadius="full"
                                                         bg="rgba(0, 255, 136, 0.2)"
                                                         border="1px solid rgba(0, 255, 136, 0.4)"
-                                                        fontSize="xs"
+                                                        fontSize={{ base: "2xs", md: "xs" }}
                                                         fontWeight="600"
                                                         color="#00ff88"
                                                         textTransform="uppercase"
@@ -203,7 +258,7 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     </Box>
 
                                                     <Heading
-                                                        fontSize="xl"
+                                                        fontSize={{ base: "md", md: "xl" }}
                                                         fontWeight="bold"
                                                         color="white"
                                                         lineHeight="1.2"
@@ -214,19 +269,20 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     </Heading>
 
                                                     <Text
-                                                        fontSize="sm"
+                                                        fontSize={{ base: "xs", md: "sm" }}
                                                         color="gray.300"
                                                         fontWeight="medium"
+                                                        lineClamp={1}
                                                     >
                                                         {programa.instituicao.nome}
                                                     </Text>
 
                                                     <Box
-                                                        px={3}
-                                                        py={2}
+                                                        px={{ base: 2, md: 3 }}
+                                                        py={{ base: 1, md: 2 }}
                                                         borderRadius="full"
                                                         bg="rgba(255, 255, 255, 0.15)"
-                                                        fontSize="sm"
+                                                        fontSize={{ base: "xs", md: "sm" }}
                                                         color="white"
                                                         fontWeight="medium"
                                                     >
@@ -243,20 +299,42 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                 </Box>
             </Box>
 
-            {/* Pagination */}
             <Box
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 width="100%"
-                mt={10}
+                mt={{ base: 6, md: 10 }}
                 position="relative"
             >
                 <Box className="swiper-pagination-custom" />
             </Box>
 
-            {/* Custom Styles */}
             <style jsx global>{`
+                .swiper-overflow-container .swiper {
+                    overflow: visible !important;
+                    position: static !important;
+                }
+                
+                .swiper-overflow-container .swiper-wrapper {
+                    overflow: visible !important;
+                }
+                
+                .swiper-overflow-container .swiper-slide {
+                    opacity: 0 !important;
+                    visibility: hidden !important;
+                    pointer-events: none !important;
+                    transition: opacity 0.3s ease, visibility 0.3s ease !important;
+                }
+                
+                .swiper-overflow-container .swiper-slide-active,
+                .swiper-overflow-container .swiper-slide-next,
+                .swiper-overflow-container .swiper-slide-prev {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    pointer-events: auto !important;
+                }
+                
                 @keyframes pulse {
                     0%, 100% {
                         box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
@@ -283,10 +361,9 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     100% { left: 100%; opacity: 0; }
                 }
                 
-                /* Paginação flutuante - sem container visível */
                 .swiper-pagination-custom {
                     position: absolute !important;
-                    bottom: -60px !important;
+                    bottom: -40px !important;
                     left: 50% !important;
                     transform: translateX(-50%) !important;
                     width: auto !important;
@@ -300,13 +377,12 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     box-shadow: none !important;
                     z-index: 10 !important;
                     animation: float 4s ease-in-out infinite !important;
-                    gap: 12px !important;
+                    gap: 8px !important;
                 }
                 
-                /* Bullets flutuantes premium */
                 .swiper-pagination-bullet {
-                    width: 14px !important;
-                    height: 14px !important;
+                    width: 12px !important;
+                    height: 12px !important;
                     background: rgba(255, 255, 255, 0.3) !important;
                     opacity: 1 !important;
                     margin: 0 !important;
@@ -316,146 +392,27 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     border-radius: 50% !important;
                     position: relative !important;
                     backdrop-filter: blur(20px) !important;
-                    box-shadow:
-                        0 4px 12px rgba(0, 0, 0, 0.1),
-                        0 2px 6px rgba(0, 0, 0, 0.05) !important;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05) !important;
                 }
                 
-                /* Efeito de glow interno */
-                .swiper-pagination-bullet::before {
-                    content: '' !important;
-                    position: absolute !important;
-                    top: 2px !important;
-                    left: 2px !important;
-                    right: 2px !important;
-                    bottom: 2px !important;
-                    background: radial-gradient(circle at center, rgba(106, 106, 106, 0.8), transparent 70%) !important;
-                    border-radius: 50% !important;
-                    opacity: 0 !important;
-                    transition: opacity 0.3s ease !important;
-                }
-                
-                /* Bullet ativo - design premium futurístico */
                 .swiper-pagination-bullet-active {
                     background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
-                    width: 24px !important;
+                    width: 32px !important;
                     height: 12px !important;
-                    border-radius: !important;
-                    box-shadow:
-                        0 0 20px rgba(102, 126, 234, 0.6),
-                        0 0 40px rgba(118, 75, 162, 0.4),
-                        0 4px 20px rgba(102, 126, 234, 0.3),
-                        inset 0 1px 3px rgba(255, 255, 255, 0.4) !important;
+                    border-radius: 12px !important;
+                    box-shadow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 40px rgba(118, 75, 162, 0.4), 0 4px 20px rgba(102, 126, 234, 0.3), inset 0 1px 3px rgba(255, 255, 255, 0.4) !important;
                     border: 1px solid rgba(102, 126, 234, 0.8) !important;
                     animation: pulse 3s infinite ease-in-out !important;
                     position: relative !important;
                     overflow: hidden !important;
                     transform: scale(1.1) !important;
                 }
-                
-                .swiper-pagination-bullet-active::before {
-                    opacity: 0.6 !important;
-                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.3)) !important;
-                    border-radius: 20px !important;
-                    top: 1px !important;
-                    left: 1px !important;
-                    right: 1px !important;
-                    bottom: 1px !important;
-                }
-                
-                /* Shimmer effect no bullet ativo */
-                .swiper-pagination-bullet-active::after {
-                    content: '' !important;
-                    position: absolute !important;
-                    top: 0 !important;
-                    left: -100% !important;
-                    width: 100% !important;
-                    height: 100% !important;
-                    background: linear-gradient(
-                        90deg,
-                        transparent,
-                        rgba(255, 255, 255, 0.6),
-                        transparent
-                    ) !important;
-                    animation: shimmer 2.5s infinite !important;
-                    border-radius: 20px !important;
-                }
-                
-                /* Hover states refinados */
-                .swiper-pagination-bullet:hover:not(.swiper-pagination-bullet-active) {
-                    transform: scale(1.3) !important;
-                    background: rgba(102, 126, 234, 0.4) !important;
-                    box-shadow:
-                        0 0 15px rgba(102, 126, 234, 0.5),
-                        0 6px 16px rgba(0, 0, 0, 0.15) !important;
-                    border: 1px solid rgba(102, 126, 234, 0.7) !important;
-                }
-                
-                .swiper-pagination-bullet:hover:not(.swiper-pagination-bullet-active)::before {
-                    opacity: 0.8 !important;
-                }
-                
-                /* Micro-interação adicional */
-                .swiper-pagination-bullet:active {
-                    transform: scale(0.9) !important;
-                    transition: transform 0.1s ease !important;
-                }
-                
-                .swiper-pagination-bullet-active:hover {
-                    animation-play-state: paused !important;
-                    transform: scale(1.15) !important;
-                    box-shadow:
-                        0 0 25px rgba(102, 126, 234, 0.8),
-                        0 0 50px rgba(118, 75, 162, 0.6),
-                        0 6px 24px rgba(102, 126, 234, 0.4) !important;
-                }
-                
-                /* Remove sombras padrão do Swiper */
-                .swiper-slide-shadow-left,
-                .swiper-slide-shadow-right {
-                    display: none !important;
-                }
-                
-                .swiper-slide-active {
-                    z-index: 10 !important;
-                }
-                
-                .swiper-slide-next,
-                .swiper-slide-prev {
-                    z-index: 5 !important;
-                }
-                
-                /* Estados de foco para acessibilidade */
-                .swiper-pagination-bullet:focus {
-                    outline: none !important;
-                    box-shadow: 
-                        0 0 0 3px rgba(102, 126, 234, 0.3),
-                        0 0 16px rgba(102, 126, 234, 0.5) !important;
-                    transform: scale(1.2) !important;
-                }
-                
-                /* Responsividade */
-                @media (max-width: 768px) {
-                    .swiper-pagination-custom {
-                        bottom: -50px !important;
-                        gap: 10px !important;
-                    }
-                    
-                    .swiper-pagination-bullet {
-                        width: 10px !important;
-                        height: 10px !important;
-                    }
-                    
-                    .swiper-pagination-bullet-active {
-                        width: 32px !important;
-                        height: 10px !important;
-                        border-radius: 16px !important;
-                    }
-                }
-                
+
+                /* Responsividade melhorada */
                 @media (max-width: 480px) {
                     .swiper-pagination-custom {
-                        gap: 8px !important;
+                        bottom: -30px !important;
+                        gap: 6px !important;
                     }
                     
                     .swiper-pagination-bullet {
@@ -464,13 +421,66 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                     }
                     
                     .swiper-pagination-bullet-active {
-                        width: 28px !important;
+                        width: 24px !important;
                         height: 8px !important;
-                        border-radius: 14px !important;
+                        border-radius: 8px !important;
                     }
                 }
                 
-                /* Redução de movimento para usuários sensíveis */
+                @media (min-width: 481px) and (max-width: 768px) {
+                    .swiper-pagination-custom {
+                        bottom: -35px !important;
+                        gap: 8px !important;
+                    }
+                    
+                    .swiper-pagination-bullet {
+                        width: 10px !important;
+                        height: 10px !important;
+                    }
+                    
+                    .swiper-pagination-bullet-active {
+                        width: 28px !important;
+                        height: 10px !important;
+                        border-radius: 10px !important;
+                    }
+                }
+
+                @media (min-width: 769px) and (max-width: 1024px) {
+                    .swiper-pagination-custom {
+                        bottom: -45px !important;
+                        gap: 10px !important;
+                    }
+                    
+                    .swiper-pagination-bullet {
+                        width: 12px !important;
+                        height: 12px !important;
+                    }
+                    
+                    .swiper-pagination-bullet-active {
+                        width: 30px !important;
+                        height: 12px !important;
+                        border-radius: 12px !important;
+                    }
+                }
+
+                @media (min-width: 1025px) {
+                    .swiper-pagination-custom {
+                        bottom: -60px !important;
+                        gap: 12px !important;
+                    }
+                    
+                    .swiper-pagination-bullet {
+                        width: 14px !important;
+                        height: 14px !important;
+                    }
+                    
+                    .swiper-pagination-bullet-active {
+                        width: 32px !important;
+                        height: 12px !important;
+                        border-radius: 12px !important;
+                    }
+                }
+                
                 @media (prefers-reduced-motion: reduce) {
                     .swiper-pagination-bullet,
                     .swiper-pagination-custom {
