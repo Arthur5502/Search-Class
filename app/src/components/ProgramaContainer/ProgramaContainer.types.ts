@@ -1,15 +1,15 @@
 import type { Programa } from '../../types/domain'
 
-export interface ProgramaSectionProps {
+export interface ProgramaSectionData {
+    id?: string
     title: string
     programas: Programa[]
     showViewAll?: boolean
     viewAllHref?: string
-    showScrollButton?: boolean
-    isLoading?: boolean
-    className?: string
+    cardSize?: 'small' | 'medium' | 'large'
     layout?: 'carousel' | 'grid'
-    cardSize?: 'small' | 'medium'
+    isLoading?: boolean
+    showScrollButton?: boolean
     columns?: {
         base: number
         sm?: number
@@ -17,4 +17,10 @@ export interface ProgramaSectionProps {
         lg?: number
         xl?: number
     }
+}
+
+export interface ProgramaContainerProps {
+    sections: ProgramaSectionData[]
+    className?: string
+    spacing?: number
 }
