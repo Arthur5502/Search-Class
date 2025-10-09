@@ -120,7 +120,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     }
 
     return (
-        <Box w="100%" py={2} px="10px">
+        <Box w="100%" py={2} px="80px">
             <Box>
                 <HStack justify="space-between" align="center" mb={2}>
                     <Heading
