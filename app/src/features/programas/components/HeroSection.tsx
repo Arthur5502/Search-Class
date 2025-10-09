@@ -10,10 +10,8 @@ import {
     HStack,
     Icon,
     Image,
-    IconButton,
 } from '@chakra-ui/react';
-import { FiHeart } from 'react-icons/fi';
-import { useAppStore } from '../../../store/useAppStore';
+import { FavoriteButton } from '../../../components/ui/FavoriteButton';
 
 interface HeroSectionProps {
     programa: {
@@ -25,10 +23,6 @@ interface HeroSectionProps {
 }
 
 export const HeroSection: FC<HeroSectionProps> = ({ programa }) => {
-    const favoritos = useAppStore((state) => state.favoritos);
-    const toggleFavorito = useAppStore((state) => state.toggleFavorito);
-    const isFavorito = favoritos.includes(String(programa.id));
-
     return (
         <Box
             position="relative"
@@ -92,28 +86,7 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => {
                 </VStack>
 
                 <HStack pb={4} gap={3}>
-                    <IconButton
-                        aria-label={isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-                        variant="outline"
-                        colorScheme="whiteAlpha"
-                        borderColor="whiteAlpha.400"
-                        color="white"
-                        bg={isFavorito ? 'red.500' : 'whiteAlpha.200'}
-                        backdropFilter="blur(8px)"
-                        _hover={{
-                            bg: isFavorito ? 'red.600' : 'whiteAlpha.300',
-                            borderColor: 'whiteAlpha.600',
-                        }}
-                        h="48px"
-                        w="48px"
-                        borderRadius="8px"
-                        onClick={() => toggleFavorito(String(programa.id))}
-                    >
-                        <FiHeart
-                            size={24}
-                            fill={isFavorito ? 'white' : 'none'}
-                        />
-                    </IconButton>
+                    <FavoriteButton programaId={programa.id} variant="hero" />
 
                     <Button
                         variant="outline"

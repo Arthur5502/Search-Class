@@ -12,17 +12,19 @@ import {
     Button,
     IconButton,
 } from '@chakra-ui/react';
-import { FiArrowRight, FiChevronRight, FiChevronLeft, FiHeart } from 'react-icons/fi';
+import { FiArrowRight, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 import type { Programa } from '../../../types/domain';
 import Link from 'next/link';
-import { useAppStore } from '../../../store/useAppStore';
+import { FavoriteButton } from '../../../components/ui/FavoriteButton';
 
 interface ProgramaSectionProps {
-    title: string;
+    title?: string;
     programas: Programa[];
     showViewAll?: boolean;
     viewAllHref?: string;
     showScrollButton?: boolean;
+    layout?: 'scroll' | 'grid';
+    showHeader?: boolean;
 }
 
 export const ProgramaSection: FC<ProgramaSectionProps> = ({
@@ -30,10 +32,10 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     programas,
     showViewAll = true,
     viewAllHref = "/programas",
-    showScrollButton = true
+    showScrollButton = true,
+    layout = 'scroll',
+    showHeader = true
 }) => {
-    const favoritos = useAppStore((state) => state.favoritos);
-    const toggleFavorito = useAppStore((state) => state.toggleFavorito);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -76,35 +78,107 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     }, [programas.length]);
 
     return (
-        <Box maxW="9xl" py={8} px={{ base: 4, md: 40 }}>
-            <HStack justify="space-between" align="center" mb={8}>
-                <Heading
-                    size="lg"
-                    color="gray.900"
-                    fontWeight="600"
-                    fontSize={{ base: "xl", md: "2xl" }}
-                >
-                    {title}
-                </Heading>
+        <Box maxW="9xl" py={8} px={{ base: 4, md: layout === 'grid' ? 0 : 40 }}>
+            {showHeader && title && (
+                <HStack justify="space-between" align="center" mb={8}>
+                    <Heading
+                        size="lg"
+                        color="gray.900"
+                        fontWeight="600"
+                        fontSize={{ base: "xl", md: "2xl" }}
+                    >
+                        {title}
+                    </Heading>
 
-                {showViewAll && (
-                    <Link href={viewAllHref}>
-                        <Button
-                            variant="ghost"
-                            color="blue.500"
-                            fontSize="sm"
-                            fontWeight="500"
-                            p={0}
-                            _hover={{ color: 'blue.600' }}
-                            transition="color 0.2s"
-                        >
-                            Ver tudo
-                        </Button>
-                    </Link>
-                )}
-            </HStack>
+                    {showViewAll && (
+                        <Link href={viewAllHref}>
+                            <Button
+                                variant="ghost"
+                                color="blue.500"
+                                fontSize="sm"
+                                fontWeight="500"
+                                p={0}
+                                _hover={{ color: 'blue.600' }}
+                                transition="color 0.2s"
+                            >
+                                Ver tudo
+                            </Button>
+                        </Link>
+                    )}
+                </HStack>
+            )}
 
             <Box position="relative">
+                {layout === 'grid' ? (
+                    <Box
+                        display="grid"
+                        gridTemplateColumns="repeat(4, 1fr)"
+                        gap={5}
+                        w="100%"
+                    >
+                        {programas.map((programa, index) => (
+                            <Box
+                                key={programa.id}
+                                position="relative"
+                            >
+                                <Box
+                                    position="absolute"
+                                    top="8px"
+                                    right="8px"
+                                    zIndex={10}
+                                >
+                                    <FavoriteButton programaId={programa.id} />
+                                </Box>
+
+                                <Link href={`/programas/${programa.id}`}>
+                                    <Box
+                                        cursor="pointer"
+                                        transition="all 0.3s ease"
+                                        _hover={{
+                                            transform: 'translateY(-2px)',
+                                        }}
+                                    >
+                                        <Box
+                                            position="relative"
+                                            overflow="hidden"
+                                            h="170px"
+                                            borderRadius="12px"
+                                            mb={2}
+                                            shadow="sm"
+                                            transition="all 0.3s ease"
+                                            _hover={{
+                                                shadow: 'md',
+                                            }}
+                                        >
+                                            <Image
+                                                src={`https://picsum.photos/280/200?random=${programa.id}`}
+                                                alt={programa.titulo}
+                                                w="100%"
+                                                h="100%"
+                                                objectFit="cover"
+                                                loading={index < 4 ? "eager" : "lazy"}
+                                                onError={(e) => {
+                                                    e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                                }}
+                                            />
+                                        </Box>
+
+                                        <Text
+                                            fontSize="xs"
+                                            color="gray.600"
+                                            textTransform="uppercase"
+                                            fontWeight="600"
+                                            letterSpacing="wide"
+                                            lineHeight="1.4"
+                                        >
+                                            CURSO DE {programa.area.toUpperCase()}
+                                        </Text>
+                                    </Box>
+                                </Link>
+                            </Box>
+                        ))}
+                    </Box>
+                ) : (
                 <Flex
                     ref={scrollContainerRef}
                     overflowX="auto"
@@ -121,43 +195,23 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                         scrollBehavior: 'smooth',
                     }}
                 >
-                    {programas.map((programa, index) => {
-                        const isFavorito = favoritos.includes(String(programa.id));
-                        
-                        return (
+                    {programas.map((programa, index) => (
+                        <Box
+                            key={programa.id}
+                            minW="280px"
+                            w="280px"
+                            scrollSnapAlign="start"
+                            flexShrink={0}
+                            position="relative"
+                        >
                             <Box
-                                key={programa.id}
-                                minW="280px"
-                                w="280px"
-                                scrollSnapAlign="start"
-                                flexShrink={0}
-                                position="relative"
+                                position="absolute"
+                                top="8px"
+                                right="8px"
+                                zIndex={10}
                             >
-                                <Box
-                                    position="absolute"
-                                    top="8px"
-                                    right="8px"
-                                    zIndex={10}
-                                >
-                                    <IconButton
-                                        aria-label={isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
-                                        size="sm"
-                                        borderRadius="full"
-                                        bg={isFavorito ? 'red.500' : 'white'}
-                                        color={isFavorito ? 'white' : 'gray.700'}
-                                        boxShadow="lg"
-                                        _hover={{
-                                            bg: isFavorito ? 'red.600' : 'gray.100',
-                                            transform: 'scale(1.1)',
-                                        }}
-                                        onClick={() => toggleFavorito(String(programa.id))}
-                                    >
-                                        <FiHeart
-                                            size={16}
-                                            fill={isFavorito ? 'white' : 'none'}
-                                        />
-                                    </IconButton>
-                                </Box>
+                                <FavoriteButton programaId={programa.id} />
+                            </Box>
 
                                 <Link href={`/programas/${programa.id}`}>
                                     <Box
@@ -225,12 +279,12 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                         </Box>
                                     </Box>
                                 </Link>
-                            </Box>
-                        );
-                    })}
+                        </Box>
+                    ))}
                 </Flex>
+                )}
 
-                {showScrollButton && programas.length > 4 && (
+                {layout === 'scroll' && showScrollButton && programas.length > 4 && (
                     <>
                         <IconButton
                             position="absolute"
