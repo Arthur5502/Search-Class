@@ -42,8 +42,8 @@ export const useResponsiveCarousel = (): ResponsiveConfig => {
                 })
             } else {
                 setConfig({
-                    slideWidth: '362px', // Largura exata do Figma
-                    cardDimensions: { width: '362px', height: '561px' }, // Dimensões exatas
+                    slideWidth: '362px',
+                    cardDimensions: { width: '362px', height: '561px' },
                     coverflowSettings: { rotate: 20, stretch: -60, depth: 100 }
                 })
             }

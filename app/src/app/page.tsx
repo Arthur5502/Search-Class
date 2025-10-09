@@ -41,7 +41,7 @@ export default function HomePage() {
   }
 
   return (
-    <Box bg="gray.50"  minH="100vh">
+    <Box bg="gray.50" minH="100vh">
       <Header />
 
       <Box bg="gray.50" py={6} px={4}>
@@ -64,80 +64,52 @@ export default function HomePage() {
       </Box>
 
       <Box bg="gray.50" pb={20}>
-
+        {/* Primeira linha - Card Pequeno */}
         <ProgramaSection
           title="Eventos mais acessados das últimas 24hrs"
           programas={programasPopulares.slice(0, 8)}
           viewAllHref="/programas?filter=populares"
-          isLoading={isLoading}
-          layout="carousel"
-          cardVariant="compact"
-          columns={{
-            base: 2,
-            sm: 2,
-            md: 4,
-            lg: 6,
-            xl: 8
-          }}
           showScrollButton={false}
+          cardType="small"
         />
 
+        {/* Segunda linha - Card Médio */}
         <ProgramaSection
           title="Cursos semelhantes a suas últimas escolhas"
-          programas={cursosAutomacao.slice(0, 3)}
+          programas={cursosAutomacao.slice(0, 6)}
           viewAllHref="/programas?area=backend"
-          isLoading={isLoading}
-          layout="grid"
-          cardVariant="standard"
-          columns={{
-            base: 1,
-            sm: 2,
-            md: 3,
-            lg: 3,
-            xl: 3
-          }}
           showScrollButton={false}
           showViewAll={false}
+          cardType="medium"
         />
 
+        {/* Terceira linha - Card Pequeno */}
         <ProgramaSection
           title="Eventos hoje na sua cidade"
-          programas={eventosLocais.slice(0, 4)}
+          programas={eventosLocais.slice(0, 8)}
           viewAllHref="/programas?local=sp"
-          isLoading={isLoading}
-          layout="carousel"
-          cardVariant="compact"
-          columns={{
-            base: 2,
-            sm: 2,
-            md: 4,
-            lg: 4,
-            xl: 4
-          }}
           showScrollButton={false}
+          cardType="small"
         />
 
-        {cursosAutomacao.length > 3 && (
+        {/* Seções adicionais com scroll */}
+        {cursosAutomacao.length > 6 && (
           <ProgramaSection
             title="Mais recomendações para você"
-            programas={cursosAutomacao.slice(3)}
+            programas={cursosAutomacao.slice(6)}
             viewAllHref="/programas?recomendados=true"
-            isLoading={isLoading}
-            layout="carousel"
-            cardVariant="standard"
             showScrollButton={true}
+            cardType="medium"
           />
         )}
 
-        {eventosLocais.length > 4 && (
+        {eventosLocais.length > 8 && (
           <ProgramaSection
             title="Outros eventos na sua região"
-            programas={eventosLocais.slice(4)}
+            programas={eventosLocais.slice(8)}
             viewAllHref="/programas?eventos=regiao"
-            isLoading={isLoading}
-            layout="carousel"
-            cardVariant="compact"
             showScrollButton={true}
+            cardType="small"
           />
         )}
       </Box>

@@ -26,7 +26,6 @@ export const Header: FC = () => {
         >
             <Container maxW="8xl">
                 <HStack justify="space-between" align="center">
-                    {/* Header esquerdo - Logo com S e C destacados */}
                     <Link href="/">
                         <HStack gap={3} cursor="pointer" ml={10}>
                             <Image

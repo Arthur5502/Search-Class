@@ -1,4 +1,3 @@
-// hooks/useHomePage.ts
 import { useState, useEffect } from 'react'
 import {
     getProgramasDestaque,
