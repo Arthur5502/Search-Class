@@ -1,10 +1,8 @@
 'use client';
-import { FC, useState, useRef, useEffect } from 'react';
+import { FC } from 'react';
 import {
     Box,
-    Container,
     Heading,
-    Flex,
     Image,
     Text,
     HStack,
@@ -12,10 +10,18 @@ import {
     Button,
     IconButton,
 } from '@chakra-ui/react';
-import { FiArrowRight, FiChevronRight, FiChevronLeft } from 'react-icons/fi';
-import type { Programa } from '../../../types/domain';
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, FreeMode, Mousewheel } from 'swiper/modules';
+import type { Swiper as SwiperType } from 'swiper';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { FavoriteButton } from '../../../components/ui/FavoriteButton';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+import type { Programa } from '../../../types/domain';
 
 interface ProgramaSectionProps {
     title?: string;
@@ -36,172 +42,41 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     layout = 'scroll',
     showHeader = true
 }) => {
-    const scrollContainerRef = useRef<HTMLDivElement>(null);
-    const [canScrollLeft, setCanScrollLeft] = useState(false);
-    const [canScrollRight, setCanScrollRight] = useState(true);
+    const swiperRef = useRef<SwiperType | null>(null);
+    const [isBeginning, setIsBeginning] = useState(true);
+    const [isEnd, setIsEnd] = useState(false);
 
-    const updateScrollButtons = () => {
-        if (scrollContainerRef.current) {
-            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-            setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 5);
-        }
+    const handleSwiperInit = (swiper: SwiperType) => {
+        swiperRef.current = swiper;
+        setIsBeginning(swiper.isBeginning);
+        setIsEnd(swiper.isEnd);
     };
 
-    const scrollToDirection = (direction: 'left' | 'right') => {
-        if (scrollContainerRef.current) {
-            const scrollAmount = 300;
-
-            scrollContainerRef.current.scrollBy({
-                left: direction === 'right' ? scrollAmount : -scrollAmount,
-                behavior: 'smooth'
-            });
-        }
+    const handleSlideChange = (swiper: SwiperType) => {
+        setIsBeginning(swiper.isBeginning);
+        setIsEnd(swiper.isEnd);
     };
 
-    useEffect(() => {
-        const handleScroll = () => updateScrollButtons();
-        const handleResize = () => updateScrollButtons();
+    const slidePrev = () => {
+        swiperRef.current?.slidePrev();
+    };
 
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.addEventListener('scroll', handleScroll);
-            window.addEventListener('resize', handleResize);
-            updateScrollButtons();
-        }
+    const slideNext = () => {
+        swiperRef.current?.slideNext();
+    };
 
-        return () => {
-            if (scrollContainerRef.current) {
-                scrollContainerRef.current.removeEventListener('scroll', handleScroll);
-            }
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [programas.length]);
-
-    return (
-        <Box maxW="9xl" py={8} px={{ base: 4, md: layout === 'grid' ? 0 : 40 }}>
-            {showHeader && title && (
-                <HStack justify="space-between" align="center" mb={8}>
-                    <Heading
-                        size="lg"
-                        color="gray.900"
-                        fontWeight="600"
-                        fontSize={{ base: "xl", md: "2xl" }}
-                    >
-                        {title}
-                    </Heading>
-
-                    {showViewAll && (
-                        <Link href={viewAllHref}>
-                            <Button
-                                variant="ghost"
-                                color="blue.500"
-                                fontSize="sm"
-                                fontWeight="500"
-                                p={0}
-                                _hover={{ color: 'blue.600' }}
-                                transition="color 0.2s"
-                            >
-                                Ver tudo
-                            </Button>
-                        </Link>
-                    )}
-                </HStack>
-            )}
-
-            <Box position="relative">
-                {layout === 'grid' ? (
-                    <Box
-                        display="grid"
-                        gridTemplateColumns="repeat(4, 1fr)"
-                        gap={5}
-                        w="100%"
-                    >
-                        {programas.map((programa, index) => (
-                            <Box
-                                key={programa.id}
-                                position="relative"
-                            >
-                                <Box
-                                    position="absolute"
-                                    top="8px"
-                                    right="8px"
-                                    zIndex={10}
-                                >
-                                    <FavoriteButton programaId={programa.id} />
-                                </Box>
-
-                                <Link href={`/programas/${programa.id}`}>
-                                    <Box
-                                        cursor="pointer"
-                                        transition="all 0.3s ease"
-                                        _hover={{
-                                            transform: 'translateY(-2px)',
-                                        }}
-                                    >
-                                        <Box
-                                            position="relative"
-                                            overflow="hidden"
-                                            h="170px"
-                                            borderRadius="12px"
-                                            mb={2}
-                                            shadow="sm"
-                                            transition="all 0.3s ease"
-                                            _hover={{
-                                                shadow: 'md',
-                                            }}
-                                        >
-                                            <Image
-                                                src={`https://picsum.photos/280/200?random=${programa.id}`}
-                                                alt={programa.titulo}
-                                                w="100%"
-                                                h="100%"
-                                                objectFit="cover"
-                                                loading={index < 4 ? "eager" : "lazy"}
-                                                onError={(e) => {
-                                                    e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
-                                                }}
-                                            />
-                                        </Box>
-
-                                        <Text
-                                            fontSize="xs"
-                                            color="gray.600"
-                                            textTransform="uppercase"
-                                            fontWeight="600"
-                                            letterSpacing="wide"
-                                            lineHeight="1.4"
-                                        >
-                                            CURSO DE {programa.area.toUpperCase()}
-                                        </Text>
-                                    </Box>
-                                </Link>
-                            </Box>
-                        ))}
-                    </Box>
-                ) : (
-                <Flex
-                    ref={scrollContainerRef}
-                    overflowX="auto"
-                    overflowY="hidden"
-                    gap={6}
-                    pb={4}
-                    css={{
-                        scrollbarWidth: 'none',
-                        msOverflowStyle: 'none',
-                        '&::-webkit-scrollbar': {
-                            display: 'none',
-                        },
-                        scrollSnapType: 'x mandatory',
-                        scrollBehavior: 'smooth',
-                    }}
+    if (layout === 'grid') {
+        return (
+            <Box w="100%" py={0}>
+                <Box
+                    display="grid"
+                    gridTemplateColumns="repeat(4, 1fr)"
+                    gap={5}
+                    w="100%"
                 >
                     {programas.map((programa, index) => (
                         <Box
                             key={programa.id}
-                            minW="280px"
-                            w="280px"
-                            scrollSnapAlign="start"
-                            flexShrink={0}
                             position="relative"
                         >
                             <Box
@@ -213,52 +88,222 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                 <FavoriteButton programaId={programa.id} />
                             </Box>
 
-                                <Link href={`/programas/${programa.id}`}>
+                            <Link href={`/programas/${programa.id}`}>
+                                <Box
+                                    cursor="pointer"
+                                    transition="all 0.3s ease"
+                                    _hover={{
+                                        transform: 'translateY(-2px)',
+                                    }}
+                                >
                                     <Box
-                                        cursor="pointer"
+                                        position="relative"
+                                        overflow="hidden"
+                                        h="170px"
+                                        borderRadius="12px"
+                                        mb={2}
+                                        shadow="sm"
                                         transition="all 0.3s ease"
                                         _hover={{
-                                            transform: 'translateY(-4px)',
+                                            shadow: 'md',
                                         }}
                                     >
+                                        <Image
+                                            src={`https://picsum.photos/280/200?random=${programa.id}`}
+                                            alt={programa.titulo}
+                                            w="100%"
+                                            h="100%"
+                                            objectFit="cover"
+                                            loading={index < 4 ? "eager" : "lazy"}
+                                            onError={(e) => {
+                                                e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                            }}
+                                        />
+                                    </Box>
+
+                                    <Text
+                                        fontSize="xs"
+                                        color="gray.600"
+                                        textTransform="uppercase"
+                                        fontWeight="600"
+                                        letterSpacing="wide"
+                                        lineHeight="1.4"
+                                    >
+                                        CURSO DE {programa.area.toUpperCase()}
+                                    </Text>
+                                </Box>
+                            </Link>
+                        </Box>
+                    ))}
+                </Box>
+            </Box>
+        );
+    }
+
+    return (
+        <Box w="100%" py={6} px="20px">
+            {showHeader && title && (
+                <Box>
+                    <HStack justify="space-between" align="center" mb={8}>
+                        <Heading
+                            size="lg"
+                            color="gray.900"
+                            fontWeight="600"
+                            fontSize={{ base: "xl", md: "2xl" }}
+                        >
+                            {title}
+                        </Heading>
+
+                        {showViewAll && (
+                            <Link href={viewAllHref}>
+                                <Button
+                                    variant="ghost"
+                                    color="blue.500"
+                                    fontSize="sm"
+                                    fontWeight="500"
+                                    p={0}
+                                    _hover={{ color: 'blue.600' }}
+                                    transition="color 0.2s"
+                                >
+                                    Ver tudo
+                                </Button>
+                            </Link>
+                        )}
+                    </HStack>
+                </Box>
+            )}
+
+            <Box
+                position="relative"
+                w="100%"
+                pt={8}
+                pb={24}
+                overflow="visible"
+                className="programa-section-overflow"
+            >
+                <Box position="relative">
+                    <Swiper
+                        modules={[Navigation, FreeMode, Mousewheel]}
+                        onSwiper={handleSwiperInit}
+                        onSlideChange={handleSlideChange}
+                        spaceBetween={24}
+                        slidesPerView="auto"
+                        grabCursor={true}
+                        watchOverflow={true}
+                        freeMode={{
+                            enabled: true,
+                            sticky: false,
+                            momentumBounce: false,
+                            momentumRatio: 0.6,
+                        }}
+                        mousewheel={{
+                            forceToAxis: true,
+                            sensitivity: 1,
+                            releaseOnEdges: true,
+                        }}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 1.2,
+                                spaceBetween: 16,
+                            },
+                            480: {
+                                slidesPerView: 1.8,
+                                spaceBetween: 20,
+                            },
+                            768: {
+                                slidesPerView: 2.5,
+                                spaceBetween: 24,
+                            },
+                            1024: {
+                                slidesPerView: 3.2,
+                                spaceBetween: 24,
+                            },
+                            1280: {
+                                slidesPerView: 4,
+                                spaceBetween: 24,
+                            },
+                            1536: {
+                                slidesPerView: 4.5,
+                                spaceBetween: 24,
+                            },
+                        }}
+                    >
+                        {programas.map((programa, index) => (
+                            <SwiperSlide
+                                key={programa.id}
+                                style={{
+                                    width: '280px',
+                                    height: 'auto',
+                                }}
+                            >
+                                <Box position="relative">
+                                    <Box
+                                        position="absolute"
+                                        top="8px"
+                                        right="8px"
+                                        zIndex={10}
+                                    >
+                                        <FavoriteButton programaId={programa.id} />
+                                    </Box>
+
+                                    <Link href={`/programas/${programa.id}`}>
                                         <Box
+                                            cursor="pointer"
+                                            transition="all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
                                             position="relative"
-                                            overflow="hidden"
-                                            h="200px"
-                                            borderRadius="16px"
-                                            mb={4}
-                                            shadow="md"
-                                            transition="all 0.3s ease"
+                                            zIndex={1}
                                             _hover={{
-                                                shadow: 'lg',
+                                                transform: 'translateY(-16px)',
+                                                zIndex: 999,
                                             }}
                                         >
-                                            <Image
-                                                src={`https://picsum.photos/280/200?random=${programa.id}`}
-                                                alt={programa.titulo}
-                                                w="100%"
-                                                h="100%"
-                                                objectFit="cover"
-                                                loading={index < 4 ? "eager" : "lazy"}
-                                                onError={(e) => {
-                                                    e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                            <Box
+                                                borderRadius="16px"
+                                                overflow="hidden"
+                                                shadow="md"
+                                                bg="white"
+                                                transition="all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+                                                mb={4}
+                                                _hover={{
+                                                    shadow: '2xl',
                                                 }}
-                                            />
-                                        </Box>
+                                            >
+                                                <Box
+                                                    position="relative"
+                                                    overflow="hidden"
+                                                    h="200px"
+                                                    bg="gray.100"
+                                                >
+                                                    <Image
+                                                        src={`https://picsum.photos/280/200?random=${programa.id}`}
+                                                        alt={programa.titulo}
+                                                        w="100%"
+                                                        h="100%"
+                                                        objectFit="cover"
+                                                        loading={index < 4 ? "eager" : "lazy"}
+                                                        transition="transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+                                                        _hover={{
+                                                            transform: 'scale(1.08)',
+                                                        }}
+                                                        onError={(e) => {
+                                                            e.currentTarget.src = `https://via.placeholder.com/280x200/E2E8F0/718096?text=${encodeURIComponent(programa.area)}`;
+                                                        }}
+                                                    />
+                                                </Box>
+                                            </Box>
 
-                                        <Box>
-                                            <VStack align="start" gap={2}>
+                                            <VStack align="start" gap={2} px={1}>
                                                 <Text
                                                     fontSize="xs"
                                                     color="gray.500"
                                                     textTransform="uppercase"
                                                     fontWeight="600"
-                                                    letterSpacing="wide"
+                                                    letterSpacing="0.5px"
                                                 >
                                                     CURSO DE {programa.area.toUpperCase()}
                                                 </Text>
 
-                                                <Heading
+                                                <Text
                                                     fontSize="lg"
                                                     color="gray.900"
                                                     fontWeight="600"
@@ -266,88 +311,115 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                                     lineClamp={2}
                                                 >
                                                     {programa.titulo}
-                                                </Heading>
+                                                </Text>
 
                                                 <Text
                                                     fontSize="sm"
                                                     color="gray.500"
                                                     fontWeight="400"
+                                                    lineClamp={1}
                                                 >
                                                     {programa.instituicao.nome}
                                                 </Text>
                                             </VStack>
                                         </Box>
-                                    </Box>
-                                </Link>
-                        </Box>
-                    ))}
-                </Flex>
-                )}
+                                    </Link>
+                                </Box>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
 
-                {layout === 'scroll' && showScrollButton && programas.length > 4 && (
-                    <>
-                        <IconButton
-                            position="absolute"
-                            left="-20px"
-                            top="30%"
-                            transform="translateY(-50%)"
-                            aria-label="Ver programas anteriores"
-                            variant="solid"
-                            bg="white"
-                            color="gray.600"
-                            size="lg"
-                            borderRadius="md"
-                            shadow="lg"
-                            border="1px solid"
-                            borderColor="gray.200"
-                            onClick={() => scrollToDirection('left')}
-                            opacity={canScrollLeft ? 1 : 0.4}
-                            cursor={canScrollLeft ? 'pointer' : 'not-allowed'}
-                            _hover={{
-                                bg: canScrollLeft ? 'gray.50' : 'white',
-                                color: canScrollLeft ? 'gray.800' : 'gray.600',
-                                shadow: canScrollLeft ? 'xl' : 'lg',
-                                transform: canScrollLeft ? 'translateY(-50%) scale(1.05)' : 'translateY(-50%)',
-                            }}
-                            transition="all 0.2s"
-                            zIndex={2}
-                            disabled={!canScrollLeft}
-                        >
-                            <FiChevronLeft size={20} />
-                        </IconButton>
+                    {showScrollButton && programas.length > 3 && (
+                        <>
+                            <IconButton
+                                position="absolute"
+                                left="-70px"
+                                top="40%"
+                                transform="translateY(-50%)"
+                                aria-label="Slide anterior"
+                                variant="solid"
+                                bg="white"
+                                color="gray.600"
+                                size="lg"
+                                borderRadius="full"
+                                shadow="lg"
+                                border="1px solid"
+                                borderColor="gray.200"
+                                onClick={slidePrev}
+                                opacity={isBeginning ? 0.4 : 1}
+                                cursor={isBeginning ? 'not-allowed' : 'pointer'}
+                                _hover={{
+                                    bg: !isBeginning ? 'gray.50' : 'white',
+                                    color: !isBeginning ? 'gray.800' : 'gray.600',
+                                    shadow: !isBeginning ? 'xl' : 'lg',
+                                    transform: !isBeginning
+                                        ? 'translateY(-50%) scale(1.1)'
+                                        : 'translateY(-50%)',
+                                }}
+                                transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                                zIndex={1000}
+                                disabled={isBeginning}
+                                w="56px"
+                                h="56px"
+                            >
+                                <FiChevronLeft size={24} />
+                            </IconButton>
 
-                        <IconButton
-                            position="absolute"
-                            right="-20px"
-                            top="30%"
-                            transform="translateY(-50%)"
-                            aria-label="Ver próximos programas"
-                            variant="solid"
-                            bg="white"
-                            color="gray.600"
-                            size="lg"
-                            borderRadius="md"
-                            shadow="lg"
-                            border="1px solid"
-                            borderColor="gray.200"
-                            onClick={() => scrollToDirection('right')}
-                            opacity={canScrollRight ? 1 : 0.4}
-                            cursor={canScrollRight ? 'pointer' : 'not-allowed'}
-                            _hover={{
-                                bg: canScrollRight ? 'gray.50' : 'white',
-                                color: canScrollRight ? 'gray.800' : 'gray.600',
-                                shadow: canScrollRight ? 'xl' : 'lg',
-                                transform: canScrollRight ? 'translateY(-50%) scale(1.05)' : 'translateY(-50%)',
-                            }}
-                            transition="all 0.2s"
-                            zIndex={2}
-                            disabled={!canScrollRight}
-                        >
-                            <FiChevronRight size={20} />
-                        </IconButton>
-                    </>
-                )}
+                            <IconButton
+                                position="absolute"
+                                right="-70px"
+                                top="40%"
+                                transform="translateY(-50%)"
+                                aria-label="Próximo slide"
+                                variant="solid"
+                                bg="white"
+                                color="gray.600"
+                                size="lg"
+                                borderRadius="full"
+                                shadow="lg"
+                                border="1px solid"
+                                borderColor="gray.200"
+                                onClick={slideNext}
+                                opacity={isEnd ? 0.4 : 1}
+                                cursor={isEnd ? 'not-allowed' : 'pointer'}
+                                _hover={{
+                                    bg: !isEnd ? 'gray.50' : 'white',
+                                    color: !isEnd ? 'gray.800' : 'gray.600',
+                                    shadow: !isEnd ? 'xl' : 'lg',
+                                    transform: !isEnd
+                                        ? 'translateY(-50%) scale(1.1)'
+                                        : 'translateY(-50%)',
+                                }}
+                                transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                                zIndex={1000}
+                                disabled={isEnd}
+                                w="56px"
+                                h="56px"
+                            >
+                                <FiChevronRight size={24} />
+                            </IconButton>
+                        </>
+                    )}
+                </Box>
             </Box>
+
+            <style jsx global>{`
+                .programa-section-overflow .swiper {
+                    overflow: visible !important;
+                    position: static !important;
+                }
+                
+                .programa-section-overflow .swiper-wrapper {
+                    overflow: visible !important;
+                }
+                
+                .programa-section-overflow .swiper-slide {
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    pointer-events: auto !important;
+                    transition: all 0.4s ease !important;
+                }
+            `}</style>
         </Box>
     );
 };
