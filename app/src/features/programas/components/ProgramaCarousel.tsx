@@ -290,9 +290,9 @@ export const ProgramaCarousel: FC<ProgramaCarouselProps> = ({ programas }) => {
                                                     </Box>
                                                 </VStack>
                                             </Box>
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                </Link>
+                                    </Link>
                             </SwiperSlide>
                         ))}
                     </Swiper>

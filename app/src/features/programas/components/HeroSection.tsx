@@ -11,6 +11,7 @@ import {
     Icon,
     Image,
 } from '@chakra-ui/react';
+import { FavoriteButton } from '../../../components/ui/FavoriteButton';
 
 interface HeroSectionProps {
     programa: {
@@ -21,15 +22,15 @@ interface HeroSectionProps {
     };
 }
 
-export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
-    <Box
-        position="relative"
-        h="509px"
-        overflow="hidden"
-        w="full"
-        bg="black"
-    >
-        {/* Background Image com Overlay */}
+export const HeroSection: FC<HeroSectionProps> = ({ programa }) => {
+    return (
+        <Box
+            position="relative"
+            h="509px"
+            overflow="hidden"
+            w="full"
+            bg="black"
+        >
         <Image
             src={`https://picsum.photos/350/500?random=${programa.id}`}
             alt="Background do curso"
@@ -42,7 +43,6 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
             filter="brightness(0.3)"
         />
 
-        {/* Overlay Gradient */}
         <Box
             position="absolute"
             top="0"
@@ -52,10 +52,8 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
             bgGradient="linear(to-r, blackAlpha.800, blackAlpha.600)"
         />
 
-        {/* Content Container - Posicionado na parte inferior */}
         <Container maxW="8xl" h="full" position="relative" zIndex={2} pl={12}>
             <HStack h="full" justify="space-between" align="flex-end" pb={8}>
-                {/* Lado Esquerdo - Conteúdo Principal */}
                 <VStack align="start" maxW="600px" gap={3}>
                     <Heading
                         as="h1"
@@ -87,8 +85,9 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
                     </VStack>
                 </VStack>
 
-                {/* Lado Direito - Botão Compartilhar */}
-                <VStack pb={4}>
+                <HStack pb={4} gap={3}>
+                    <FavoriteButton programaId={programa.id} variant="hero" />
+
                     <Button
                         variant="outline"
                         colorScheme="whiteAlpha"
@@ -108,18 +107,18 @@ export const HeroSection: FC<HeroSectionProps> = ({ programa }) => (
                         fontSize="md"
                         fontFamily="Poppins, sans-serif"
                     >
-                        {/* Ícone personalizado de compartilhar */}
                         <Image
                             src="/mdi-light_share.svg"
                             alt="Compartilhar"
                             boxSize="24px"
                             mr={2}
-                            filter="brightness(0) invert(1)" // Torna o ícone branco
+                            filter="brightness(0) invert(1)"
                         />
                         Compartilhar
                     </Button>
-                </VStack>
+                </HStack>
             </HStack>
         </Container>
     </Box>
-);
+    );
+};
