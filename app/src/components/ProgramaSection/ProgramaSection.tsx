@@ -277,7 +277,6 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                 </Box>
             </Box>
 
-            {/* CSS */}
             <style jsx global>{`
                 .programa-section-overflow .swiper {
                     overflow: visible !important;
