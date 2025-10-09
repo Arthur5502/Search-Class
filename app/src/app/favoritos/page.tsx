@@ -2,12 +2,11 @@
 import { FC, useEffect, useState } from 'react';
 import {
     Box,
-    Container,
     Heading,
     Text,
     HStack,
 } from '@chakra-ui/react';
-import { Header } from '../../components/layout/Header';
+import { Header } from '@/components/Header';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ProgramaSection } from '../../features/programas/components/ProgramaSection';
 import { useAppStore } from '../../store/useAppStore';
@@ -34,9 +33,9 @@ const FavoritosPage: FC = () => {
         return (
             <Box bg="gray.50" minH="100vh">
                 <Header />
-                <Container maxW="8xl" py={12}>
+                <Box py={12} px="20px">
                     <Text>Carregando...</Text>
-                </Container>
+                </Box>
             </Box>
         );
     }
@@ -45,18 +44,19 @@ const FavoritosPage: FC = () => {
         <Box bg="gray.50" minH="100vh">
             <Header />
 
-            <Container maxW="8xl" py={8} px={10}>
+            <Box py={6} px="20px">
                 {programasFavoritos.length > 0 ? (
                     <>
-                        <HStack justify="space-between" align="center" mb={6}>
+                        <HStack justify="space-between" align="center" mb={8}>
                             <Heading
-                                fontSize="3xl"
+                                size="lg"
                                 color="gray.900"
                                 fontWeight="600"
+                                fontSize={{ base: "xl", md: "2xl" }}
                             >
                                 Favoritos
                             </Heading>
-                            <Text fontSize="sm" color="gray.600" fontWeight="500">
+                            <Text fontSize="sm" color="gray.500" fontWeight="500">
                                 {programasFavoritos.length} {programasFavoritos.length === 1 ? 'curso favorito' : 'cursos favoritos'}
                             </Text>
                         </HStack>
@@ -72,7 +72,7 @@ const FavoritosPage: FC = () => {
                 ) : (
                     <EmptyState />
                 )}
-            </Container>
+            </Box>
         </Box>
     );
 };
