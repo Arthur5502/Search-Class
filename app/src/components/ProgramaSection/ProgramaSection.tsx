@@ -66,27 +66,27 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
             return {
                 320: {
                     slidesPerView: 1.1,
-                    spaceBetween: 16,
+                    spaceBetween: 8,
                 },
                 480: {
                     slidesPerView: 1.3,
-                    spaceBetween: 20,
+                    spaceBetween: 10,
                 },
                 768: {
                     slidesPerView: 2,
-                    spaceBetween: 24,
+                    spaceBetween: 12,
                 },
                 1024: {
                     slidesPerView: 2.5,
-                    spaceBetween: 24,
+                    spaceBetween: 12,
                 },
                 1280: {
                     slidesPerView: 3,
-                    spaceBetween: 24,
+                    spaceBetween: 12,
                 },
                 1536: {
                     slidesPerView: 3.5,
-                    spaceBetween: 24,
+                    spaceBetween: 12,
                 },
             }
         }
@@ -94,27 +94,27 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
         return {
             320: {
                 slidesPerView: 1.2,
-                spaceBetween: 16,
+                spaceBetween: 8,
             },
             480: {
                 slidesPerView: 1.8,
-                spaceBetween: 20,
+                spaceBetween: 10,
             },
             768: {
                 slidesPerView: 2.5,
-                spaceBetween: 24,
+                spaceBetween: 12,
             },
             1024: {
                 slidesPerView: 3.2,
-                spaceBetween: 24,
+                spaceBetween: 12,
             },
             1280: {
                 slidesPerView: 4,
-                spaceBetween: 24,
+                spaceBetween: 12,
             },
             1536: {
                 slidesPerView: 4.5,
-                spaceBetween: 24,
+                spaceBetween: 12,
             },
         }
     }
@@ -163,7 +163,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                         modules={[Navigation, FreeMode, Mousewheel]}
                         onSwiper={handleSwiperInit}
                         onSlideChange={handleSlideChange}
-                        spaceBetween={24}
+                        spaceBetween={12}
                         slidesPerView="auto"
                         grabCursor={true}
                         watchOverflow={true}
@@ -207,7 +207,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                         <>
                             <IconButton
                                 position="absolute"
-                                left="-70px"
+                                left="10px"
                                 top="35%"
                                 transform="translateY(-50%)"
                                 aria-label="Slide anterior"
@@ -241,7 +241,7 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
 
                             <IconButton
                                 position="absolute"
-                                right="-70px"
+                                right="10px"
                                 top="35%"
                                 transform="translateY(-50%)"
                                 aria-label="Próximo slide"

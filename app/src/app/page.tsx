@@ -64,16 +64,14 @@ export default function HomePage() {
       </Box>
 
       <Box bg="gray.50" pb={20}>
-        {/* Primeira linha - Card Pequeno */}
         <ProgramaSection
           title="Eventos mais acessados das últimas 24hrs"
-          programas={programasPopulares.slice(0, 8)}
+          programas={programasPopulares.slice(0, 20)}
           viewAllHref="/programas?filter=populares"
           showScrollButton={false}
           cardType="small"
         />
 
-        {/* Segunda linha - Card Médio */}
         <ProgramaSection
           title="Cursos semelhantes a suas últimas escolhas"
           programas={cursosAutomacao.slice(0, 6)}
@@ -83,7 +81,6 @@ export default function HomePage() {
           cardType="medium"
         />
 
-        {/* Terceira linha - Card Pequeno */}
         <ProgramaSection
           title="Eventos hoje na sua cidade"
           programas={eventosLocais.slice(0, 8)}
@@ -92,7 +89,6 @@ export default function HomePage() {
           cardType="small"
         />
 
-        {/* Seções adicionais com scroll */}
         {cursosAutomacao.length > 6 && (
           <ProgramaSection
             title="Mais recomendações para você"
