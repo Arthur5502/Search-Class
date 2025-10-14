@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { Header } from '@/components/Header';
 import { EmptyState } from '../../components/ui/EmptyState';
-import { ProgramaSection } from '../../features/programas/components/ProgramaSection';
+import { ProgramaSection } from '../../components/ProgramaSection';
 import { useAppStore } from '../../store/useAppStore';
 import { mockProgramas } from '../../mocks/programas';
 import type { Programa } from '../../types/domain';
@@ -62,9 +62,8 @@ const FavoritosPage: FC = () => {
                         </HStack>
 
                         <ProgramaSection
+                            title="Favoritos"
                             programas={programasFavoritos}
-                            layout="grid"
-                            showHeader={false}
                             showViewAll={false}
                             showScrollButton={false}
                         />

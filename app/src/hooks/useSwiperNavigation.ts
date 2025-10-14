@@ -9,7 +9,6 @@ export const useSwiperNavigation = () => {
     const handleSwiperInit = (swiper: SwiperType) => {
         setSwiperInstance(swiper)
 
-        // Configurar navegação após inicialização
         setTimeout(() => {
             if (prevRef.current && nextRef.current) {
                 (swiper.params.navigation as any).prevEl = prevRef.current;

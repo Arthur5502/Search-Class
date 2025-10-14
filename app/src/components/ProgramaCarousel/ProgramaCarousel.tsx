@@ -11,7 +11,6 @@ import { useSwiperNavigation } from '../../hooks/useSwiperNavigation'
 import { swiperStyles } from './ProgramaCarousel.styles'
 import type { ProgramaCarouselProps } from './ProgramaCarousel.types'
 
-// Importações CSS
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -41,7 +40,6 @@ export const ProgramaCarousel = ({
                 py={{ base: "30px", md: "50px" }}
                 overflow="visible"
             >
-                {/* Botões de Navegação */}
                 <CarouselButton
                     ref={prevRef}
                     icon={<FiChevronLeft size={24} />}
@@ -56,7 +54,6 @@ export const ProgramaCarousel = ({
                     aria-label="Próximo slide"
                 />
 
-                {/* Container do Swiper */}
                 <Box
                     width="100%"
                     maxW={{ base: "100%", md: "1200px" }}
@@ -112,7 +109,6 @@ export const ProgramaCarousel = ({
                 </Box>
             </Box>
 
-            {/* Paginação */}
             <Box
                 display="flex"
                 justifyContent="center"
@@ -124,7 +120,6 @@ export const ProgramaCarousel = ({
                 <Box className="swiper-pagination-custom" />
             </Box>
 
-            {/* Estilos CSS */}
             <style jsx global>
                 {swiperStyles}
             </style>

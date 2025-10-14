@@ -36,8 +36,8 @@ export const CarouselButton = forwardRef<HTMLButtonElement, CarouselButtonProps>
             disabled={disabled}
             onClick={onClick}
             _hover={{
-                bg: 'rgba(0, 0, 0, 0.8)',
-                color: 'white',
+                bg: 'rgba(255, 255, 255, 0.8)',
+                color: 'black',
                 transform: 'translateY(-50%) scale(1.1)',
                 boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.1)'
             }}

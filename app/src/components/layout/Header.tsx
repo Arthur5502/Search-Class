@@ -34,7 +34,6 @@ export const Header: FC = () => {
         >
             <Box px={{ base: 4, sm: 6, md: 8, lg: 10 }} w="100%">
                 <HStack justify="space-between" align="center" w="100%">
-                    {/* Logo */}
                     <Link href="/">
                         <HStack gap={3} cursor="pointer">
                             <Image
