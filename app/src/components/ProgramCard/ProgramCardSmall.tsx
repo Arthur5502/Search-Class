@@ -23,7 +23,7 @@ export const ProgramCardSmall = ({
                 transition="all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
                 position="relative"
                 zIndex={1}
-                w="317px"
+                w={{ base: "280px", sm: "300px", md: "317px" }}
                 _hover={{
                     transform: 'translateY(-4px)',
                     zIndex: 999,
@@ -54,7 +54,7 @@ export const ProgramCardSmall = ({
                     <Box
                         position="relative"
                         overflow="hidden"
-                        h="163px"
+                        h={{ base: "150px", sm: "163px" }}
                         bg="gray.100"
                     >
                         <Image

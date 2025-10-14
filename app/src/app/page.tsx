@@ -41,11 +41,11 @@ export default function HomePage() {
   }
 
   return (
-    <Box bg="gray.50" minH="100vh">
+    <Box bg="gray.50" minH="100vh" position="relative" overflow="hidden">
       <Header />
 
-      <Box bg="gray.50" py={6} px={4}>
-        <VStack gap={1} align="center" w="100%" maxW="800px" mx="auto">
+      <Box bg="gray.50" py={{ base: 4, md: 6 }} px={{ base: 2, sm: 3, md: 4 }}>
+        <VStack gap={{ base: 2, md: 3 }} align="center" w="100%" maxW="800px" mx="auto">
           <SearchInput
             placeholder="Curso de Front-End"
           />
@@ -53,7 +53,7 @@ export default function HomePage() {
         </VStack>
       </Box>
 
-      <Box py={8}>
+      <Box py={{ base: 4, md: 6, lg: 8 }}>
         {programasDestaque.length > 0 && (
           <ProgramaCarousel
             programas={programasDestaque}
@@ -63,7 +63,7 @@ export default function HomePage() {
         )}
       </Box>
 
-      <Box bg="gray.50" pb={20}>
+      <Box bg="gray.50" pb={{ base: 10, md: 15, lg: 20 }}>
         <ProgramaSection
           title="Eventos mais acessados das últimas 24hrs"
           programas={programasPopulares.slice(0, 20)}

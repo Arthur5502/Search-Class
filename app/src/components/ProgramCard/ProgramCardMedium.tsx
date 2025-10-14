@@ -23,7 +23,7 @@ export const ProgramCardMedium = ({
                 transition="all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
                 position="relative"
                 zIndex={1}
-                w="440px"
+                w={{ base: "320px", sm: "380px", md: "420px", lg: "440px" }}
                 className={className}
                 _hover={{
                     transform: 'translateY(-4px)',
@@ -55,7 +55,7 @@ export const ProgramCardMedium = ({
                     <Box
                         position="relative"
                         overflow="hidden"
-                        h="226px"
+                        h={{ base: "180px", sm: "200px", md: "220px", lg: "226px" }}
                         bg="gray.100"
                     >
                         <Image
