@@ -1,4 +1,3 @@
-// hooks/useFilters.ts
 import { useState } from 'react'
 import type { Estado } from '../constants/estados'
 import type { FilterType } from '../components/FilterTabs/FilterTabs.types'
