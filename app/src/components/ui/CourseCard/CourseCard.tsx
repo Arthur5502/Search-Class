@@ -1,6 +1,7 @@
 import { Box, Image, Text, Heading, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { ProgramBadge } from '../ProgramaBadge'
+import { FavoriteButton } from '../FavoriteButton'
 import type { CourseCardProps } from './CourseCard.types'
 
 const DESIGN_TOKENS = {
@@ -100,45 +101,63 @@ export const CourseCard = ({
                 overflow="hidden"
                 borderRadius={config.borderRadius}
             >
-                {/* Imagem de Fundo */}
-                <Image
-                    src={`https://picsum.photos/350/500?random=${programa.id}`}
-                    alt={programa.titulo}
-                    w="100%"
+                {/* Container da Imagem */}
+                <Box
+                    position="relative"
                     h={layout === 'overlay' ? "100%" : config.imageHeight}
-                    objectFit="cover"
-                    loading={priority ? 'eager' : 'lazy'}
-                />
+                    w="100%"
+                >
+                    {/* Imagem de Fundo */}
+                    <Image
+                        src={`https://picsum.photos/350/500?random=${programa.id}`}
+                        alt={programa.titulo}
+                        w="100%"
+                        h="100%"
+                        objectFit="cover"
+                        loading={priority ? 'eager' : 'lazy'}
+                    />
 
-                {/* 🆕 Badge de destaque para featured */}
-                {variant === 'featured' && (
+                    {/* 🆕 Badge de destaque para featured */}
+                    {variant === 'featured' && (
+                        <Box
+                            position="absolute"
+                            top="12px"
+                            left="12px"
+                            bg="blue.500"
+                            color="white"
+                            px="8px"
+                            py="4px"
+                            borderRadius="full"
+                            fontSize="xs"
+                            fontWeight="bold"
+                        >
+                            DESTAQUE
+                        </Box>
+                    )}
+
+                    {/* Gradiente Overlay - só para layout overlay */}
+                    {layout === 'overlay' && (
+                        <Box
+                            position="absolute"
+                            top={0}
+                            left={0}
+                            right={0}
+                            bottom={0}
+                            background={DESIGN_TOKENS.gradient}
+                        />
+                    )}
+
+                    {/* Botão de Favoritar - Canto superior direito */}
                     <Box
                         position="absolute"
                         top="12px"
                         right="12px"
-                        bg="blue.500"
-                        color="white"
-                        px="8px"
-                        py="4px"
-                        borderRadius="full"
-                        fontSize="xs"
-                        fontWeight="bold"
+                        zIndex={10}
+                        onClick={(e) => e.preventDefault()}
                     >
-                        DESTAQUE
+                        <FavoriteButton programaId={programa.id} />
                     </Box>
-                )}
-
-                {/* Gradiente Overlay - só para layout overlay */}
-                {layout === 'overlay' && (
-                    <Box
-                        position="absolute"
-                        top={0}
-                        left={0}
-                        right={0}
-                        bottom={0}
-                        background={DESIGN_TOKENS.gradient}
-                    />
-                )}
+                </Box>
 
                 {/* Conteúdo do Card - Posicionamento baseado no layout */}
                 {layout === 'overlay' ? (
