@@ -108,29 +108,25 @@ export const Header: FC = () => {
 
                         {user ? (
                             <Box
-                                w={10}
-                                h={10}
+                                w="36px"
+                                h="36px"
                                 bg="blue.500"
                                 rounded="full"
                                 display="flex"
                                 alignItems="center"
                                 justifyContent="center"
                                 color="white"
-                                fontSize="sm"
+                                fontSize="xs"
                                 fontWeight="bold"
-                                cursor="pointer"
-                                _hover={{ bg: "blue.600" }}
                             >
                                 {user.nome.charAt(0).toUpperCase()}
                             </Box>
                         ) : (
                             <Image
-                                src="/profile-icon.png"
+                                src="/profile-icon.svg"
                                 alt="Profile"
-                                w={10}
-                                h={10}
-                                cursor="pointer"
-                                _hover={{ opacity: 0.8 }}
+                                w="36px"
+                                h="36px"
                             />
                         )}
                     </HStack>
