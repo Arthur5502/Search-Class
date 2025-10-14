@@ -101,13 +101,11 @@ export const CourseCard = ({
                 overflow="hidden"
                 borderRadius={config.borderRadius}
             >
-                {/* Container da Imagem */}
                 <Box
                     position="relative"
                     h={layout === 'overlay' ? "100%" : config.imageHeight}
                     w="100%"
                 >
-                    {/* Imagem de Fundo */}
                     <Image
                         src={`https://picsum.photos/350/500?random=${programa.id}`}
                         alt={programa.titulo}
@@ -117,7 +115,6 @@ export const CourseCard = ({
                         loading={priority ? 'eager' : 'lazy'}
                     />
 
-                    {/* 🆕 Badge de destaque para featured */}
                     {variant === 'featured' && (
                         <Box
                             position="absolute"
@@ -135,7 +132,6 @@ export const CourseCard = ({
                         </Box>
                     )}
 
-                    {/* Gradiente Overlay - só para layout overlay */}
                     {layout === 'overlay' && (
                         <Box
                             position="absolute"
@@ -147,7 +143,6 @@ export const CourseCard = ({
                         />
                     )}
 
-                    {/* Botão de Favoritar - Canto superior direito */}
                     <Box
                         position="absolute"
                         top="12px"
@@ -159,9 +154,7 @@ export const CourseCard = ({
                     </Box>
                 </Box>
 
-                {/* Conteúdo do Card - Posicionamento baseado no layout */}
                 {layout === 'overlay' ? (
-                    // LAYOUT ORIGINAL - Texto sobre a imagem (carousel)
                     <Box
                         position="absolute"
                         bottom={0}
@@ -209,7 +202,6 @@ export const CourseCard = ({
                         </VStack>
                     </Box>
                 ) : (
-                    // 🆕 LAYOUT EXTERNO - Texto embaixo da imagem (grid)
                     <Box
                         position="absolute"
                         bottom={0}
