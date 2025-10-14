@@ -1,6 +1,6 @@
 import type { Programa, Instituicao } from '@/types/domain';
 
-const mockInstituicoes: Instituicao[] = [
+export const mockInstituicoes: Instituicao[] = [
     {
         id: 'inst-1',
         nome: 'SENAI - Serviço Nacional de Aprendizagem Industrial',
