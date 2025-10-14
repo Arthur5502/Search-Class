@@ -56,16 +56,19 @@ export default function CadastrarCursoPage() {
             >
                 <VStack
                     align="stretch"
-                    gap="10px"
+                    gap="20px"
                     w="1368px"
                     maxW="100%"
                     px={{ base: 4, md: 6, lg: 0 }}
                 >
                     <Box h={{ base: "auto", md: "30px" }} pl={{ base: 4, md: 8 }}>
                         <Text
-                            fontSize={{ base: "2xl", md: "3xl" }}
-                            fontWeight="bold"
-                            color="gray.800"
+                            fontSize={{ base: "28px", md: "42.08px" }}
+                            fontWeight="400"
+                            color="#000000"
+                            lineHeight="100%"
+                            letterSpacing="0%"
+                            fontFamily="'Poppins', sans-serif"
                         >
                             Cadastrar novo curso
                         </Text>

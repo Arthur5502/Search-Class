@@ -12,10 +12,13 @@ export const FormTextarea = ({
     return (
         <Box w="100%">
             <Text
-                fontSize="sm"
-                fontWeight="medium"
-                color="gray.900"
-                mb={1}
+                fontSize="20px"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="100%"
+                letterSpacing="0%"
+                fontFamily="'Poppins', sans-serif"
+                mb={2}
             >
                 {label}
                 {isRequired && (
@@ -28,27 +31,30 @@ export const FormTextarea = ({
                 placeholder={placeholder}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
-                bg="gray.50"
-                border="1px"
-                borderColor="gray.200"
-                borderRadius="md"
+                bg="#F7F7F7"
+                border="1px solid"
+                borderColor="#D9D9D9"
+                borderRadius="10px"
                 px={4}
                 py={3}
-                fontSize="sm"
+                fontSize="14px"
+                fontFamily="'Poppins', sans-serif"
+                fontWeight="400"
                 color="gray.900"
                 rows={rows}
                 resize="vertical"
                 _placeholder={{
-                    color: "gray.400"
+                    color: "gray.400",
+                    fontFamily: "'Poppins', sans-serif"
                 }}
                 _hover={{
-                    borderColor: "gray.300"
+                    borderColor: "#B3B3B3"
                 }}
                 _focus={{
-                    borderColor: "blue.500",
+                    borderColor: "#298bf8",
                     bg: "white",
                     outline: "none",
-                    boxShadow: "0 0 0 1px var(--chakra-colors-blue-500)"
+                    boxShadow: "0 0 0 1px #298bf8"
                 }}
             />
         </Box>

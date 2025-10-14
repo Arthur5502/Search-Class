@@ -6,9 +6,12 @@ export const AddressForm = ({ data, onChange }: AddressFormProps) => {
     return (
         <VStack align="stretch" gap="10px">
             <Text
-                fontSize="lg"
-                fontWeight="semibold"
-                color="gray.800"
+                fontSize="30px"
+                fontWeight="400"
+                color="#000000"
+                lineHeight="100%"
+                letterSpacing="0%"
+                fontFamily="'Poppins', sans-serif"
             >
                 Endereço do evento
             </Text>
