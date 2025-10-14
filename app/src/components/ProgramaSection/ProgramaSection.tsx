@@ -120,14 +120,14 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
     }
 
     return (
-        <Box w="100%" py={2} px="80px">
+        <Box w="100%" py={{ base: 3, md: 4, lg: 6 }} px={{ base: "16px", sm: "24px", md: "40px", lg: "80px" }}>
             <Box>
-                <HStack justify="space-between" align="center" mb={2}>
+                <HStack justify="space-between" align="center" mb={{ base: 3, md: 4 }} flexWrap="wrap" gap={2}>
                     <Heading
                         size="lg"
                         color="gray.900"
                         fontWeight="600"
-                        fontSize={{ base: "xl", md: "2xl" }}
+                        fontSize={{ base: "lg", sm: "xl", md: "2xl" }}
                     >
                         {title}
                     </Heading>
@@ -137,9 +137,10 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                             <Button
                                 variant="ghost"
                                 color="blue.500"
-                                fontSize="sm"
+                                fontSize={{ base: "xs", sm: "sm" }}
                                 fontWeight="500"
                                 p={0}
+                                minW="auto"
                                 _hover={{ color: 'blue.600' }}
                                 transition="color 0.2s"
                             >
@@ -153,8 +154,8 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
             <Box
                 position="relative"
                 w="100%"
-                pt={4}
-                pb={5}
+                pt={{ base: 2, md: 4 }}
+                pb={{ base: 3, md: 5 }}
                 overflow="visible"
                 className="programa-section-overflow"
             >
@@ -207,14 +208,14 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                         <>
                             <IconButton
                                 position="absolute"
-                                left="10px"
+                                left={{ base: "-8px", md: "10px" }}
                                 top="35%"
                                 transform="translateY(-50%)"
                                 aria-label="Slide anterior"
                                 variant="solid"
                                 bg="white"
                                 color="gray.600"
-                                size="lg"
+                                size={{ base: "md", md: "lg" }}
                                 borderRadius="full"
                                 shadow="lg"
                                 border="1px solid"
@@ -233,22 +234,23 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                 transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                                 zIndex={1000}
                                 disabled={isBeginning}
-                                w="56px"
-                                h="56px"
+                                w={{ base: "40px", md: "56px" }}
+                                h={{ base: "40px", md: "56px" }}
+                                display={{ base: "none", sm: "flex" }}
                             >
                                 <FiChevronLeft size={24} />
                             </IconButton>
 
                             <IconButton
                                 position="absolute"
-                                right="10px"
+                                right={{ base: "-8px", md: "10px" }}
                                 top="35%"
                                 transform="translateY(-50%)"
                                 aria-label="Próximo slide"
                                 variant="solid"
                                 bg="white"
                                 color="gray.600"
-                                size="lg"
+                                size={{ base: "md", md: "lg" }}
                                 borderRadius="full"
                                 shadow="lg"
                                 border="1px solid"
@@ -267,8 +269,9 @@ export const ProgramaSection: FC<ProgramaSectionProps> = ({
                                 transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
                                 zIndex={1000}
                                 disabled={isEnd}
-                                w="56px"
-                                h="56px"
+                                w={{ base: "40px", md: "56px" }}
+                                h={{ base: "40px", md: "56px" }}
+                                display={{ base: "none", sm: "flex" }}
                             >
                                 <FiChevronRight size={24} />
                             </IconButton>
