@@ -2,12 +2,10 @@
 import { FC, useState, useEffect } from 'react';
 import { Box, Text } from '@chakra-ui/react';
 import { useParams } from 'next/navigation';
-import { Header } from '@/components/layout/Header';
-
-import { HeroSection } from '../../../features/programas/components/HeroSection';
-import { ContentSection } from '../../../features/programas/components/ContentSection';
-import { getProgramaById } from '@/lib/programas.service';
-import type { Programa } from '@/types/domain';
+import { Header } from '../../../components/layout/Header';
+import { ProgramaHero, ProgramaConteudo } from '../../../components/programas';
+import { getProgramaById } from '../../../lib/programas.service';
+import type { Programa } from '../../../types/domain';
 
 /* Hook de dados */
 const usePrograma = (id: string) => {
@@ -46,10 +44,22 @@ const ProgramaDetalhePage: FC = () => {
 
     /* PÁGINA COMPLETA */
     return (
-        <Box bg="gray.50" minH="100vh">
+        <Box bg="gray.50" minH="100vh" position="relative">
             <Header />
-            <HeroSection programa={programa} />
-            <ContentSection programa={programa} />
+            <ProgramaHero programa={programa} />
+            <ProgramaConteudo
+                programaId={programa.id}
+                titulo="Marketing Digital – Do conteúdo às vendas com Paula Tebett"
+                descricao={[
+                    'A Associação Comercial e Industrial de Campo Grande recebe dia 09/10/2025 às 19h, Paula Tebett – jornalista de formação e com MBA em Marketing pela FGV. Paula construiu uma trajetória que vai muito além da redação. Hoje, é palestrante, professora de MBA, treinadora de equipes, criadora de conteúdo e mestre de cerimônias. Sua atuação é marcada por uma combinação única de conhecimento técnico, visão de mercado e um bom humor que contagia.',
+                    'Nesta dia vamos aprender como conteúdos autênticos colaboram para uma rede social utilizando linguagem simples e leve. Paula irá ensinar como tornar sua marca competitiva.'
+                ]}
+                data="Dia 09/10/2025 às 19h"
+                local="Local: ACICG"
+                realizacao="Realização: ACICG / SEBRAE / ESCOLA DE NEGÓCIOS"
+                imagemUrl="/university-image.jpg"
+                instituicao="Cesar School"
+            />
         </Box>
     );
 };
