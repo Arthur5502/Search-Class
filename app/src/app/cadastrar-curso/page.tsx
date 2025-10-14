@@ -1,47 +1,21 @@
 'use client';
 
-import { useState } from 'react';
 import { Box, VStack, Button, HStack, Text, Image } from '@chakra-ui/react';
 import { ProducerHeader } from '@/components/layout/ProducerHeader';
 import { GeneralInfoForm } from '@/components/forms/GeneralInfoForm';
 import { AddressForm } from '@/components/forms/AddressForm';
-import type { GeneralInfoFormData } from '@/components/forms/GeneralInfoForm';
-import type { AddressFormData } from '@/components/forms/AddressForm';
+import { useCadastroCurso } from '@/hooks/useCadastroCurso';
 
 export default function CadastrarCursoPage() {
-    const [generalInfo, setGeneralInfo] = useState<GeneralInfoFormData>({
-        titulo: '',
-        dataEvento: '',
-        tipoEvento: '',
-        descricao: '',
-        politicas: ''
-    });
-
-    const [address, setAddress] = useState<AddressFormData>({
-        cep: '',
-        numero: '',
-        complemento: '',
-        logradouro: '',
-        rua: ''
-    });
-
-    const [imageFile, setImageFile] = useState<File | null>(null);
-
-    const handleGeneralInfoChange = (data: Partial<GeneralInfoFormData>) => {
-        setGeneralInfo((prev) => ({ ...prev, ...data }));
-    };
-
-    const handleAddressChange = (data: Partial<AddressFormData>) => {
-        setAddress((prev) => ({ ...prev, ...data }));
-    };
-
-    const handleSubmit = () => {
-        console.log('Dados do formulário:', {
-            generalInfo,
-            address,
-            imageFile
-        });
-    };
+    const {
+        generalInfo,
+        address,
+        isSubmitting,
+        handleGeneralInfoChange,
+        handleAddressChange,
+        handleImageSelect,
+        handleSubmit
+    } = useCadastroCurso();
 
     return (
         <>
@@ -83,7 +57,7 @@ export default function CadastrarCursoPage() {
                             <GeneralInfoForm
                                 data={generalInfo}
                                 onChange={handleGeneralInfoChange}
-                                onImageSelect={setImageFile}
+                                onImageSelect={handleImageSelect}
                             />
 
                             <AddressForm
@@ -106,10 +80,12 @@ export default function CadastrarCursoPage() {
                                     borderColor="#298BF8"
                                     _hover={{ bg: "#265486", borderColor: "#265486" }}
                                     onClick={handleSubmit}
+                                    loading={isSubmitting}
+                                    disabled={isSubmitting}
                                 >
                                     <HStack gap="10px">
                                         <Image src="/ei_plus.svg" alt="Adicionar" w="24px" h="24px" />
-                                        <Text>Cadastrar</Text>
+                                        <Text>{isSubmitting ? 'Cadastrando...' : 'Cadastrar'}</Text>
                                     </HStack>
                                 </Button>
                             </HStack>

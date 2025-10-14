@@ -13,6 +13,7 @@ interface AppState {
     currentPage: number;
     totalPages: number;
     totalResults: number;
+    cursosCadastrados: Programa[];
     setUser: (user: Usuario | null) => void;
     updateFiltros: (filtros: Partial<FiltrosPrograma>) => void;
     resetFiltros: () => void;
@@ -22,6 +23,8 @@ interface AppState {
     setError: (error: string | null) => void;
     setCurrentPage: (page: number) => void;
     hasFiltrosAtivos: () => boolean;
+    adicionarCurso: (curso: Programa) => void;
+    removerCurso: (cursoId: string) => void;
 }
 
 const initialFiltros: FiltrosPrograma = {
@@ -46,6 +49,7 @@ export const useAppStore = create<AppState>()(
                 currentPage: 1,
                 totalPages: 0,
                 totalResults: 0,
+                cursosCadastrados: [],
 
                 setUser: (user) => set({ user }),
 
@@ -62,7 +66,7 @@ export const useAppStore = create<AppState>()(
                 toggleFavorito: (programaId) => {
                     set((state) => {
                         const index = state.favoritos.indexOf(programaId);
-                        
+
                         if (index > -1) {
                             state.favoritos.splice(index, 1);
                         } else {
@@ -97,13 +101,26 @@ export const useAppStore = create<AppState>()(
                         filtros.comBolsas ||
                         filtros.inscricoesAbertas
                     );
-                }
+                },
+
+                adicionarCurso: (curso) => set((state) => {
+                    state.cursosCadastrados.push(curso);
+                }),
+
+                removerCurso: (cursoId) => set((state) => {
+                    const index = state.cursosCadastrados.findIndex(c => c.id === cursoId);
+                    if (index > -1) {
+                        state.cursosCadastrados.splice(index, 1);
+                    }
+                })
             })),
             {
                 name: 'talent-platform-store',
+                skipHydration: false,
                 partialize: (state) => ({
                     user: state.user,
                     favoritos: state.favoritos,
+                    cursosCadastrados: state.cursosCadastrados,
                     filtros: {
                         ...state.filtros,
                         areas: Array.from(state.filtros.areas),
@@ -125,14 +142,38 @@ export const useAppStore = create<AppState>()(
     )
 );
 
-export const useFiltros = () => useAppStore((state) => ({
-    filtros: state.filtros,
-    updateFiltros: state.updateFiltros,
-    resetFiltros: state.resetFiltros,
-    hasFiltrosAtivos: state.hasFiltrosAtivos()
-}));
+export const useFiltros = () => {
+    const filtros = useAppStore((state) => state.filtros);
+    const updateFiltros = useAppStore((state) => state.updateFiltros);
+    const resetFiltros = useAppStore((state) => state.resetFiltros);
+    const hasFiltrosAtivos = useAppStore((state) => state.hasFiltrosAtivos);
 
-export const useUser = () => useAppStore((state) => ({
-    user: state.user,
-    setUser: state.setUser
-}));
+    return {
+        filtros,
+        updateFiltros,
+        resetFiltros,
+        hasFiltrosAtivos: hasFiltrosAtivos()
+    };
+};
+
+export const useUser = () => {
+    const user = useAppStore((state) => state.user);
+    const setUser = useAppStore((state) => state.setUser);
+
+    return {
+        user,
+        setUser
+    };
+};
+
+export const useCursosCadastrados = () => {
+    const cursosCadastrados = useAppStore((state) => state.cursosCadastrados);
+    const adicionarCurso = useAppStore((state) => state.adicionarCurso);
+    const removerCurso = useAppStore((state) => state.removerCurso);
+
+    return {
+        cursosCadastrados,
+        adicionarCurso,
+        removerCurso
+    };
+};

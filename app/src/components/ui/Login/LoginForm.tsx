@@ -1,6 +1,7 @@
 "use client";
 
 import { VStack, Box, Button } from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 import { LoginField } from "./LoginField";
 
 interface LoginFormProps {
@@ -8,9 +9,17 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ userType }: LoginFormProps) {
+  const router = useRouter();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Entrar como:", userType);
+    
+    if (userType === "aluno") {
+      router.push("/");
+    } else {
+      router.push("/seus-cursos");
+    }
   };
 
   return (
