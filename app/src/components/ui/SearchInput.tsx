@@ -45,17 +45,17 @@ export const SearchInput: FC<SearchInputProps> = ({
         onChange={(e) => updateFiltros({ busca: e.target.value })}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        borderColor={'gray.300'}
         placeholder={placeholder}
         bg="white"
-        borderColor="E4E5E6"
         h={{ base: "50px", sm: "56px", md: "64px" }}
         pl={{ base: "50px", sm: "56px", md: "64px" }}
         pr={{ base: 4, sm: 5, md: 6 }}
         borderRadius={{ base: "18px", sm: "18px", md: "18px" }}
         fontSize={{ base: "md", sm: "lg", md: "lg" }}
         fontWeight="400"
+        boxShadow={"inset"}
         w="100%"
-        shadow="sm"
         transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
         _focus={{
           borderColor: 'blue.400',
