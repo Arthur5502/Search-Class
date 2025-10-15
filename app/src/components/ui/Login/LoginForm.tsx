@@ -16,7 +16,7 @@ export function LoginForm({ userType }: LoginFormProps) {
     console.log("Entrar como:", userType);
     
     if (userType === "aluno") {
-      router.push("/");
+      router.push("/homepage");
     } else {
       router.push("/seus-cursos");
     }
