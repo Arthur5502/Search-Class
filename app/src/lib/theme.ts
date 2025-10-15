@@ -9,6 +9,10 @@ export const theme = createSystem(defineConfig({
                     500: { value: '#0066cc' },
                     600: { value: '#0052a3' },
                 }
+            },
+            fonts: {
+                body: { value: 'Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
+                heading: { value: 'Poppins, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
             }
         }
     }

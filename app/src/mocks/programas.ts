@@ -1,6 +1,6 @@
 import type { Programa, Instituicao } from '@/types/domain';
 
-const mockInstituicoes: Instituicao[] = [
+export const mockInstituicoes: Instituicao[] = [
     {
         id: 'inst-1',
         nome: 'SENAI - Serviço Nacional de Aprendizagem Industrial',
@@ -92,6 +92,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p1',
         titulo: 'Técnico em Automação Industrial',
+        professor: 'Prof. Dr. Carlos Eduardo Machado',
         instituicao: mockInstituicoes[0], // SENAI
         area: 'backend',
         modalidade: 'presencial',
@@ -131,10 +132,11 @@ export const mockProgramas: Programa[] = [
         createdAt: '2025-08-15',
         updatedAt: '2025-09-27'
     },
-    
+
     {
         id: 'p2',
         titulo: 'Desenvolvimento de Sistemas Web Full Stack',
+        professor: 'Prof. Msc. Ana Carolina Silva',
         instituicao: mockInstituicoes[5], // Alura
         area: 'frontend',
         modalidade: 'online',
@@ -172,6 +174,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p3',
         titulo: 'Marketing Digital para Pequenos Negócios',
+        professor: 'Prof. Especialista Fernanda Oliveira',
         instituicao: mockInstituicoes[4], // SEBRAE
         area: 'marketing',
         modalidade: 'hibrido',
@@ -214,6 +217,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p4',
         titulo: 'Design Gráfico e Comunicação Visual',
+        professor: 'Prof. Dr. Ricardo Pereira Santos',
         instituicao: mockInstituicoes[1], // SENAC
         area: 'design',
         modalidade: 'presencial',
@@ -256,6 +260,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p5',
         titulo: 'Análise e Desenvolvimento de Sistemas',
+        professor: 'Prof. Dr. João Marcos Lima',
         instituicao: mockInstituicoes[3], // FATEC
         area: 'backend',
         modalidade: 'presencial',
@@ -293,6 +298,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p6',
         titulo: 'Técnico em Eletrotécnica',
+        professor: 'Prof. Msc. Rafael Costa Nunes',
         instituicao: mockInstituicoes[2], // IFSP
         area: 'engenharia',
         modalidade: 'presencial',
@@ -318,6 +324,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p7',
         titulo: 'Gestão Empresarial para MEI',
+        professor: 'Prof. Especialista Mariana Almeida',
         instituicao: mockInstituicoes[4], // SEBRAE
         area: 'gestao',
         modalidade: 'online',
@@ -343,6 +350,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p8',
         titulo: 'Técnico em Administração',
+        professor: 'Prof. Msc. Luciano Barbosa',
         instituicao: mockInstituicoes[1], // SENAC
         area: 'gestao',
         modalidade: 'presencial',
@@ -368,6 +376,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p9',
         titulo: 'Data Science e Analytics',
+        professor: 'Prof. Dr. Thiago Monteiro',
         instituicao: mockInstituicoes[5], // Alura
         area: 'dados',
         modalidade: 'online',
@@ -393,6 +402,7 @@ export const mockProgramas: Programa[] = [
     {
         id: 'p10',
         titulo: 'Soldagem e Caldeiraria',
+        professor: 'Prof. Técnico André Silva',
         instituicao: mockInstituicoes[0], // SENAI
         area: 'engenharia',
         modalidade: 'presencial',

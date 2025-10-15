@@ -1,5 +1,5 @@
-import { mockProgramas } from '../mocks/programas';
-import type { Programa, AreaTecnologia } from '../types/domain';
+import { mockProgramas, mockInstituicoes } from '../mocks/programas';
+import type { Programa, AreaTecnologia, Instituicao  } from '../types/domain';
 
 export async function getProgramasDestaque(): Promise<Programa[]> {
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -23,4 +23,17 @@ export async function getProgramasPorCategoria(area: AreaTecnologia): Promise<Pr
 export async function getProgramaById(id: string): Promise<Programa | null> {
     await new Promise(resolve => setTimeout(resolve, 100));
     return mockProgramas.find(p => p.id === id) || null;
+}
+
+export async function getProgramasRecentes(): Promise<Programa[]> {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return mockProgramas
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+        .slice(0, 10);
+}
+
+
+export async function getTodasInstituicoes(): Promise<Instituicao[]> {
+  await new Promise(resolve => setTimeout(resolve, 100));
+  return mockInstituicoes;
 }
