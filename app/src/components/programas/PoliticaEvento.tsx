@@ -3,11 +3,13 @@ import { Heading, VStack } from '@chakra-ui/react';
 import { PoliticaEventoItem } from './PoliticaEventoItem';
 
 export const PoliticaEvento: FC = () => (
-    <VStack align="start" gap="4">
-        <Heading 
-            size={{ base: "lg", md: "xl" }} 
-            color="gray.900" 
-            fontSize={{ base: "xl", md: "2xl" }}
+    <VStack align="start" gap={{ base: "16px", md: "20px", lg: "24px" }}>
+        <Heading
+            size={{ base: "lg", md: "xl" }}
+            color="gray.900"
+            fontSize={{ base: "24px", md: "28px", lg: "32px" }}
+            fontFamily="Poppins, sans-serif"
+            fontWeight="600"
         >
             Política do Evento
         </Heading>

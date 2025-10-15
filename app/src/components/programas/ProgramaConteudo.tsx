@@ -28,22 +28,26 @@ export const ProgramaConteudo: FC<ProgramaConteudoProps> = ({
     instituicao,
     eventoUrl
 }) => (
-    <Box 
-        w={{ base: "100%", lg: "1728px" }}
-        minH={{ base: "auto", lg: "1256px" }}
+    <Box
+        w="full"
+        maxW="1728px"
         mx="auto"
-        pt={{ base: "20px", md: "20px", lg: "10px" }}
-        pr={{ base: "20px", md: "40px", lg: "109px" }}
-        pb={{ base: "40px", md: "60px", lg: "10px" }}
-        pl={{ base: "20px", md: "40px", lg: "109px" }}
+        px={{ base: "20px", md: "40px", lg: "109px" }}
+        py={{ base: "40px", md: "60px", lg: "10px" }}
     >
-        <HStack 
-            align="start" 
+        <HStack
+            align="start"
             gap={{ base: 0, lg: "159px" }}
             flexDirection={{ base: "column", lg: "row" }}
         >
-            {/* Área da esquerda - TEXTO DIRETO */}
-            <VStack align="stretch" gap="6" flex="1" maxW="2xl">
+            {/* Área da esquerda - TEXTO */}
+            <VStack
+                align="stretch"
+                gap={{ base: "24px", md: "32px", lg: "48px" }}
+                flex="1"
+                maxW={{ base: "full", lg: "901px" }}
+                py={{ base: 0, lg: "103px" }}
+            >
                 <DescricaoEvento
                     titulo={titulo}
                     descricao={descricao}
@@ -55,11 +59,11 @@ export const ProgramaConteudo: FC<ProgramaConteudoProps> = ({
                 <BotaoAcessarEvento url={eventoUrl} />
             </VStack>
 
-            {/* Área da direita - SÓ A IMAGEM */}
-            <ImagemPrograma 
+            {/* Área da direita - IMAGEM */}
+            <ImagemPrograma
                 programaId={programaId}
-                imagemUrl={imagemUrl} 
-                instituicao={instituicao} 
+                imagemUrl={imagemUrl}
+                instituicao={instituicao}
             />
         </HStack>
     </Box>

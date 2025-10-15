@@ -8,17 +8,26 @@ interface BotaoAcessarEventoProps {
 
 export const BotaoAcessarEvento: FC<BotaoAcessarEventoProps> = ({ url }) => (
     <Button
-        size={{ base: "md", md: "lg" }}
         w="full"
-        bg="rgba(226, 242, 254, 1)"
+        maxW={{ base: "full", lg: "901px" }}
+        h="48px"
+        bg="#E2F2FE"
         color="blue.600"
-        border="1px"
-        borderColor="blue.600"
-        _hover={{ bg: 'blue.100' }}
+        border="none"
+        borderRadius="10px"
+        px="15px"
+        py="11px"
+        gap="16px"
+        _hover={{ bg: '#C9E7FD' }}
         onClick={() => url && window.open(url, '_blank')}
-        fontSize={{ base: "sm", md: "md" }}
+        fontSize="16px"
+        fontFamily="Poppins, sans-serif"
+        fontWeight="400"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
     >
-        <Icon as={FiExternalLink} mr="2" />
+        <Icon as={FiExternalLink} boxSize="24px" />
         Acessar Website do evento
     </Button>
 );

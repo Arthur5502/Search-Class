@@ -13,27 +13,32 @@ export const PoliticaEventoItem: FC<PoliticaEventoItemProps> = ({
     linkTexto
 }) => (
     <Box>
-        <Text 
-            fontWeight="bold" 
-            mb="2" 
-            color="gray.900" 
-            fontSize={{ base: "sm", md: "md" }}
+        <Text
+            fontWeight="600"
+            mb="8px"
+            color="gray.900"
+            fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+            fontFamily="Poppins, sans-serif"
         >
             {titulo}
         </Text>
-        <Text 
-            fontSize={{ base: "sm", md: "md" }} 
-            color="gray.700" 
-            lineHeight="1.6" 
-            mb="2"
+        <Text
+            fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+            color="gray.700"
+            lineHeight="1.6"
+            mb="8px"
+            fontFamily="Poppins, sans-serif"
+            fontWeight="400"
         >
             {descricao}
         </Text>
-        <Text 
-            fontSize={{ base: "sm", md: "md" }} 
-            color="blue.500" 
-            cursor="pointer" 
+        <Text
+            fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+            color="blue.500"
+            cursor="pointer"
             textDecoration="underline"
+            fontFamily="Poppins, sans-serif"
+            fontWeight="400"
         >
             {linkTexto}
         </Text>

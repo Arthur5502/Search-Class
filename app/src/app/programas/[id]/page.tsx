@@ -42,7 +42,6 @@ const ProgramaDetalhePage: FC = () => {
         );
     }
 
-    /* PÁGINA COMPLETA */
     return (
         <Box bg="gray.50" minH="100vh" position="relative">
             <Header />

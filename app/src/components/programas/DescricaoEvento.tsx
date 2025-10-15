@@ -16,36 +16,65 @@ export const DescricaoEvento: FC<DescricaoEventoProps> = ({
     local,
     realizacao
 }) => (
-    <VStack align="start" gap="4">
-        <Heading 
-            size={{ base: "xl", md: "2xl" }} 
-            color="gray.900" 
-            fontSize={{ base: "xl", md: "2xl" }}
+    <VStack align="start" gap={0}>
+        <Heading
+            size={{ base: "xl", md: "2xl" }}
+            color="#000000"
+            fontSize={{ base: "34px", md: "38px", lg: "42px" }}
+            fontFamily="Poppins, sans-serif"
+            fontWeight="700"
+            mb={{ base: "32px", md: "40px", lg: "48px" }}
         >
             Descrição do evento
         </Heading>
-        <Heading 
-            size={{ base: "md", md: "lg" }} 
-            fontWeight="bold" 
-            color="gray.900" 
-            fontSize={{ base: "lg", md: "xl" }}
-        >
-            {titulo}
-        </Heading>
-        {descricao.map((paragrafo, index) => (
-            <Text 
-                key={index} 
-                color="gray.700" 
-                lineHeight="1.6" 
-                fontSize={{ base: "sm", md: "md" }}
+        <VStack align="start" gap={{ base: "16px", md: "20px", lg: "24px" }}>
+            <Heading
+                size={{ base: "md", md: "lg" }}
+                fontWeight="600"
+                color="gray.900"
+                fontSize={{ base: "18px", md: "20px", lg: "24px" }}
+                fontFamily="Poppins, sans-serif"
             >
-                {paragrafo}
-            </Text>
-        ))}
-        <VStack align="start" gap="1" pt="2">
-            <Text fontWeight="bold" color="gray.900" fontSize={{ base: "sm", md: "md" }}>{data}</Text>
-            <Text color="gray.600" fontSize={{ base: "sm", md: "md" }}>{local}</Text>
-            <Text color="gray.600" fontSize={{ base: "sm", md: "md" }}>{realizacao}</Text>
+                {titulo}
+            </Heading>
+            {descricao.map((paragrafo, index) => (
+                <Text
+                    key={index}
+                    color="gray.700"
+                    lineHeight="1.6"
+                    fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+                    fontFamily="Poppins, sans-serif"
+                    fontWeight="400"
+                >
+                    {paragrafo}
+                </Text>
+            ))}
+            <VStack align="start" gap="8px" pt="16px">
+                <Text
+                    fontWeight="600"
+                    color="gray.900"
+                    fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+                    fontFamily="Poppins, sans-serif"
+                >
+                    {data}
+                </Text>
+                <Text
+                    color="gray.600"
+                    fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+                    fontFamily="Poppins, sans-serif"
+                    fontWeight="400"
+                >
+                    {local}
+                </Text>
+                <Text
+                    color="gray.600"
+                    fontSize={{ base: "14px", md: "15px", lg: "16px" }}
+                    fontFamily="Poppins, sans-serif"
+                    fontWeight="400"
+                >
+                    {realizacao}
+                </Text>
+            </VStack>
         </VStack>
     </VStack>
 );
