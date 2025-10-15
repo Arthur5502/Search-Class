@@ -5,10 +5,11 @@ import {
     Heading,
     Text,
     HStack,
+    SimpleGrid,
 } from '@chakra-ui/react';
 import { Header } from '@/components/Header';
 import { EmptyState } from '../../components/ui/EmptyState';
-import { ProgramaSection } from '../../components/ProgramaSection';
+import { ProgramCardSmall } from '../../components/ProgramCard/ProgramCardSmall';
 import { useAppStore } from '../../store/useAppStore';
 import { mockProgramas } from '../../mocks/programas';
 import type { Programa } from '../../types/domain';
@@ -45,7 +46,7 @@ const FavoritosPage: FC = () => {
             <Header showBorder={false} />
 
             {programasFavoritos.length > 0 ? (
-                <Box py={6} px="20px">
+                <Box py={6} px={{ base: "20px", md: "40px", lg: "80px" }}>
                     <HStack justify="space-between" align="center" mb={8}>
                         <Heading
                             size="lg"
@@ -60,12 +61,19 @@ const FavoritosPage: FC = () => {
                         </Text>
                     </HStack>
 
-                    <ProgramaSection
-                        title="Favoritos"
-                        programas={programasFavoritos}
-                        showViewAll={false}
-                        showScrollButton={false}
-                    />
+                    <SimpleGrid
+                        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+                        gap={{ base: 4, md: 6 }}
+                        w="100%"
+                    >
+                        {programasFavoritos.map((programa, index) => (
+                            <ProgramCardSmall
+                                key={programa.id}
+                                programa={programa}
+                                index={index}
+                            />
+                        ))}
+                    </SimpleGrid>
                 </Box>
             ) : (
                 <Box
