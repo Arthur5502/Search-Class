@@ -34,7 +34,11 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
                 h="48px"
                 w="48px"
                 borderRadius="8px"
-                onClick={() => toggleFavorito(String(programaId))}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleFavorito(String(programaId));
+                }}
             >
                 <FiHeart
                     size={24}
@@ -56,7 +60,11 @@ export const FavoriteButton: FC<FavoriteButtonProps> = ({
                 bg: isFavorito ? 'red.600' : 'gray.100',
                 transform: 'scale(1.1)',
             }}
-            onClick={() => toggleFavorito(String(programaId))}
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleFavorito(String(programaId));
+            }}
         >
             <FiHeart
                 size={16}

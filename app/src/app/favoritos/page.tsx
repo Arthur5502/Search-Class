@@ -32,7 +32,7 @@ const FavoritosPage: FC = () => {
     if (!isHydrated) {
         return (
             <Box bg="gray.50" minH="100vh">
-                <Header />
+                <Header showBorder={false} />
                 <Box py={12} px="20px">
                     <Text>Carregando...</Text>
                 </Box>
@@ -42,7 +42,7 @@ const FavoritosPage: FC = () => {
 
     return (
         <Box bg="gray.50" minH="100vh">
-            <Header />
+            <Header showBorder={false} />
 
             <Box py={6} px="20px">
                 {programasFavoritos.length > 0 ? (
