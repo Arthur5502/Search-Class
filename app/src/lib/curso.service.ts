@@ -1,4 +1,4 @@
-import type { Programa } from '@/types/domain';
+import type { Programa, AreaTecnologia } from '@/types/domain'; // Importação de AreaTecnologia adicionada
 import type { GeneralInfoFormData } from '@/components/forms/GeneralInfoForm';
 import type { AddressFormData } from '@/components/forms/AddressForm';
 
@@ -89,8 +89,9 @@ export class CursoService {
         };
     }
 
-    private static mapearTipoParaArea(tipoEvento: string): any {
-        const mapeamento: Record<string, string> = {
+    // Correção aplicada aqui
+    private static mapearTipoParaArea(tipoEvento: string): AreaTecnologia {
+        const mapeamento: Record<string, AreaTecnologia> = {
             'frontend': 'frontend',
             'backend': 'backend',
             'fullstack': 'fullstack',
