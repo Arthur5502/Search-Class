@@ -5,4 +5,6 @@ export interface ProgramCardSmallProps {
     index?: number
     variant?: 'default' | 'variant2'
     className?: string
+    showFavorite?: boolean
+    enableNavigation?: boolean
 }
