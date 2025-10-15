@@ -44,34 +44,41 @@ const FavoritosPage: FC = () => {
         <Box bg="gray.50" minH="100vh">
             <Header showBorder={false} />
 
-            <Box py={6} px="20px">
-                {programasFavoritos.length > 0 ? (
-                    <>
-                        <HStack justify="space-between" align="center" mb={8}>
-                            <Heading
-                                size="lg"
-                                color="gray.900"
-                                fontWeight="600"
-                                fontSize={{ base: "xl", md: "2xl" }}
-                            >
-                                Favoritos
-                            </Heading>
-                            <Text fontSize="sm" color="gray.500" fontWeight="500">
-                                {programasFavoritos.length} {programasFavoritos.length === 1 ? 'curso favorito' : 'cursos favoritos'}
-                            </Text>
-                        </HStack>
+            {programasFavoritos.length > 0 ? (
+                <Box py={6} px="20px">
+                    <HStack justify="space-between" align="center" mb={8}>
+                        <Heading
+                            size="lg"
+                            color="gray.900"
+                            fontWeight="600"
+                            fontSize={{ base: "xl", md: "2xl" }}
+                        >
+                            Favoritos
+                        </Heading>
+                        <Text fontSize="sm" color="gray.500" fontWeight="500">
+                            {programasFavoritos.length} {programasFavoritos.length === 1 ? 'curso favorito' : 'cursos favoritos'}
+                        </Text>
+                    </HStack>
 
-                        <ProgramaSection
-                            title="Favoritos"
-                            programas={programasFavoritos}
-                            showViewAll={false}
-                            showScrollButton={false}
-                        />
-                    </>
-                ) : (
+                    <ProgramaSection
+                        title="Favoritos"
+                        programas={programasFavoritos}
+                        showViewAll={false}
+                        showScrollButton={false}
+                    />
+                </Box>
+            ) : (
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    minH="calc(100vh - 100px)"
+                    w="100%"
+                    mt="-40px"
+                >
                     <EmptyState />
-                )}
-            </Box>
+                </Box>
+            )}
         </Box>
     );
 };

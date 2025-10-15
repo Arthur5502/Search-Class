@@ -6,15 +6,13 @@ import { FiHeart } from 'react-icons/fi';
 export const EmptyState: FC = () => {
     return (
         <VStack
-            gap={6}
-            py={20}
+            gap={8}
             align="center"
             justify="center"
-            minH="60vh"
         >
             <Box position="relative">
                 <FiHeart
-                    size={80}
+                    size={120}
                     color="#D1D5DB"
                     strokeWidth={1.5}
                 />
@@ -23,23 +21,23 @@ export const EmptyState: FC = () => {
                     top="50%"
                     left="50%"
                     transform="translate(-50%, -50%) rotate(45deg)"
-                    w="100px"
-                    h="2px"
+                    w="140px"
+                    h="3px"
                     bg="gray.400"
                 />
             </Box>
 
-            <VStack gap={2}>
+            <VStack gap={3}>
                 <Text
-                    fontSize="xl"
+                    fontSize="2xl"
                     color="gray.700"
-                    fontWeight="500"
+                    fontWeight="600"
                     textAlign="center"
                 >
                     Você ainda não tem nenhum curso favorito
                 </Text>
                 <Text
-                    fontSize="sm"
+                    fontSize="md"
                     color="gray.500"
                     textAlign="center"
                 >
