@@ -8,18 +8,18 @@ import {
     Button,
     VStack,
     HStack,
-    Icon,
     Image,
     IconButton,
     Grid,
     GridItem,
 } from '@chakra-ui/react';
-import { FiExternalLink, FiChevronLeft } from 'react-icons/fi';
+import { FiChevronLeft } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 import { PolicySection } from './PolicySection';
+import type { Programa } from '../../../types/domain'; // Importação adicionada
 
 interface ContentSectionProps {
-    programa: any;
+    programa: Programa; // Correção aplicada aqui
 }
 
 export const ContentSection: FC<ContentSectionProps> = ({ programa }) => {
@@ -103,7 +103,7 @@ export const ContentSection: FC<ContentSectionProps> = ({ programa }) => {
                                         Dia 09/10/2025 às 19h
                                     </Text>
                                     <Text color="gray.600" fontSize="16px">
-                                        Local: {programa.local} - {programa.cidade}, {programa.estado}
+                                        Local: {programa.cidade}, {programa.estado}
                                     </Text>
                                     <Text color="gray.600" fontSize="16px">
                                         Realização: {programa.instituicao.nome}

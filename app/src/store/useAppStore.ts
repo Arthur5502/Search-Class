@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import type { Usuario, FiltrosPrograma, Programa } from '@/types/domain';
+import type { Usuario, FiltrosPrograma, Programa, AreaTecnologia, Modalidade, NivelExperiencia } from '@/types/domain';
 
 interface AppState {
     user: Usuario | null;
@@ -35,6 +35,22 @@ const initialFiltros: FiltrosPrograma = {
     estados: new Set(),
     ordenacao: 'relevancia'
 };
+
+// Tipo para representar a parte do estado que será salva no localStorage
+type PersistedState = {
+    user: Usuario | null;
+    favoritos: string[];
+    cursosCadastrados: Programa[];
+    filtros: {
+        busca: string;
+        ordenacao: 'relevancia' | 'data' | 'investimento' | 'avaliacao';
+        areas: AreaTecnologia[];
+        modalidades: Modalidade[];
+        niveis: NivelExperiencia[];
+        estados: string[];
+    };
+};
+
 
 export const useAppStore = create<AppState>()(
     subscribeWithSelector(
@@ -116,25 +132,28 @@ export const useAppStore = create<AppState>()(
             })),
             {
                 name: 'talent-platform-store',
-                skipHydration: false,
-                partialize: (state) => ({
+                // Correção 1: Definindo explicitamente o que salvar e convertendo Set para Array
+                partialize: (state): PersistedState => ({
                     user: state.user,
                     favoritos: state.favoritos,
                     cursosCadastrados: state.cursosCadastrados,
                     filtros: {
-                        ...state.filtros,
+                        busca: state.filtros.busca,
+                        ordenacao: state.filtros.ordenacao,
                         areas: Array.from(state.filtros.areas),
                         modalidades: Array.from(state.filtros.modalidades),
                         niveis: Array.from(state.filtros.niveis),
-                        estados: Array.from(state.filtros.estados)
-                    }
+                        estados: Array.from(state.filtros.estados),
+                    },
                 }),
+                // Correção 2: Convertendo Array de volta para Set ao carregar
                 onRehydrateStorage: () => (state) => {
                     if (state?.filtros) {
-                        state.filtros.areas = new Set(state.filtros.areas as any);
-                        state.filtros.modalidades = new Set(state.filtros.modalidades as any);
-                        state.filtros.niveis = new Set(state.filtros.niveis as any);
-                        state.filtros.estados = new Set(state.filtros.estados as any);
+                        const persistedFiltros = state.filtros as unknown as PersistedState['filtros'];
+                        state.filtros.areas = new Set(persistedFiltros.areas);
+                        state.filtros.modalidades = new Set(persistedFiltros.modalidades);
+                        state.filtros.niveis = new Set(persistedFiltros.niveis);
+                        state.filtros.estados = new Set(persistedFiltros.estados);
                     }
                 }
             }
