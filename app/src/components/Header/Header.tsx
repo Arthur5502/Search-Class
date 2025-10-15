@@ -1,4 +1,3 @@
-// components/Header/Header.tsx - VERSÃO CORRIGIDA
 'use client'
 
 import { Box, HStack, Icon } from '@chakra-ui/react'
@@ -25,13 +24,11 @@ export const Header = ({ className, variant = 'default', showBorder = true }: He
             borderColor="gray.100"
             shadow={showBorder ? "sm" : "none"}
             className={className}
-            w="100%"           // ✅ FORÇA LARGURA TOTAL
-            minW="100vw"       // ✅ GARANTE VIEWPORT COMPLETO
+            w="100%"
+            minW="100vw"
         >
-            {/* REMOVE Container e usa padding direto */}
             <Box px={{ base: 4, sm: 6, md: 8 }} w="100%">
                 <HStack justify="space-between" align="center" w="100%">
-                    {/* Logo Section */}
                     <Box>
                         <Logo
                             size={variant === 'minimal' ? 'sm' : 'md'}
@@ -39,7 +36,6 @@ export const Header = ({ className, variant = 'default', showBorder = true }: He
                         />
                     </Box>
 
-                    {/* Navigation Section */}
                     <HStack
                         gap={{ base: 4, md: 8, lg: 16 }}
                         display={{ base: 'none', sm: 'flex' }}
@@ -61,7 +57,6 @@ export const Header = ({ className, variant = 'default', showBorder = true }: He
                         />
                     </HStack>
 
-                    {/* Mobile Navigation */}
                     <HStack
                         gap={4}
                         display={{ base: 'flex', sm: 'none' }}
