@@ -2,7 +2,6 @@
 import { FC, useState } from 'react';
 import {
     Box,
-    Container,
     HStack,
     Text,
     Button,
@@ -10,7 +9,7 @@ import {
     IconButton,
     VStack,
 } from '@chakra-ui/react';
-import { FiHeart, FiUser, FiMenu, FiX } from 'react-icons/fi';
+import { FiHeart, FiMenu, FiX } from 'react-icons/fi';
 import Link from 'next/link';
 import { useAppStore } from '../../store/useAppStore';
 
@@ -26,14 +25,19 @@ export const Header: FC = () => {
                 py={4}
                 borderBottom="1px"
                 borderColor="gray.100"
-                position="relative"
+                position="sticky"
+                top={0}
                 zIndex={1000}
-                px={{ base: 4, md: 0 }}
+                w="100%"
             >
-                <Container maxW="8xl" px={{ base: 0, md: 4 }}>
+                <Box
+                    mx="auto"
+                    px={{ base: 4, md: 8, lg: 16 }}
+                >
                     <HStack justify="space-between" align="center">
+
                         <Link href="/homepage">
-                            <HStack gap={3} cursor="pointer" ml={{ base: 0, md: 10 }}>
+                            <HStack gap={3} cursor="pointer">
                                 <Image
                                     src="/Logo.svg"
                                     alt="Logo"
@@ -47,14 +51,9 @@ export const Header: FC = () => {
                                         color="gray.800"
                                         lineHeight="1"
                                         textTransform="uppercase"
-                                        _firstLetter={{
-                                            color: "blue.600",
-                                            textTransform: "uppercase"
-                                        }}
                                         css={{
                                             '&::first-letter': {
-                                                color: 'var(--chakra-colors-blue-600)',
-                                                textTransform: 'uppercase'
+                                                color: 'var(--chakra-colors-blue-600)'
                                             }
                                         }}
                                     >
@@ -65,14 +64,9 @@ export const Header: FC = () => {
                                         color="gray.500"
                                         textTransform="uppercase"
                                         letterSpacing="wide"
-                                        _firstLetter={{
-                                            color: "blue.600",
-                                            textTransform: "uppercase"
-                                        }}
                                         css={{
                                             '&::first-letter': {
-                                                color: 'var(--chakra-colors-blue-600)',
-                                                textTransform: 'uppercase'
+                                                color: 'var(--chakra-colors-blue-600)'
                                             }
                                         }}
                                     >
@@ -82,7 +76,10 @@ export const Header: FC = () => {
                             </HStack>
                         </Link>
 
-                        <HStack gap={{ base: 4, lg: 58 }} mr={{ base: 0, md: -2 }} display={{ base: 'none', md: 'flex' }}>
+                        <HStack
+                            gap={{ base: 4, lg: 12 }}
+                            display={{ base: 'none', md: 'flex' }}
+                        >
                             <Link href="/favoritos">
                                 <Button
                                     variant="ghost"
@@ -90,7 +87,7 @@ export const Header: FC = () => {
                                     fontSize="sm"
                                     color="gray.600"
                                     fontWeight="medium"
-                                    _hover={{ bg: "gray.50" }}
+                                    _hover={{ bg: "gray.100" }}
                                 >
                                     <FiHeart size={16} style={{ marginRight: '8px' }} />
                                     Favoritos
@@ -104,7 +101,7 @@ export const Header: FC = () => {
                                     fontSize="sm"
                                     color="gray.600"
                                     fontWeight="medium"
-                                    _hover={{ bg: "gray.50" }}
+                                    _hover={{ bg: "gray.100" }}
                                 >
                                     Instituições
                                 </Button>
@@ -122,6 +119,7 @@ export const Header: FC = () => {
                                     color="white"
                                     fontSize="xs"
                                     fontWeight="bold"
+                                    cursor="pointer"
                                 >
                                     {user.nome.charAt(0).toUpperCase()}
                                 </Box>
@@ -131,20 +129,23 @@ export const Header: FC = () => {
                                     alt="User"
                                     w="40px"
                                     h="40px"
+                                    cursor="pointer"
                                 />
                             )}
                         </HStack>
 
+                        {/* Mobile Hamburger */}
                         <IconButton
                             aria-label="Menu"
                             variant="ghost"
                             display={{ base: 'flex', md: 'none' }}
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            _hover={{ bg: "gray.100" }}
                         >
                             {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
                         </IconButton>
                     </HStack>
-                </Container>
+                </Box>
             </Box>
 
             {isMenuOpen && (
@@ -170,6 +171,7 @@ export const Header: FC = () => {
                                 fontSize="md"
                                 color="gray.600"
                                 fontWeight="medium"
+                                _hover={{ bg: "gray.100" }}
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 <FiHeart size={20} style={{ marginRight: '12px' }} />
@@ -189,6 +191,7 @@ export const Header: FC = () => {
                                 fontSize="md"
                                 color="gray.600"
                                 fontWeight="medium"
+                                _hover={{ bg: "gray.100" }}
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 Instituições
@@ -221,11 +224,14 @@ export const Header: FC = () => {
                             ) : (
                                 <HStack gap={3}>
                                     <Image
-                                        src={"/profile-icon.svg"}
+                                        src="/profile-icon.svg"
                                         alt="User"
                                         w="40px"
                                         h="40px"
                                     />
+                                    <Text color="gray.700" fontWeight="medium">
+                                        Perfil
+                                    </Text>
                                 </HStack>
                             )}
                         </Box>

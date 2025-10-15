@@ -7,7 +7,7 @@ import {
     HStack,
     SimpleGrid,
 } from '@chakra-ui/react';
-import { Header } from '@/components/Header';
+import { Header } from '@/components/layout/Header';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ProgramCardSmall } from '../../components/ProgramCard/ProgramCardSmall';
 import { useAppStore } from '../../store/useAppStore';
