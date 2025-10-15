@@ -47,7 +47,7 @@ export default function HomePage() {
             <Box bg="gray.50" py={{ base: 4, md: 6 }} px={{ base: 2, sm: 3, md: 4 }}>
                 <VStack gap={{ base: 2, md: 3 }} align="center" w="100%" maxW="800px" mx="auto">
                     <SearchInput
-                        placeholder="Curso de Front-End"
+                        placeholder="Curso de Front-End, Design, Marketing..."
                     />
                     <FilterTabs />
                 </VStack>

@@ -44,7 +44,6 @@ const FavoritosPage: FC = () => {
     return (
         <Box bg="gray.50" minH="100vh">
             <Header />
-
             {programasFavoritos.length > 0 ? (
                 <Box py={6} px={{ base: "20px", md: "40px", lg: "80px" }}>
                     <HStack justify="space-between" align="center" mb={8}>
@@ -62,8 +61,8 @@ const FavoritosPage: FC = () => {
                     </HStack>
 
                     <SimpleGrid
-                        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
-                        gap={{ base: 4, md: 6 }}
+                        columns={{ base: 1, sm: 2, md: 3, lg: 5 }}
+                        gap={{ base: 1, md: 3 }}
                         w="100%"
                     >
                         {programasFavoritos.map((programa, index) => (
