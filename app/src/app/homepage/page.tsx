@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, VStack } from '@chakra-ui/react'
-import { Header } from '@/components/Header'
+import { Header } from '@/components/layout/Header'
 import { SearchInput } from '@/components/ui/SearchInput'
 import { FilterTabs } from '@/components/FilterTabs'
 import { ProgramaCarousel } from '@/components/ProgramaCarousel'

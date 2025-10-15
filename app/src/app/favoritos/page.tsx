@@ -7,7 +7,7 @@ import {
     HStack,
     SimpleGrid,
 } from '@chakra-ui/react';
-import { Header } from '@/components/Header';
+import { Header } from '@/components/layout/Header';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ProgramCardSmall } from '../../components/ProgramCard/ProgramCardSmall';
 import { useAppStore } from '../../store/useAppStore';
@@ -33,7 +33,7 @@ const FavoritosPage: FC = () => {
     if (!isHydrated) {
         return (
             <Box bg="gray.50" minH="100vh">
-                <Header showBorder={false} />
+                <Header />
                 <Box py={12} px="20px">
                     <Text>Carregando...</Text>
                 </Box>
@@ -43,7 +43,7 @@ const FavoritosPage: FC = () => {
 
     return (
         <Box bg="gray.50" minH="100vh">
-            <Header showBorder={false} />
+            <Header />
 
             {programasFavoritos.length > 0 ? (
                 <Box py={6} px={{ base: "20px", md: "40px", lg: "80px" }}>

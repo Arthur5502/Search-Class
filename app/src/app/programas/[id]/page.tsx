@@ -7,7 +7,6 @@ import { ProgramaHero, ProgramaConteudo } from '../../../components/programas';
 import { getProgramaById } from '../../../lib/programas.service';
 import type { Programa } from '../../../types/domain';
 
-/* Hook de dados */
 const usePrograma = (id: string) => {
     const [programa, setPrograma] = useState<Programa | null>(null);
     const [loading, setLoading] = useState(true);

@@ -22,11 +22,6 @@ main {
   overflow-x: hidden;
 }
 
-/* Prevent horizontal scroll on all containers */
-* {
-  max-width: 100%;
-}
-
 img {
   max-width: 100%;
   height: auto;
@@ -37,7 +32,6 @@ a {
   text-decoration: none;
 }
 
-/* Swiper customizations */
 .swiper-pagination-bullet {
   background: rgba(0, 0, 0, 0.3) !important;
 }
