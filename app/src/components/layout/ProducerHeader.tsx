@@ -44,7 +44,7 @@ export const ProducerHeader: FC = () => {
                             h="55.2px"
                             display={{ base: 'none', md: 'flex' }}
                         >
-                            <Link href="/">
+                            <Link href="/seus-cursos">
                                 <HStack gap={2} cursor="pointer">
                                     <Image
                                         src="/Logo.svg"
@@ -55,28 +55,36 @@ export const ProducerHeader: FC = () => {
                                     />
                                     <Box>
                                         <Text
-                                            fontSize="lg"
+                                            fontSize="xl"
                                             color="gray.800"
                                             lineHeight="1"
                                             textTransform="uppercase"
-                                            fontWeight="semibold"
+                                            _firstLetter={{
+                                                color: "blue.600",
+                                                textTransform: "uppercase"
+                                            }}
                                             css={{
                                                 '&::first-letter': {
-                                                    color: 'var(--chakra-colors-blue-600)'
+                                                    color: 'var(--chakra-colors-blue-600)',
+                                                    textTransform: 'uppercase'
                                                 }
                                             }}
                                         >
                                             search
                                         </Text>
                                         <Text
-                                            fontSize="lg"
+                                            fontSize="xl"
                                             color="gray.500"
                                             textTransform="uppercase"
                                             letterSpacing="wide"
-                                            fontWeight="medium"
+                                            _firstLetter={{
+                                                color: "blue.600",
+                                                textTransform: "uppercase"
+                                            }}
                                             css={{
                                                 '&::first-letter': {
-                                                    color: 'var(--chakra-colors-blue-600)'
+                                                    color: 'var(--chakra-colors-blue-600)',
+                                                    textTransform: 'uppercase'
                                                 }
                                             }}
                                         >
@@ -237,7 +245,6 @@ export const ProducerHeader: FC = () => {
                     bg="white"
                     borderBottom="1px"
                     borderColor="gray.200"
-                    shadow="xl"
                     zIndex={999}
                     display={{ base: 'block', lg: 'none' }}
                 >

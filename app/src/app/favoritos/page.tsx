@@ -5,10 +5,11 @@ import {
     Heading,
     Text,
     HStack,
+    SimpleGrid,
 } from '@chakra-ui/react';
 import { Header } from '@/components/Header';
 import { EmptyState } from '../../components/ui/EmptyState';
-import { ProgramaSection } from '../../components/ProgramaSection';
+import { ProgramCardSmall } from '../../components/ProgramCard/ProgramCardSmall';
 import { useAppStore } from '../../store/useAppStore';
 import { mockProgramas } from '../../mocks/programas';
 import type { Programa } from '../../types/domain';
@@ -32,7 +33,7 @@ const FavoritosPage: FC = () => {
     if (!isHydrated) {
         return (
             <Box bg="gray.50" minH="100vh">
-                <Header />
+                <Header showBorder={false} />
                 <Box py={12} px="20px">
                     <Text>Carregando...</Text>
                 </Box>
@@ -42,36 +43,50 @@ const FavoritosPage: FC = () => {
 
     return (
         <Box bg="gray.50" minH="100vh">
-            <Header />
+            <Header showBorder={false} />
 
-            <Box py={6} px="20px">
-                {programasFavoritos.length > 0 ? (
-                    <>
-                        <HStack justify="space-between" align="center" mb={8}>
-                            <Heading
-                                size="lg"
-                                color="gray.900"
-                                fontWeight="600"
-                                fontSize={{ base: "xl", md: "2xl" }}
-                            >
-                                Favoritos
-                            </Heading>
-                            <Text fontSize="sm" color="gray.500" fontWeight="500">
-                                {programasFavoritos.length} {programasFavoritos.length === 1 ? 'curso favorito' : 'cursos favoritos'}
-                            </Text>
-                        </HStack>
+            {programasFavoritos.length > 0 ? (
+                <Box py={6} px={{ base: "20px", md: "40px", lg: "80px" }}>
+                    <HStack justify="space-between" align="center" mb={8}>
+                        <Heading
+                            size="lg"
+                            color="gray.900"
+                            fontWeight="600"
+                            fontSize={{ base: "xl", md: "2xl" }}
+                        >
+                            Favoritos
+                        </Heading>
+                        <Text fontSize="sm" color="gray.500" fontWeight="500">
+                            {programasFavoritos.length} {programasFavoritos.length === 1 ? 'curso favorito' : 'cursos favoritos'}
+                        </Text>
+                    </HStack>
 
-                        <ProgramaSection
-                            title="Favoritos"
-                            programas={programasFavoritos}
-                            showViewAll={false}
-                            showScrollButton={false}
-                        />
-                    </>
-                ) : (
+                    <SimpleGrid
+                        columns={{ base: 1, sm: 2, md: 3, lg: 4 }}
+                        gap={{ base: 4, md: 6 }}
+                        w="100%"
+                    >
+                        {programasFavoritos.map((programa, index) => (
+                            <ProgramCardSmall
+                                key={programa.id}
+                                programa={programa}
+                                index={index}
+                            />
+                        ))}
+                    </SimpleGrid>
+                </Box>
+            ) : (
+                <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    minH="calc(100vh - 100px)"
+                    w="100%"
+                    mt="-40px"
+                >
                     <EmptyState />
-                )}
-            </Box>
+                </Box>
+            )}
         </Box>
     );
 };
