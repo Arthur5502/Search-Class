@@ -186,7 +186,7 @@ export const ProducerHeader: FC = () => {
                         </HStack>
 
                         <HStack gap={2} display={{ base: 'flex', lg: 'none' }} w="100%" justify="space-between">
-                            <Link href="/">
+                            <Link href="/seus-cursos">
                                 <Image
                                     src="/Logo.svg"
                                     alt="Logo"
